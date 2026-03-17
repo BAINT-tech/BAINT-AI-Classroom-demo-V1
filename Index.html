@@ -89,6 +89,11 @@ button.mic { background: #10b981; margin-left: 8px; }
   display: none;
   text-align: center;
 }
+.disclaimer {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 6px;
+}
 </style>
 </head>
 <body>
@@ -101,6 +106,7 @@ button.mic { background: #10b981; margin-left: 8px; }
 <div id="app-launcher" class="section">
   <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
   <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
+  <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
 </div>
 
     <!-- BOOT SCREEN -->
@@ -224,7 +230,7 @@ function startBootSequence() {
   }
 }
 
-/* DEMO DATA WITH DEFINITIONS */
+/* DEMO DATA WITH DEFINITIONS & EXAMPLES */
 const data = {
   biology: {
     definition: {
@@ -235,30 +241,16 @@ const data = {
     },
     photosynthesis: {
       teacher: {
-        en:"Teacher explains Photosynthesis: Plants convert sunlight into chemical energy. Step-by-step explanation with examples.",
-        es:"El maestro explica la fotosíntesis: las plantas convierten la luz solar en energía química. Explicación paso a paso con ejemplos.",
-        zh:"老师讲解光合作用：植物将阳光转化为化学能。逐步解释并附示例。",
-        fr:"Le professeur explique la photosynthèse : les plantes transforment la lumière du soleil en énergie chimique. Explication étape par étape avec exemples."
+        en:"Teacher explains Photosynthesis: Plants convert sunlight into chemical energy. Step-by-step explanation with examples and diagrams.",
+        es:"El maestro explica la fotosíntesis: las plantas convierten la luz solar en energía química. Explicación paso a paso con ejemplos y diagramas.",
+        zh:"老师讲解光合作用：植物将阳光转化为化学能。逐步解释并附示例和图示。",
+        fr:"Le professeur explique la photosynthèse : les plantes transforment la lumière du soleil en énergie chimique. Explication étape par étape avec exemples et diagrammes."
       },
       student: {
-        en:"Student observes Photosynthesis step-by-step.",
-        es:"El estudiante observa la fotosíntesis paso a paso.",
-        zh:"学生观察光合作用步骤。",
-        fr:"L'étudiant observe la photosynthèse étape par étape."
-      }
-    },
-    watercycle: {
-      teacher: {
-        en:"Teacher explains Water Cycle: Evaporation, Condensation, Precipitation. Step-by-step guidance.",
-        es:"El maestro explica el ciclo del agua: evaporación, condensación, precipitación. Guía paso a paso.",
-        zh:"老师讲解水循环：蒸发，冷凝，降水。逐步指导。",
-        fr:"Le professeur explique le cycle de l'eau : évaporation, condensation, précipitation. Guide étape par étape."
-      },
-      student: {
-        en:"Student observes Water Cycle step-by-step.",
-        es:"El estudiante observa el ciclo del agua paso a paso.",
-        zh:"学生观察水循环步骤。",
-        fr:"L'étudiant observe le cycle de l'eau étape par étape."
+        en:"Student observes Photosynthesis step-by-step and takes notes for understanding.",
+        es:"El estudiante observa la fotosíntesis paso a paso y toma notas para comprender.",
+        zh:"学生观察光合作用步骤并做笔记以理解。",
+        fr:"L'étudiant observe la photosynthèse étape par étape et prend des notes pour comprendre."
       }
     }
   },
@@ -271,38 +263,16 @@ const data = {
     },
     revolution: {
       teacher: {
-        en:"Teacher explains French Revolution: End of monarchy, rise of equality, step-by-step changes.",
-        es:"El maestro explica la Revolución Francesa: fin de la monarquía, auge de la igualdad, cambios paso a paso.",
-        zh:"老师讲解法国大革命：结束君主制，平等兴起，逐步变化。",
-        fr:"Le professeur explique la Révolution française : fin de la monarchie, émergence de l'égalité, changements étape par étape."
+        en:"Teacher explains French Revolution: End of monarchy, rise of equality, step-by-step changes with causes & effects.",
+        es:"El maestro explica la Revolución Francesa: fin de la monarquía, auge de la igualdad, cambios paso a paso con causas y efectos.",
+        zh:"老师讲解法国大革命：结束君主制，平等兴起，逐步变化，附因果分析。",
+        fr:"Le professeur explique la Révolution française : fin de la monarchie, émergence de l'égalité, changements étape par étape avec causes et effets."
       },
       student: {
-        en:"Student observes French Revolution step by step.",
-        es:"El estudiante observa la Revolución Francesa paso a paso.",
-        zh:"学生观察法国大革命步骤。",
-        fr:"L'étudiant observe la Révolution française étape par étape."
-      }
-    }
-  },
-  science: {
-    definition: {
-      en:"Science is the systematic study of the natural and physical world through observation and experiments.",
-      es:"La ciencia es el estudio sistemático del mundo natural y físico mediante observación y experimentos.",
-      zh:"科学是通过观察和实验系统地研究自然界和物理世界。",
-      fr:"La science est l'étude systématique du monde naturel et physique par l'observation et l'expérimentation."
-    },
-    states: {
-      teacher: {
-        en:"Teacher explains States of Matter: Solid, Liquid, Gas. Step-by-step examples.",
-        es:"El maestro explica los estados de la materia: sólido, líquido, gas. Ejemplos paso a paso.",
-        zh:"老师讲解物质状态：固体，液体，气体。逐步示例。",
-        fr:"Le professeur explique les états de la matière : solide, liquide, gaz. Exemples étape par étape."
-      },
-      student: {
-        en:"Student observes States of Matter step by step.",
-        es:"El estudiante observa los estados de la materia paso a paso.",
-        zh:"学生观察物质状态步骤。",
-        fr:"L'étudiant observe les états de la matière étape par étape."
+        en:"Student observes French Revolution step by step and notes causes and effects.",
+        es:"El estudiante observa la Revolución Francesa paso a paso y toma notas de causas y efectos.",
+        zh:"学生观察法国大革命步骤并记录原因与结果。",
+        fr:"L'étudiant observe la Révolution française étape par étape et note causes et effets."
       }
     }
   }
@@ -335,7 +305,12 @@ function updateContent(){
   const lang=document.getElementById("language").value;
   const def = data[subject].definition[lang];
   explanationBox.innerText=`${def}\n\nTopic Explanation:\n${data[subject][topic][role][lang]}`;
-  document.getElementById("problem-solving").innerHTML=`• Understands topic step-by-step<br>• ${role==="teacher"?"Supports teaching guidance":"Observes learning clearly"}<br>• Reduces confusion<br>• Human-in-control education`;
+  document.getElementById("problem-solving").innerHTML=
+    `• Understands topic step-by-step<br>`+
+    `• ${role==="teacher"?"Supports teaching guidance":"Observes learning clearly"}<br>`+
+    `• Reduces confusion<br>`+
+    `• Human-in-control education<br>`+
+    `• Structured & example-driven explanations`;
 }
 
 /* VOICE */
