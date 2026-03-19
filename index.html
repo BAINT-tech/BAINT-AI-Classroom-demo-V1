@@ -229,12 +229,178 @@ const bootLines=[
 ];
 
 /* DATA */
-const data={
-  biology:{photosynthesis:"Plants convert sunlight into energy."},
-  history:{revolution:"Revolutions change political systems."},
-  science:{gravity:"Gravity pulls objects downward."},
-  math:{algebra:"Algebra solves unknown values."},
-  computer:{ai:"AI simulates human intelligence."}
+const data = {
+  biology: {
+    photosynthesis: `
+Photosynthesis is the process plants use to make food.
+
+Step 1: Plants take in sunlight through leaves  
+Step 2: They absorb carbon dioxide from air  
+Step 3: Water is absorbed from roots  
+Step 4: Chlorophyll converts energy into glucose  
+
+Example:
+A tree uses sunlight to grow fruits and leaves.
+
+Simple Summary:
+Plants “eat” sunlight to survive.
+`,
+
+    cell: `
+Cells are the basic building blocks of life.
+
+Step 1: All living things are made of cells  
+Step 2: Cells have nucleus, membrane, cytoplasm  
+Step 3: They perform life functions  
+
+Example:
+Your skin is made of millions of cells.
+
+Summary:
+Cells = tiny units that form life.
+`,
+
+    digestion: `
+Digestion is how food is broken down in the body.
+
+Step 1: Food enters mouth  
+Step 2: Stomach breaks it down  
+Step 3: Nutrients are absorbed  
+
+Example:
+Rice becomes energy in your body.
+
+Summary:
+Digestion = turning food into energy.
+`,
+
+    genetics: `
+Genetics is how traits are passed from parents.
+
+Step 1: DNA carries information  
+Step 2: Genes control traits  
+Step 3: Traits are inherited  
+
+Example:
+Eye color comes from parents.
+
+Summary:
+Genes = biological information transfer.
+`
+  },
+
+  math: {
+    algebra: `
+Algebra is solving unknown values using symbols.
+
+Step 1: Identify unknown (x)  
+Step 2: Form equation  
+Step 3: Solve step-by-step  
+
+Example:
+x + 5 = 10 → x = 5  
+
+Summary:
+Algebra = solving missing numbers.
+`,
+
+    ratio: `
+Ratios compare two quantities.
+
+Step 1: Write values  
+Step 2: Simplify  
+
+Example:
+2:4 = 1:2  
+
+Summary:
+Ratio = comparison tool.
+`
+  },
+
+  science: {
+    gravity: `
+Gravity is a force that pulls objects down.
+
+Step 1: Earth has mass  
+Step 2: Mass creates pull  
+Step 3: Everything falls toward Earth  
+
+Example:
+Apple falling from tree.
+
+Summary:
+Gravity = Earth's pulling force.
+`,
+
+    energy: `
+Energy is the ability to do work.
+
+Step 1: Exists in many forms  
+Step 2: Can change form  
+Step 3: Cannot be destroyed  
+
+Example:
+Food → energy for movement  
+
+Summary:
+Energy = power to do work.
+`
+  },
+
+  history: {
+    revolution: `
+A revolution is a major change in society.
+
+Step 1: People are dissatisfied  
+Step 2: Conflict begins  
+Step 3: Government changes  
+
+Example:
+French Revolution changed France.
+
+Summary:
+Revolution = big political change.
+`,
+
+    ww1: `
+World War 1 was a global conflict.
+
+Step 1: Political tension  
+Step 2: Alliances formed  
+Step 3: War begins in 1914  
+
+Summary:
+WW1 = global war between nations.
+`
+  },
+
+  computer: {
+    ai: `
+AI is machines simulating human intelligence.
+
+Step 1: Machines learn data  
+Step 2: Patterns are recognized  
+Step 3: Decisions are made  
+
+Example:
+Chatbots answering questions.
+
+Summary:
+AI = machine thinking system.
+`,
+
+    internet: `
+Internet connects computers worldwide.
+
+Step 1: Devices connect  
+Step 2: Data is shared  
+Step 3: Communication happens  
+
+Summary:
+Internet = global communication network.
+`
+  }
 };
 
 /* LAUNCH */
@@ -266,18 +432,18 @@ function updateTopics(){
   const topic=document.getElementById("topic");
 
   topic.innerHTML="";
-  const keys=Object.keys(data[subject]);
+
+  const keys = Object.keys(data[subject]);
 
   keys.forEach(t=>{
     let opt=document.createElement("option");
     opt.value=t;
-    opt.innerText=t;
+    opt.innerText = t.charAt(0).toUpperCase() + t.slice(1);
     topic.appendChild(opt);
   });
 
-  topic.value=keys[0];
+  topic.value = keys[0];
 }
-
 /* CONTENT */
 function updateContent(){
   const s=document.getElementById("subject").value;
