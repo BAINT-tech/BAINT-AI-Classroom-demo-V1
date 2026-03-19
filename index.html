@@ -290,30 +290,72 @@ function updateContent(){
 /* VOICE SYSTEM */
 let utterance;
 
+function getVoice(lang) {
+  const voices = speechSynthesis.getVoices();
+
+  return voices.find(v =>
+    v.lang.toLowerCase().includes(lang)
+  ) || voices.find(v =>
+    v.lang.toLowerCase().includes("en")
+  );
+}
+
 function speak(){
   stopVoice();
-  const text=document.getElementById("explanation").innerText;
-  document.getElementById("subtitles").style.display="block";
-  document.getElementById("subtitles").innerText=text;
 
-  utterance=new SpeechSynthesisUtterance(text);
+  const lang = document.getElementById("language").value;
+  const text = document.getElementById("explanation").innerText;
+
+  document.getElementById("subtitles").style.display = "block";
+  document.getElementById("subtitles").innerText = text;
+
+  utterance = new SpeechSynthesisUtterance(text);
+
+  // map dropdown to real browser codes
+  let voiceLang = "en";
+
+  if(lang === "zh") voiceLang = "zh";
+  if(lang === "fr") voiceLang = "fr";
+  if(lang === "es") voiceLang = "es";
+
+  utterance.voice = getVoice(voiceLang);
+  utterance.lang = voiceLang;
+
   speechSynthesis.speak(utterance);
 }
 
 function speakReply(){
   stopVoice();
-  const text=document.getElementById("teacherReply").innerText;
-  document.getElementById("subtitles").style.display="block";
-  document.getElementById("subtitles").innerText=text;
 
-  utterance=new SpeechSynthesisUtterance(text);
+  const lang = document.getElementById("language").value;
+  const text = document.getElementById("teacherReply").innerText;
+
+  document.getElementById("subtitles").style.display = "block";
+  document.getElementById("subtitles").innerText = text;
+
+  utterance = new SpeechSynthesisUtterance(text);
+
+  let voiceLang = "en";
+
+  if(lang === "zh") voiceLang = "zh";
+  if(lang === "fr") voiceLang = "fr";
+  if(lang === "es") voiceLang = "es";
+
+  utterance.voice = getVoice(voiceLang);
+  utterance.lang = voiceLang;
+
   speechSynthesis.speak(utterance);
 }
 
 function stopVoice(){
   speechSynthesis.cancel();
-  document.getElementById("subtitles").style.display="none";
+  document.getElementById("subtitles").style.display = "none";
 }
+
+// important fix: load voices properly
+speechSynthesis.onvoiceschanged = () => {
+  speechSynthesis.getVoices();
+};
 
 /* QUESTION */
 function answerQuestion(){
