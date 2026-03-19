@@ -15,6 +15,7 @@ body {
   align-items: center;
   height: 100vh;
 }
+
 .laptop {
   width: 960px;
   height: 650px;
@@ -25,6 +26,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 .top-bar {
   height: 36px;
   background: #1c1c1c;
@@ -36,6 +38,7 @@ body {
   font-size: 14px;
   font-weight: bold;
 }
+
 .screen-shell {
   flex: 1;
   background: #f9fafb;
@@ -43,14 +46,29 @@ body {
   margin-top: 6px;
   padding: 22px;
   overflow-y: auto;
-  position: relative;
 }
+
 .section { margin-bottom: 20px; }
-.section h4 { margin: 0 0 8px; font-size: 15px; }
-select, input { padding: 8px 10px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 14px; margin-right: 8px; }
-input[type="text"], input[type="email"] { width: 60%; }
+
+.section h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+select, input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+input[type="text"], input[type="email"] {
+  width: 60%;
+}
+
 .card {
-  background: #ffffff;
+  background: #fff;
   border-radius: 14px;
   padding: 16px;
   border: 1px solid #e5e7eb;
@@ -58,6 +76,7 @@ input[type="text"], input[type="email"] { width: 60%; }
   line-height: 1.6;
   min-height: 60px;
 }
+
 button {
   background: #2563eb;
   border: none;
@@ -68,14 +87,22 @@ button {
   font-size: 14px;
   margin-top: 6px;
 }
+
 button.mic { background: #10b981; margin-left: 8px; }
+
 .waitlist {
   background: #eef2ff;
   border: 1px dashed #6366f1;
   border-radius: 14px;
   padding: 16px;
 }
-.success { color: #047857; font-size: 13px; margin-top: 8px; }
+
+.success {
+  color: #047857;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
 .subtitles {
   position: fixed;
   bottom: 20px;
@@ -100,14 +127,25 @@ button.mic { background: #10b981; margin-left: 8px; }
 
   <div class="screen-shell">
 
+    <!-- LAUNCH -->
     <div id="app-launcher" class="section">
       <img src="logo.png" style="width:120px;height:120px;margin-bottom:12px;">
-      <h3 onclick="launchDemo()" style="cursor:pointer;">Click to Launch BAINT Classroom Demo</h3>
+      <h3 onclick="launchDemo()" style="cursor:pointer;">
+        Click to Launch BAINT Classroom Demo
+      </h3>
     </div>
 
+    <!-- BOOT -->
+    <div class="section" id="boot" style="display:none;">
+      <div style="background:#111;color:#0f0;font-family:monospace;padding:20px;">
+        <div id="boot-log"></div>
+      </div>
+    </div>
+
+    <!-- DEMO -->
     <div id="demo" style="display:none;">
 
-      <!-- SUBJECTS -->
+      <!-- SUBJECT -->
       <div class="section">
         <h4>Learning Subjects</h4>
         <select id="subject" onchange="updateTopics(); updateContent();">
@@ -131,6 +169,7 @@ button.mic { background: #10b981; margin-left: 8px; }
       <div class="section">
         <input type="text" id="studentQuestion" placeholder="Ask BAINT AI..." />
         <button onclick="answerQuestion()">Ask</button>
+
         <div class="card" id="teacherReply">BAINT AI will respond here...</div>
       </div>
 
@@ -156,53 +195,95 @@ button.mic { background: #10b981; margin-left: 8px; }
 
 <script>
 
-/* EXPANDED KNOWLEDGE SYSTEM */
+const appLauncher = document.getElementById("app-launcher");
+const bootScreen = document.getElementById("boot");
+const demoScreen = document.getElementById("demo");
+const bootLog = document.getElementById("boot-log");
+
+const bootLines = [
+  "Initializing BAINT OS...",
+  "Loading AI Classroom Engine...",
+  "Starting Learning System...",
+  "Ready."
+];
+
+/* EXPANDED DATA (SAFE + NON-BREAKING) */
 const data = {
   biology: {
-    photosynthesis: "Plants convert sunlight into glucose using chlorophyll.",
-    cell: "Cell is the basic unit of life with nucleus, membrane and cytoplasm.",
-    dna: "DNA carries genetic information in all living organisms."
+    photosynthesis: "Plants convert sunlight into energy using chlorophyll.",
+    cell: "Cell is the basic unit of life.",
+    dna: "DNA carries genetic information."
   },
-
   history: {
-    revolution: "French Revolution changed monarchy into democracy structure.",
-    worldwar: "World War shaped modern global politics and alliances."
+    revolution: "French Revolution changed political systems in Europe.",
+    war: "World wars shaped modern global history."
   },
-
   science: {
-    gravity: "Gravity is a force that pulls objects toward Earth.",
-    energy: "Energy cannot be created or destroyed, only transformed."
+    gravity: "Gravity pulls objects toward Earth.",
+    energy: "Energy transforms but is never destroyed."
   },
-
   math: {
-    algebra: "Algebra uses symbols to represent numbers in equations.",
-    geometry: "Geometry studies shapes, angles and spatial relationships."
+    algebra: "Algebra uses symbols to solve equations.",
+    geometry: "Geometry studies shapes and angles."
   },
-
   computer: {
-    ai: "AI enables machines to simulate human intelligence.",
-    internet: "Internet connects millions of computers globally."
+    ai: "AI allows machines to think and learn.",
+    internet: "Internet connects the world digitally."
   }
 };
 
-/* INIT TOPICS */
+/* LAUNCH FIXED */
+function launchDemo(){
+  appLauncher.style.display="none";
+  bootScreen.style.display="block";
+
+  let i=0;
+
+  function runBoot(){
+    if(i < bootLines.length){
+      bootLog.innerHTML += bootLines[i] + "<br>";
+      i++;
+      setTimeout(runBoot, 500);
+    } else {
+      setTimeout(()=>{
+        bootScreen.style.display="none";
+        demoScreen.style.display="block";
+        updateTopics();
+        updateContent();
+      }, 500);
+    }
+  }
+
+  runBoot();
+}
+
+/* FIXED TOPICS (CRITICAL FIX) */
 function updateTopics(){
   const subject=document.getElementById("subject").value;
   const topic=document.getElementById("topic");
+
   topic.innerHTML="";
 
-  Object.keys(data[subject]).forEach(t=>{
+  const keys = Object.keys(data[subject]);
+
+  keys.forEach(t=>{
     let opt=document.createElement("option");
     opt.value=t;
     opt.innerText=t;
     topic.appendChild(opt);
   });
+
+  topic.value = keys[0]; // IMPORTANT FIX
+  updateContent();
 }
 
-/* CONTENT */
+/* SAFE CONTENT */
 function updateContent(){
   const s=document.getElementById("subject").value;
   const t=document.getElementById("topic").value;
+
+  if(!data[s] || !data[s][t]) return;
+
   document.getElementById("explanation").innerText =
   "BAINT AI Classroom Assistant\n\n" + data[s][t];
 }
@@ -225,13 +306,16 @@ ${data[s][t]}`;
 /* FEEDBACK */
 function submitFeedback(){
   const f=document.getElementById("feedbackInput").value;
+
   let list=JSON.parse(localStorage.getItem("baint_feedback"))||[];
   list.push(f);
   localStorage.setItem("baint_feedback",JSON.stringify(list));
-  document.getElementById("feedbackList").innerHTML=list.map(x=>"• "+x).join("<br>");
+
+  document.getElementById("feedbackList").innerHTML =
+  list.map(x=>"• "+x).join("<br>");
 }
 
-/* WAITLIST (MAILTO FIX INCLUDED) */
+/* WAITLIST (FIXED MAILTO) */
 function joinWaitlist(){
   const email=document.getElementById("waitlistEmail").value;
 
@@ -239,15 +323,12 @@ function joinWaitlist(){
   list.push(email);
   localStorage.setItem("baint_waitlist",JSON.stringify(list));
 
-  window.location.href=
+  window.location.href =
   `mailto:baintcomputer@gmail.com?subject=BAINT Waitlist&body=New signup: ${email}`;
 
   document.getElementById("waitlistMessage").innerText =
   "You're on the waitlist!";
 }
-
-/* INIT */
-updateTopics();
 
 </script>
 
