@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>BAINT OS – Classroom Assistant Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -89,319 +90,166 @@ button.mic { background: #10b981; margin-left: 8px; }
   display: none;
   text-align: center;
 }
-.disclaimer {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 6px;
-}
 </style>
 </head>
+
 <body>
 
 <div class="laptop">
   <div class="top-bar">BAINT OS — Classroom Assistant Demo</div>
+
   <div class="screen-shell">
 
-    <!-- APP LAUNCHER -->
-<div id="app-launcher" class="section">
-  <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
-  <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
-  <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
-</div>
-
-    <!-- BOOT SCREEN -->
-    <div class="section" id="boot" style="display:none;">
-      <div style="background:#111;color:#0f0;font-family:monospace;height:100%;padding:20px;overflow-y:auto;">
-        <div id="boot-log"></div>
-      </div>
+    <div id="app-launcher" class="section">
+      <img src="logo.png" style="width:120px;height:120px;margin-bottom:12px;">
+      <h3 onclick="launchDemo()" style="cursor:pointer;">Click to Launch BAINT Classroom Demo</h3>
     </div>
 
-    <!-- DEMO -->
     <div id="demo" style="display:none;">
 
-      <!-- ROLE & LANGUAGE -->
+      <!-- SUBJECTS -->
       <div class="section">
-        <h4>Role & Language</h4>
-        <select id="role" onchange="updateContent()">
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
-        </select>
-        <select id="language" onchange="updateContent()">
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
-          <option value="zh">Chinese</option>
-          <option value="fr">French</option>
-        </select>
-      </div>
-
-      <!-- LEARNING CONTEXT -->
-      <div class="section">
-        <h4>Learning Context</h4>
+        <h4>Learning Subjects</h4>
         <select id="subject" onchange="updateTopics(); updateContent();">
           <option value="biology">Biology</option>
           <option value="history">History</option>
-          <option value="science">General Science</option>
+          <option value="science">Science</option>
+          <option value="math">Mathematics</option>
+          <option value="computer">Computer Science</option>
         </select>
+
         <select id="topic" onchange="updateContent()"></select>
       </div>
 
-      <!-- GUIDED EXPLANATION -->
+      <!-- EXPLANATION -->
       <div class="section">
-        <h4>Teacher Explanation</h4>
-        <div class="card" id="explanation">Select a subject and topic to see the explanation.</div>
-        <br>
-        <button onclick="speak()">▶ Teacher Voice Explainer</button>
-        <button onclick="stopVoice()">⏹ Stop</button>
+        <h4>BAINT AI Classroom Assistant</h4>
+        <div class="card" id="explanation"></div>
       </div>
 
-      <!-- STUDENT QUESTION -->
+      <!-- QUESTION -->
       <div class="section">
-        <h4>Student Question</h4>
-        <input type="text" id="studentQuestion" placeholder="Ask your question..." />
-        <button class="mic" onclick="askWithMic()">🎙️</button>
+        <input type="text" id="studentQuestion" placeholder="Ask BAINT AI..." />
         <button onclick="answerQuestion()">Ask</button>
-        <div class="card" id="teacherReply">Teacher will reply here...</div>
-        <button onclick="speakReply()">▶ Listen Reply</button>
+        <div class="card" id="teacherReply">BAINT AI will respond here...</div>
       </div>
 
       <!-- FEEDBACK -->
       <div class="section">
         <h4>Feedback</h4>
-        <input type="text" id="feedbackInput" placeholder="Share your feedback..." />
+        <input type="text" id="feedbackInput" />
         <button onclick="submitFeedback()">Submit</button>
-        <div class="card" id="feedbackList">Feedback will appear here...</div>
-      </div>
-
-      <!-- PROBLEM SOLVING -->
-      <div class="section">
-        <h4>What Problem Does This Solve?</h4>
-        <div class="card" id="problem-solving"></div>
+        <div class="card" id="feedbackList"></div>
       </div>
 
       <!-- WAITLIST -->
       <div class="section waitlist">
-        <h4>🚀 Join the BAINT Waitlist</h4>
-        <p style="font-size:13px;">Human-centric AI supporting teachers and students.</p>
-        <input type="email" id="waitlistEmail" placeholder="your@email.com" />
+        <h4>Join BAINT Waitlist</h4>
+        <input type="email" id="waitlistEmail" />
         <button onclick="joinWaitlist()">Join</button>
         <div id="waitlistMessage" class="success"></div>
       </div>
 
     </div>
-
   </div>
 </div>
 
-<div class="subtitles" id="subtitles"></div>
-
 <script>
-/* APP LAUNCH → BOOT → DEMO */
-const appLauncher = document.getElementById("app-launcher");
-const bootScreen = document.getElementById("boot");
-const demoScreen = document.getElementById("demo");
-const bootLog = document.getElementById("boot-log");
 
-function launchDemo() {
-  appLauncher.style.display = "none";
-  bootScreen.style.display = "block";
-  startBootSequence();
-}
-
-const bootLines = [
-  "Initializing BAINT OS...",
-  "Loading Human-Centric AI modules...",
-  "Activating Classroom Assistant...",
-  "System ready!"
-];
-
-let bootIndex = 0;
-function startBootSequence() {
-  if (bootIndex < bootLines.length) {
-    bootLog.innerHTML += bootLines[bootIndex] + "<br>";
-    bootIndex++;
-    setTimeout(startBootSequence, 600);
-  } else {
-    setTimeout(() => {
-      bootScreen.style.display = "none";
-      demoScreen.style.display = "block";
-      updateTopics();
-      updateContent();
-    }, 800);
-  }
-}
-
-/* DEMO DATA WITH DEFINITIONS & EXAMPLES */
+/* EXPANDED KNOWLEDGE SYSTEM */
 const data = {
   biology: {
-    definition: {
-      en: "Biology is the study of living organisms, their structure, function, growth, origin, evolution, and distribution. Step-by-step, we explore cells, tissues, organs, and systems.",
-      es: "La biología es el estudio de los organismos vivos, su estructura, función, crecimiento, origen, evolución y distribución. Exploramos células, tejidos, órganos y sistemas paso a paso.",
-      zh: "生物学是研究生物体的学科，包括其结构、功能、成长、起源、进化和分布。逐步探索细胞、组织、器官和系统。",
-      fr: "La biologie est l'étude des organismes vivants, leur structure, fonction, croissance, origine, évolution et répartition. Étape par étape, nous explorons cellules, tissus, organes et systèmes."
-    },
-    photosynthesis: {
-      teacher: {
-        en:"Teacher explains Photosynthesis: Plants convert sunlight into chemical energy. Step-by-step explanation with examples and diagrams.",
-        es:"El maestro explica la fotosíntesis: las plantas convierten la luz solar en energía química. Explicación paso a paso con ejemplos y diagramas.",
-        zh:"老师讲解光合作用：植物将阳光转化为化学能。逐步解释并附示例和图示。",
-        fr:"Le professeur explique la photosynthèse : les plantes transforment la lumière du soleil en énergie chimique. Explication étape par étape avec exemples et diagrammes."
-      },
-      student: {
-        en:"Student observes Photosynthesis step-by-step and takes notes for understanding.",
-        es:"El estudiante observa la fotosíntesis paso a paso y toma notas para comprender.",
-        zh:"学生观察光合作用步骤并做笔记以理解。",
-        fr:"L'étudiant observe la photosynthèse étape par étape et prend des notes pour comprendre."
-      }
-    }
+    photosynthesis: "Plants convert sunlight into glucose using chlorophyll.",
+    cell: "Cell is the basic unit of life with nucleus, membrane and cytoplasm.",
+    dna: "DNA carries genetic information in all living organisms."
   },
+
   history: {
-    definition: {
-      en:"History is the study of past events, societies, and civilizations, helping us understand human development step by step.",
-      es:"La historia es el estudio de eventos pasados, sociedades y civilizaciones, ayudándonos a entender el desarrollo humano paso a paso.",
-      zh:"历史是研究过去事件、社会和文明，帮助我们逐步理解人类发展。",
-      fr:"L'histoire est l'étude des événements passés, des sociétés et des civilisations, nous aidant à comprendre le développement humain étape par étape."
-    },
-    revolution: {
-      teacher: {
-        en:"Teacher explains French Revolution: End of monarchy, rise of equality, step-by-step changes with causes & effects.",
-        es:"El maestro explica la Revolución Francesa: fin de la monarquía, auge de la igualdad, cambios paso a paso con causas y efectos.",
-        zh:"老师讲解法国大革命：结束君主制，平等兴起，逐步变化，附因果分析。",
-        fr:"Le professeur explique la Révolution française : fin de la monarchie, émergence de l'égalité, changements étape par étape avec causes et effets."
-      },
-      student: {
-        en:"Student observes French Revolution step by step and notes causes and effects.",
-        es:"El estudiante observa la Revolución Francesa paso a paso y toma notas de causas y efectos.",
-        zh:"学生观察法国大革命步骤并记录原因与结果。",
-        fr:"L'étudiant observe la Révolution française étape par étape et note causes et effets."
-      }
-    }
+    revolution: "French Revolution changed monarchy into democracy structure.",
+    worldwar: "World War shaped modern global politics and alliances."
+  },
+
+  science: {
+    gravity: "Gravity is a force that pulls objects toward Earth.",
+    energy: "Energy cannot be created or destroyed, only transformed."
+  },
+
+  math: {
+    algebra: "Algebra uses symbols to represent numbers in equations.",
+    geometry: "Geometry studies shapes, angles and spatial relationships."
+  },
+
+  computer: {
+    ai: "AI enables machines to simulate human intelligence.",
+    internet: "Internet connects millions of computers globally."
   }
 };
 
-/* DOM ELEMENTS */
-const explanationBox = document.getElementById("explanation");
-const teacherReplyBox = document.getElementById("teacherReply");
-const feedbackList = document.getElementById("feedbackList");
-const subtitles = document.getElementById("subtitles");
-
-/* TOPICS */
+/* INIT TOPICS */
 function updateTopics(){
-  const subject = document.getElementById("subject").value;
-  const topicSelect = document.getElementById("topic");
-  topicSelect.innerHTML="";
-  Object.keys(data[subject]).filter(t=>t!=="definition").forEach(t=>{
-    let o=document.createElement("option");
-    o.value=t;
-    o.innerText=t.charAt(0).toUpperCase()+t.slice(1);
-    topicSelect.appendChild(o);
+  const subject=document.getElementById("subject").value;
+  const topic=document.getElementById("topic");
+  topic.innerHTML="";
+
+  Object.keys(data[subject]).forEach(t=>{
+    let opt=document.createElement("option");
+    opt.value=t;
+    opt.innerText=t;
+    topic.appendChild(opt);
   });
 }
 
 /* CONTENT */
 function updateContent(){
-  const subject=document.getElementById("subject").value;
-  const topic=document.getElementById("topic").value;
-  const role=document.getElementById("role").value;
-  const lang=document.getElementById("language").value;
-  const def = data[subject].definition[lang];
-  explanationBox.innerText=`${def}\n\nTopic Explanation:\n${data[subject][topic][role][lang]}`;
-  document.getElementById("problem-solving").innerHTML=
-    `• Understands topic step-by-step<br>`+
-    `• ${role==="teacher"?"Supports teaching guidance":"Observes learning clearly"}<br>`+
-    `• Reduces confusion<br>`+
-    `• Human-in-control education<br>`+
-    `• Structured & example-driven explanations`;
+  const s=document.getElementById("subject").value;
+  const t=document.getElementById("topic").value;
+  document.getElementById("explanation").innerText =
+  "BAINT AI Classroom Assistant\n\n" + data[s][t];
 }
 
-/* VOICE */
-let utterance=null;
-function speak(){
-  stopVoice();
-  const text=explanationBox.innerText;
-  subtitles.innerText=text;
-  subtitles.style.display="block";
-  utterance=new SpeechSynthesisUtterance(text);
-  utterance.rate=0.9;
-  utterance.onend=()=>subtitles.style.display="none";
-  speechSynthesis.speak(utterance);
-}
-function stopVoice(){ speechSynthesis.cancel(); subtitles.style.display="none"; }
-
-/* STUDENT QUESTION */
+/* QUESTION */
 function answerQuestion(){
-  const q=document.getElementById("studentQuestion").value.trim();
-  if(!q) return;
-  const subject=document.getElementById("subject").value;
-  const topic=document.getElementById("topic").value;
-  const role="teacher";
-  const lang=document.getElementById("language").value;
-  teacherReplyBox.innerText=`Student asked: "${q}"\n\nStep-by-step answer:\n${data[subject][topic][role][lang]}`;
-  speakReply();
-  document.getElementById("studentQuestion").value="";
-}
-function speakReply(){
-  stopVoice();
-  const text=teacherReplyBox.innerText;
-  subtitles.innerText=text;
-  subtitles.style.display="block";
-  utterance=new SpeechSynthesisUtterance(text);
-  utterance.rate=0.9;
-  utterance.onend=()=>subtitles.style.display="none";
-  speechSynthesis.speak(utterance);
-}
+  const q=document.getElementById("studentQuestion").value;
+  const s=document.getElementById("subject").value;
+  const t=document.getElementById("topic").value;
 
-/* MIC INPUT */
-function askWithMic(){
-  if(!navigator.mediaDevices || !window.SpeechRecognition && !window.webkitSpeechRecognition){
-    alert("Speech Recognition not supported.");
-    return;
-  }
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang=document.getElementById("language").value;
-  recognition.start();
-  recognition.onresult = (event)=>{
-    const spoken = event.results[0][0].transcript;
-    document.getElementById("studentQuestion").value = spoken;
-    answerQuestion();
-  };
+  document.getElementById("teacherReply").innerText =
+`BAINT AI RESPONSE
+
+Question: ${q}
+
+Answer:
+${data[s][t]}`;
 }
 
 /* FEEDBACK */
 function submitFeedback(){
-  const feedback=document.getElementById("feedbackInput").value.trim();
-  if(!feedback) return;
+  const f=document.getElementById("feedbackInput").value;
   let list=JSON.parse(localStorage.getItem("baint_feedback"))||[];
-  list.push({feedback,date:new Date().toISOString()});
+  list.push(f);
   localStorage.setItem("baint_feedback",JSON.stringify(list));
-  document.getElementById("feedbackInput").value="";
-  renderFeedback();
-}
-function renderFeedback(){
-  const list=JSON.parse(localStorage.getItem("baint_feedback"))||[];
-  feedbackList.innerHTML=list.map(f=>`• ${f.feedback}`).join("<br>");
+  document.getElementById("feedbackList").innerHTML=list.map(x=>"• "+x).join("<br>");
 }
 
-/* WAITLIST */
+/* WAITLIST (MAILTO FIX INCLUDED) */
 function joinWaitlist(){
-  const email=document.getElementById("waitlistEmail").value.trim();
-  const msg=document.getElementById("waitlistMessage");
-  if(!email || !email.includes("@")){
-    msg.style.color="red";
-    msg.innerText="Please enter a valid email.";
-    return;
-  }
+  const email=document.getElementById("waitlistEmail").value;
+
   let list=JSON.parse(localStorage.getItem("baint_waitlist"))||[];
-  list.push({email,date:new Date().toISOString()});
+  list.push(email);
   localStorage.setItem("baint_waitlist",JSON.stringify(list));
-  window.location.href=`mailto:baintcomputer@gmail.com?subject=BAINT Waitlist Signup&body=New signup: ${email}`;
-  msg.style.color="#047857";
-  msg.innerText="You're on the waitlist. Thanks!";
+
+  window.location.href=
+  `mailto:baintcomputer@gmail.com?subject=BAINT Waitlist&body=New signup: ${email}`;
+
+  document.getElementById("waitlistMessage").innerText =
+  "You're on the waitlist!";
 }
 
 /* INIT */
 updateTopics();
-updateContent();
-renderFeedback();
+
 </script>
+
 </body>
 </html>
