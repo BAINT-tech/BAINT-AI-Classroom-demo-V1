@@ -131,8 +131,7 @@ button.mic { background: #10b981; margin-left: 8px; }
   <div class="screen-shell">
 
     <!-- LAUNCH -->
-    <div id="app-launcher" class="section">
-      <img src="logo.png" style="width:120px;height:120px;margin-bottom:12px;">
+    
       <h3 onclick="launchDemo()" style="cursor:pointer;">
         Click to Launch BAINT Classroom Demo
       </h3>
@@ -142,7 +141,11 @@ button.mic { background: #10b981; margin-left: 8px; }
     <!-- BOOT -->
     <div class="section" id="boot" style="display:none;">
       <div style="background:#111;color:#0f0;font-family:monospace;padding:20px;">
-        <div id="boot-log"></div>
+  <div id="app-launcher" class="section">
+  <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
+  <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
+  </div>
+       <div id="boot-log"></div>
       </div>
     </div>
 
