@@ -50,10 +50,7 @@ body {
 
 .section { margin-bottom: 20px; }
 
-.section h4 {
-  margin: 0 0 8px;
-  font-size: 15px;
-}
+.section h4 { margin: 0 0 8px; font-size: 15px; }
 
 select, input {
   padding: 8px 10px;
@@ -117,6 +114,12 @@ button.mic { background: #10b981; margin-left: 8px; }
   display: none;
   text-align: center;
 }
+
+.disclaimer {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 6px;
+}
 </style>
 </head>
 
@@ -133,6 +136,10 @@ button.mic { background: #10b981; margin-left: 8px; }
       <h3 onclick="launchDemo()" style="cursor:pointer;">
         Click to Launch BAINT Classroom Demo
       </h3>
+
+      <div class="disclaimer">
+        ⚠️ Human-in-the-loop AI system. Teachers remain in control of learning outcomes.
+      </div>
     </div>
 
     <!-- BOOT -->
@@ -145,9 +152,17 @@ button.mic { background: #10b981; margin-left: 8px; }
     <!-- DEMO -->
     <div id="demo" style="display:none;">
 
-      <!-- SUBJECT -->
+      <!-- SUBJECT + LANGUAGE -->
       <div class="section">
-        <h4>Learning Subjects</h4>
+        <h4>Learning Setup</h4>
+
+        <select id="language">
+          <option value="en">English</option>
+          <option value="zh">Chinese</option>
+          <option value="fr">French</option>
+          <option value="es">Spanish</option>
+        </select>
+
         <select id="subject" onchange="updateTopics(); updateContent();">
           <option value="biology">Biology</option>
           <option value="history">History</option>
@@ -163,6 +178,9 @@ button.mic { background: #10b981; margin-left: 8px; }
       <div class="section">
         <h4>BAINT AI Classroom Assistant</h4>
         <div class="card" id="explanation"></div>
+
+        <button onclick="speak()">🎙️ BAINT Voice Explainer</button>
+        <button onclick="stopVoice()">⏹ Stop Voice</button>
       </div>
 
       <!-- QUESTION -->
@@ -171,6 +189,7 @@ button.mic { background: #10b981; margin-left: 8px; }
         <button onclick="answerQuestion()">Ask</button>
 
         <div class="card" id="teacherReply">BAINT AI will respond here...</div>
+        <button onclick="speakReply()">🔊 Listen Answer</button>
       </div>
 
       <!-- FEEDBACK -->
@@ -193,78 +212,61 @@ button.mic { background: #10b981; margin-left: 8px; }
   </div>
 </div>
 
+<div class="subtitles" id="subtitles"></div>
+
 <script>
 
-const appLauncher = document.getElementById("app-launcher");
-const bootScreen = document.getElementById("boot");
-const demoScreen = document.getElementById("demo");
-const bootLog = document.getElementById("boot-log");
+const appLauncher=document.getElementById("app-launcher");
+const bootScreen=document.getElementById("boot");
+const demoScreen=document.getElementById("demo");
+const bootLog=document.getElementById("boot-log");
 
-const bootLines = [
-  "Initializing BAINT OS...",
-  "Loading AI Classroom Engine...",
-  "Starting Learning System...",
-  "Ready."
+const bootLines=[
+"Booting BAINT AI...",
+"Loading Classroom Engine...",
+"Activating Voice System...",
+"Ready."
 ];
 
-/* EXPANDED DATA (SAFE + NON-BREAKING) */
-const data = {
-  biology: {
-    photosynthesis: "Plants convert sunlight into energy using chlorophyll.",
-    cell: "Cell is the basic unit of life.",
-    dna: "DNA carries genetic information."
-  },
-  history: {
-    revolution: "French Revolution changed political systems in Europe.",
-    war: "World wars shaped modern global history."
-  },
-  science: {
-    gravity: "Gravity pulls objects toward Earth.",
-    energy: "Energy transforms but is never destroyed."
-  },
-  math: {
-    algebra: "Algebra uses symbols to solve equations.",
-    geometry: "Geometry studies shapes and angles."
-  },
-  computer: {
-    ai: "AI allows machines to think and learn.",
-    internet: "Internet connects the world digitally."
-  }
+/* DATA */
+const data={
+  biology:{photosynthesis:"Plants convert sunlight into energy."},
+  history:{revolution:"Revolutions change political systems."},
+  science:{gravity:"Gravity pulls objects downward."},
+  math:{algebra:"Algebra solves unknown values."},
+  computer:{ai:"AI simulates human intelligence."}
 };
 
-/* LAUNCH FIXED */
+/* LAUNCH */
 function launchDemo(){
   appLauncher.style.display="none";
   bootScreen.style.display="block";
 
   let i=0;
-
-  function runBoot(){
-    if(i < bootLines.length){
-      bootLog.innerHTML += bootLines[i] + "<br>";
+  function run(){
+    if(i<bootLines.length){
+      bootLog.innerHTML+=bootLines[i]+"<br>";
       i++;
-      setTimeout(runBoot, 500);
+      setTimeout(run,500);
     } else {
       setTimeout(()=>{
         bootScreen.style.display="none";
         demoScreen.style.display="block";
         updateTopics();
         updateContent();
-      }, 500);
+      },500);
     }
   }
-
-  runBoot();
+  run();
 }
 
-/* FIXED TOPICS (CRITICAL FIX) */
+/* TOPICS */
 function updateTopics(){
   const subject=document.getElementById("subject").value;
   const topic=document.getElementById("topic");
 
   topic.innerHTML="";
-
-  const keys = Object.keys(data[subject]);
+  const keys=Object.keys(data[subject]);
 
   keys.forEach(t=>{
     let opt=document.createElement("option");
@@ -273,19 +275,44 @@ function updateTopics(){
     topic.appendChild(opt);
   });
 
-  topic.value = keys[0]; // IMPORTANT FIX
-  updateContent();
+  topic.value=keys[0];
 }
 
-/* SAFE CONTENT */
+/* CONTENT */
 function updateContent(){
   const s=document.getElementById("subject").value;
   const t=document.getElementById("topic").value;
 
-  if(!data[s] || !data[s][t]) return;
+  document.getElementById("explanation").innerText=
+  "BAINT AI Classroom Assistant\n\n"+data[s][t];
+}
 
-  document.getElementById("explanation").innerText =
-  "BAINT AI Classroom Assistant\n\n" + data[s][t];
+/* VOICE SYSTEM */
+let utterance;
+
+function speak(){
+  stopVoice();
+  const text=document.getElementById("explanation").innerText;
+  document.getElementById("subtitles").style.display="block";
+  document.getElementById("subtitles").innerText=text;
+
+  utterance=new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+}
+
+function speakReply(){
+  stopVoice();
+  const text=document.getElementById("teacherReply").innerText;
+  document.getElementById("subtitles").style.display="block";
+  document.getElementById("subtitles").innerText=text;
+
+  utterance=new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+}
+
+function stopVoice(){
+  speechSynthesis.cancel();
+  document.getElementById("subtitles").style.display="none";
 }
 
 /* QUESTION */
@@ -294,7 +321,7 @@ function answerQuestion(){
   const s=document.getElementById("subject").value;
   const t=document.getElementById("topic").value;
 
-  document.getElementById("teacherReply").innerText =
+  document.getElementById("teacherReply").innerText=
 `BAINT AI RESPONSE
 
 Question: ${q}
@@ -306,16 +333,15 @@ ${data[s][t]}`;
 /* FEEDBACK */
 function submitFeedback(){
   const f=document.getElementById("feedbackInput").value;
-
   let list=JSON.parse(localStorage.getItem("baint_feedback"))||[];
   list.push(f);
   localStorage.setItem("baint_feedback",JSON.stringify(list));
 
-  document.getElementById("feedbackList").innerHTML =
+  document.getElementById("feedbackList").innerHTML=
   list.map(x=>"• "+x).join("<br>");
 }
 
-/* WAITLIST (FIXED MAILTO) */
+/* WAITLIST */
 function joinWaitlist(){
   const email=document.getElementById("waitlistEmail").value;
 
@@ -323,10 +349,10 @@ function joinWaitlist(){
   list.push(email);
   localStorage.setItem("baint_waitlist",JSON.stringify(list));
 
-  window.location.href =
+  window.location.href=
   `mailto:baintcomputer@gmail.com?subject=BAINT Waitlist&body=New signup: ${email}`;
 
-  document.getElementById("waitlistMessage").innerText =
+  document.getElementById("waitlistMessage").innerText=
   "You're on the waitlist!";
 }
 
