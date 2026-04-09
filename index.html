@@ -49,17 +49,6 @@ body {
 }
 
 .section { margin-bottom: 20px; }
-.section h4 { margin: 0 0 8px; font-size: 15px; }
-
-select, input {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-  margin-right: 8px;
-}
-
-input[type="text"], input[type="email"] { width: 60%; }
 
 .card {
   background: #fff;
@@ -68,7 +57,6 @@ input[type="text"], input[type="email"] { width: 60%; }
   border: 1px solid #e5e7eb;
   font-size: 14px;
   line-height: 1.6;
-  min-height: 60px;
 }
 
 button {
@@ -78,213 +66,165 @@ button {
   border-radius: 10px;
   color: #fff;
   cursor: pointer;
-  font-size: 14px;
-  margin-top: 6px;
 }
 
-.waitlist {
-  background: #eef2ff;
-  border: 1px dashed #6366f1;
-  border-radius: 14px;
-  padding: 16px;
-}
-
-.subtitles {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 13px;
-  display: none;
-  text-align: center;
-}
+button.mic { background: #10b981; margin-left: 8px; }
 </style>
 </head>
 
 <body>
 
 <div class="laptop">
-  <div class="top-bar">BAINT OS — Classroom Assistant Demo</div>
+  <div class="top-bar">BAINT OS — Classroom Assistant</div>
 
   <div class="screen-shell">
 
-    <!-- LAUNCH -->
-    <div id="app-launcher" class="section">
-      <h3 onclick="launchDemo()" style="cursor:pointer;">
-        Click to Launch BAINT Classroom Demo
-      </h3>
+    <!-- CONTROLS -->
+    <div class="section">
+      <select id="language">
+        <option value="en">English</option>
+        <option value="th">Thai</option>
+        <option value="ko">Korean</option>
+        <option value="vi">Vietnamese</option>
+      </select>
+
+      <select id="mode">
+        <option value="step">Step-by-step</option>
+        <option value="simple">Simple</option>
+        <option value="logic">Logical</option>
+        <option value="context">Context</option>
+        <option value="human">Human</option>
+      </select>
+
+      <select id="subject" onchange="updateTopics(); updateContent();">
+        <option value="math">Math</option>
+        <option value="science">Science</option>
+        <option value="biology">Biology</option>
+        <option value="history">History</option>
+        <option value="computer">Computer</option>
+      </select>
+
+      <select id="topic" onchange="updateContent()"></select>
     </div>
 
-    <!-- BOOT -->
-    <div id="boot" style="display:none;">
-      <div style="background:#111;color:#0f0;font-family:monospace;padding:20px;">
-        <div id="boot-log"></div>
-      </div>
+    <!-- EXPLANATION -->
+    <div class="card" id="explanation"></div>
+
+    <button onclick="speak()">🔊 Speak</button>
+
+    <!-- QUESTION -->
+    <div class="section">
+      <input type="text" id="studentQuestion" placeholder="Ask question..." style="width:70%;">
+      <button onclick="answerQuestion()">Ask</button>
     </div>
 
-    <!-- DEMO -->
-    <div id="demo" style="display:none;">
+    <div class="card" id="teacherReply">Answer will appear here...</div>
 
-      <!-- SETUP -->
-      <div class="section">
-        <h4>Learning Setup</h4>
+    <button onclick="speakReply()">🔊 Speak Answer</button>
 
-        <select id="language">
-          <option value="en">English</option>
-          <option value="th">Thai</option>
-          <option value="ko">Korean</option>
-          <option value="vi">Vietnamese</option>
-        </select>
-
-        <select id="mode" onchange="updateContent()">
-          <option value="step">Step-by-step</option>
-          <option value="simple">Simple</option>
-          <option value="logic">Logical</option>
-          <option value="context">Context</option>
-          <option value="human">Human</option>
-        </select>
-
-        <select id="subject" onchange="updateTopics(); updateContent();">
-          <option value="biology">Biology</option>
-          <option value="math">Mathematics</option>
-          <option value="science">Science</option>
-        </select>
-
-        <select id="topic" onchange="updateContent()"></select>
-      </div>
-
-      <!-- EXPLANATION -->
-      <div class="section">
-        <h4>BAINT AI</h4>
-        <div class="card" id="explanation"></div>
-        <button onclick="speak()">🎙️ Explain</button>
-      </div>
-
-      <!-- QUESTION -->
-      <div class="section">
-        <input type="text" id="studentQuestion" placeholder="Ask..." />
-        <button onclick="answerQuestion()">Ask</button>
-        <div class="card" id="teacherReply"></div>
-      </div>
-
-    </div>
   </div>
 </div>
-
-<div class="subtitles" id="subtitles"></div>
 
 <script>
 
 /* DATA */
 const data = {
-  biology: {
-    photosynthesis: `Plants use sunlight to make food.`
-  },
-  math: {
-    algebra: `Solve x + 5 = 10 → x = 5`
-  },
-  science: {
-    gravity: `Gravity pulls objects to Earth.`
-  }
+  math: { algebra: "Solve x + 5 = 10 → x = 5" },
+  science: { energy: "Energy is the ability to do work." },
+  biology: { cell: "Cells are building blocks of life." },
+  history: { ww1: "World War 1 started in 1914." },
+  computer: { ai: "AI is machine intelligence." }
 };
 
-/* LAUNCH */
-function launchDemo(){
-  document.getElementById("app-launcher").style.display="none";
-  document.getElementById("boot").style.display="block";
-
-  let logs=["Booting...","Loading AI...","Ready"];
-  let i=0;
-
-  function run(){
-    if(i<logs.length){
-      document.getElementById("boot-log").innerHTML+=logs[i]+"<br>";
-      i++;
-      setTimeout(run,500);
-    } else {
-      document.getElementById("boot").style.display="none";
-      document.getElementById("demo").style.display="block";
-      updateTopics();
-      updateContent();
-    }
-  }
-  run();
-}
-
-/* TOPICS */
+/* INIT TOPICS */
 function updateTopics(){
-  const s=document.getElementById("subject").value;
-  const topic=document.getElementById("topic");
-  topic.innerHTML="";
+  const subject = document.getElementById("subject").value;
+  const topic = document.getElementById("topic");
+  topic.innerHTML = "";
 
-  Object.keys(data[s]).forEach(t=>{
-    let opt=document.createElement("option");
-    opt.value=t;
-    opt.innerText=t;
+  Object.keys(data[subject]).forEach(t=>{
+    let opt = document.createElement("option");
+    opt.value = t;
+    opt.innerText = t;
     topic.appendChild(opt);
   });
+
+  topic.value = Object.keys(data[subject])[0];
 }
 
-/* CONTENT (SMART MODE) */
+/* CONTENT */
 function updateContent(){
-  const s=document.getElementById("subject").value;
-  const t=document.getElementById("topic").value;
-  const mode=document.getElementById("mode").value;
-  const lang=document.getElementById("language").value;
+  const s = document.getElementById("subject").value;
+  const t = document.getElementById("topic").value;
+  const mode = document.getElementById("mode").value;
+  const lang = document.getElementById("language").value;
 
-  let base=data[s][t];
-  let output="";
+  let base = data[s][t];
+  let text = "";
 
-  if(mode==="step") output="Step-by-step:\n"+base;
-  if(mode==="simple") output="Simple:\n"+base;
-  if(mode==="logic") output="Logic:\n"+base;
-  if(mode==="context") output="Real-life:\n"+base;
-  if(mode==="human") output="Think of it like:\n"+base;
+  if(mode==="simple") text = base;
+  else if(mode==="step") text = "Step-by-step:\n" + base;
+  else text = base;
 
-  if(lang==="th") output="คำอธิบาย:\n"+output;
-  if(lang==="ko") output="설명:\n"+output;
-  if(lang==="vi") output="Giải thích:\n"+output;
+  if(lang==="th") text = "คำอธิบาย:\n" + text;
+  if(lang==="ko") text = "설명:\n" + text;
+  if(lang==="vi") text = "Giải thích:\n" + text;
 
-  document.getElementById("explanation").innerText=output;
-}
-
-/* ANSWER */
-function answerQuestion(){
-  const q=document.getElementById("studentQuestion").value;
-  const mode=document.getElementById("mode").value;
-
-  let reply="";
-
-  if(mode==="step") reply="Let’s solve step-by-step";
-  if(mode==="simple") reply="Simple answer";
-  if(mode==="logic") reply="Logical explanation";
-  if(mode==="context") reply="Real-life explanation";
-  if(mode==="human") reply="Think about it this way";
-
-  document.getElementById("teacherReply").innerText=
-`Q: ${q}
-
-${reply}`;
+  document.getElementById("explanation").innerText = text;
 }
 
 /* VOICE */
 function speak(){
-  const text=document.getElementById("explanation").innerText;
-  let u=new SpeechSynthesisUtterance(text);
-
-  let lang=document.getElementById("language").value;
-  u.lang=lang;
-
-  speechSynthesis.speak(u);
-
-  document.getElementById("subtitles").innerText=text;
-  document.getElementById("subtitles").style.display="block";
+  const text = document.getElementById("explanation").innerText;
+  speakText(text);
 }
+
+function speakReply(){
+  const text = document.getElementById("teacherReply").innerText;
+  speakText(text);
+}
+
+function speakText(text){
+  const lang = document.getElementById("language").value;
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  let voiceLang = "en-US";
+  if(lang==="th") voiceLang="th-TH";
+  if(lang==="ko") voiceLang="ko-KR";
+  if(lang==="vi") voiceLang="vi-VN";
+
+  utterance.lang = voiceLang;
+  speechSynthesis.speak(utterance);
+}
+
+/* QUESTION */
+function answerQuestion(){
+  const q = document.getElementById("studentQuestion").value;
+  const s = document.getElementById("subject").value;
+  const t = document.getElementById("topic").value;
+  const mode = document.getElementById("mode").value;
+  const lang = document.getElementById("language").value;
+
+  let base = data[s][t] || "No data";
+  let reply = "";
+
+  if(mode==="step") reply = "Step-by-step:\n" + base;
+  else if(mode==="simple") reply = "Simple:\n" + base;
+  else reply = base;
+
+  if(lang==="th") reply = "คำตอบ:\n" + reply;
+  if(lang==="ko") reply = "답변:\n" + reply;
+  if(lang==="vi") reply = "Câu trả lời:\n" + reply;
+
+  document.getElementById("teacherReply").innerText =
+  `BAINT AI RESPONSE\n\nQuestion: ${q}\n\n${reply}`;
+
+  speakText(reply);
+}
+
+/* START */
+updateTopics();
+updateContent();
 
 </script>
 
