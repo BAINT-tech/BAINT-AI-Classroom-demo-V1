@@ -4,636 +4,172 @@
 <meta charset="UTF-8">
 <title>BAINT OS – Classroom Assistant Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg: #0e0e12;
-  --surface: #16161d;
-  --surface2: #1e1e28;
-  --border: #2a2a38;
-  --accent: #4f6ef7;
-  --accent2: #7c3aed;
-  --green: #10b981;
-  --yellow: #f59e0b;
-  --red: #ef4444;
-  --text: #e8e8f0;
-  --muted: #6b6b80;
-  --mono: 'Space Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
-  background: var(--bg);
-  font-family: var(--sans);
-  color: var(--text);
+  margin: 0;
+  background: #f3f3f3;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
+  height: 100vh;
 }
 
 .laptop {
-  width: 980px;
-  height: 660px;
-  background: #111118;
-  border-radius: 24px;
-  padding: 14px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px #2a2a38;
+  width: 960px;
+  height: 650px;
+  background: #000;
+  border-radius: 28px;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
 }
 
 .top-bar {
-  height: 34px;
-  background: var(--surface);
-  border-radius: 12px 12px 0 0;
+  height: 36px;
+  background: #1c1c1c;
+  border-radius: 18px 18px 0 0;
+  color: #fff;
   display: flex;
   align-items: center;
-  padding: 0 14px;
-  gap: 8px;
-  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.dot { width: 10px; height: 10px; border-radius: 50%; }
-.dot.r { background: #ef4444; }
-.dot.y { background: #f59e0b; }
-.dot.g { background: #10b981; }
-
-.top-bar-title {
+.screen-shell {
   flex: 1;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-
-.screen {
-  flex: 1;
-  background: var(--surface);
-  border-radius: 0 0 14px 14px;
+  background: #f9fafb;
+  border-radius: 0 0 28px 28px;
+  margin-top: 6px;
+  padding: 22px;
   overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
 }
 
-.screen-panel { display: none; padding: 32px; height: 100%; }
-.screen-panel.active { display: flex; flex-direction: column; }
+.section { margin-bottom: 20px; }
+.section h4 { margin: 0 0 8px; font-size: 15px; }
 
-/* INSTALL */
-#screen-install {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 20px;
-  background: radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, var(--surface) 70%);
-}
-
-.install-logo {
-  width: 90px; height: 90px;
-  border-radius: 22px;
-  border: 2px solid var(--border);
-  object-fit: contain;
-  background: var(--surface2);
-  padding: 8px;
-}
-
-.install-title {
-  font-family: var(--mono);
-  font-size: 22px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.02em;
-}
-
-.install-sub {
-  font-size: 13px;
-  color: var(--muted);
-  max-width: 340px;
-  line-height: 1.6;
-}
-
-.trust-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(16,185,129,0.1);
-  border: 1px solid rgba(16,185,129,0.3);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 12px;
-  color: var(--green);
-  font-family: var(--mono);
-}
-
-.btn-install {
-  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
-  border: none;
-  padding: 14px 40px;
-  border-radius: 12px;
-  color: #fff;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: opacity 0.2s, transform 0.1s;
-  box-shadow: 0 4px 20px rgba(79,110,247,0.4);
-}
-.btn-install:hover { opacity: 0.9; transform: translateY(-1px); }
-.btn-install:active { transform: translateY(0); }
-
-/* INSTALLING */
-#screen-installing {
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  text-align: center;
-}
-
-.install-log {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--green);
-  background: #0a0a0f;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px 24px;
-  width: 380px;
-  min-height: 120px;
-  text-align: left;
-  line-height: 2;
-  white-space: pre-wrap;
-}
-
-.progress-bar-wrap {
-  width: 380px;
-  height: 4px;
-  background: var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #4f6ef7, #7c3aed);
-  border-radius: 4px;
-  width: 0%;
-  transition: width 0.4s ease;
-}
-
-/* SIGNUP */
-#screen-signup {
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
-.signup-box {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 32px 36px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.signup-title {
-  font-family: var(--mono);
-  font-size: 16px;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.signup-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
-
-.field-group { display: flex; flex-direction: column; gap: 6px; }
-.field-label { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-
-.field-input {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 14px;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.field-input:focus { border-color: var(--accent); }
-.field-input::placeholder { color: var(--muted); }
-
-.btn-primary {
-  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  color: #fff;
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.btn-primary:hover { opacity: 0.88; }
-
-.skip-link {
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-  cursor: pointer;
-  text-decoration: underline;
-}
-.skip-link:hover { color: var(--text); }
-
-/* BOOT */
-#screen-boot {
-  align-items: center;
-  justify-content: center;
-}
-
-.boot-terminal {
-  background: #050508;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px 28px;
-  width: 440px;
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--green);
-  line-height: 2.2;
-}
-
-.boot-cursor {
-  display: inline-block;
-  width: 8px; height: 14px;
-  background: var(--green);
-  animation: blink 0.8s infinite;
-  vertical-align: middle;
-  margin-left: 2px;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-/* DEMO */
-#screen-demo { padding: 0; display: none; flex-direction: row; height: 100%; }
-#screen-demo.active { display: flex; }
-
-.sidebar {
-  width: 200px;
-  background: var(--bg);
-  border-right: 1px solid var(--border);
-  padding: 20px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 6px 16px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
-}
-
-.sidebar-logo img { width: 28px; height: 28px; border-radius: 6px; }
-.sidebar-logo span {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.sidebar-label {
-  font-size: 10px;
-  font-family: var(--mono);
-  color: var(--muted);
-  padding: 6px 8px 2px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.sidebar-item {
+select, input {
   padding: 8px 10px;
   border-radius: 8px;
-  font-size: 13px;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.sidebar-item:hover { background: var(--surface2); color: var(--text); }
-.sidebar-item.active { background: rgba(79,110,247,0.15); color: var(--accent); }
-
-.user-chip {
-  margin-top: auto;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 12px;
-}
-.user-chip .name { color: var(--text); font-weight: 600; }
-.user-chip .email { color: var(--muted); font-size: 11px; margin-top: 2px; }
-
-.main-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-right: 8px;
 }
 
-.main-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface);
-}
+input[type="text"], input[type="email"] { width: 60%; }
 
-.selects-row { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
-
-.baint-select {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 7px 10px;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 13px;
-  outline: none;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-.baint-select:focus { border-color: var(--accent); }
-
-.chat-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.msg {
-  display: flex;
-  gap: 10px;
-  max-width: 88%;
-  animation: fadeUp 0.25s ease;
-}
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(8px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.msg.user { align-self: flex-end; flex-direction: row-reverse; }
-
-.msg-avatar {
-  width: 30px; height: 30px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.msg.ai .msg-avatar { background: rgba(79,110,247,0.2); }
-.msg.user .msg-avatar { background: rgba(124,58,237,0.2); }
-
-.msg-bubble {
-  background: var(--surface2);
-  border: 1px solid var(--border);
+.card {
+  background: #fff;
   border-radius: 14px;
-  padding: 12px 15px;
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--text);
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 60px;
   white-space: pre-wrap;
 }
-.msg.user .msg-bubble {
-  background: rgba(79,110,247,0.12);
-  border-color: rgba(79,110,247,0.25);
-}
 
-.state-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  font-family: var(--mono);
-  padding: 2px 8px;
-  border-radius: 20px;
-  margin-bottom: 6px;
-}
-.state-confused   { background: rgba(245,158,11,0.15); color: #f59e0b; border:1px solid rgba(245,158,11,0.3); }
-.state-curious    { background: rgba(79,110,247,0.15); color: #4f6ef7; border:1px solid rgba(79,110,247,0.3); }
-.state-frustrated { background: rgba(239,68,68,0.15);  color: #ef4444; border:1px solid rgba(239,68,68,0.3); }
-.state-clear      { background: rgba(16,185,129,0.15); color: #10b981; border:1px solid rgba(16,185,129,0.3); }
-.state-neutral    { background: rgba(107,107,128,0.15);color: var(--muted); border:1px solid var(--border); }
-
-.quick-replies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 8px;
-}
-.qr-btn {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 6px 13px;
-  font-size: 12px;
-  color: var(--text);
-  cursor: pointer;
-  font-family: var(--sans);
-  transition: all 0.15s;
-}
-.qr-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(79,110,247,0.08); }
-
-.input-bar {
-  padding: 14px 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background: var(--surface);
-}
-
-.chat-input {
-  flex: 1;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 14px;
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.chat-input:focus { border-color: var(--accent); }
-.chat-input::placeholder { color: var(--muted); }
-
-.btn-send {
-  background: linear-gradient(135deg, #4f6ef7, #7c3aed);
+button {
+  background: #2563eb;
   border: none;
+  padding: 10px 18px;
   border-radius: 10px;
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  font-size: 16px;
   color: #fff;
-}
-.btn-send:hover { opacity: 0.85; }
-
-.btn-voice {
-  background: rgba(16,185,129,0.15);
-  border: 1px solid rgba(16,185,129,0.3);
-  border-radius: 10px;
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  font-size: 16px;
-  transition: all 0.15s;
+  font-size: 14px;
+  margin-top: 6px;
 }
-.btn-voice:hover { background: rgba(16,185,129,0.25); }
 
-.typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
-.typing-dot {
-  width: 6px; height: 6px;
-  background: var(--muted);
-  border-radius: 50%;
-  animation: typingBounce 1.2s infinite;
+.waitlist {
+  background: #eef2ff;
+  border: 1px dashed #6366f1;
+  border-radius: 14px;
+  padding: 16px;
 }
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingBounce {
-  0%,60%,100% { transform: translateY(0); opacity:0.4; }
-  30% { transform: translateY(-5px); opacity:1; }
-}
+
+.success { color: #047857; font-size: 13px; margin-top: 8px; }
 
 .subtitles {
   position: fixed;
-  bottom: 20px; left: 50%;
+  bottom: 20px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 70%;
-  background: rgba(0,0,0,0.85);
+  width: 80%;
+  background: rgba(0,0,0,0.8);
   color: #fff;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-size: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13px;
   display: none;
   text-align: center;
-  font-family: var(--sans);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.disclaimer { font-size: 12px; color: #6b7280; margin-top: 6px; }
+
+/* ── NEW: Response option buttons ── */
+.reply-options {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.reply-options button {
+  background: #f3f4f6;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 20px;
+  margin-top: 0;
+  cursor: pointer;
+}
+.reply-options button:hover { background: #2563eb; color: #fff; }
+
+/* ── NEW: State badge ── */
+.state-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+.state-confused  { background: #fef3c7; color: #92400e; }
+.state-curious   { background: #dbeafe; color: #1e40af; }
+.state-neutral   { background: #f3f4f6; color: #374151; }
 </style>
 </head>
+
 <body>
 
 <div class="laptop">
-  <div class="top-bar">
-    <div class="dot r"></div>
-    <div class="dot y"></div>
-    <div class="dot g"></div>
-    <div class="top-bar-title">BAINT OS — Classroom Assistant Demo</div>
-  </div>
+  <div class="top-bar">BAINT OS — Classroom Assistant Demo</div>
+  <div class="screen-shell">
 
-  <div class="screen">
-
-    <!-- INSTALL -->
-    <div id="screen-install" class="screen-panel active">
-      <img src="logo.png" class="install-logo" alt="BAINT">
-      <div class="install-title">BAINT OS</div>
-      <div class="install-sub">An adaptive AI classroom assistant that understands how you learn — not just what you ask.</div>
-      <div class="trust-badge">🔒 Demo only · No data stored · Explore freely</div>
-      <button class="btn-install" onclick="startInstall()">⬇ Install Demo</button>
-    </div>
-
-    <!-- INSTALLING -->
-    <div id="screen-installing" class="screen-panel">
-      <div style="font-family:var(--mono);font-size:13px;color:var(--muted);">Installing BAINT OS...</div>
-      <div class="install-log" id="install-log"></div>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="progress-fill"></div>
-      </div>
-    </div>
-
-    <!-- SIGNUP -->
-    <div id="screen-signup" class="screen-panel">
-      <div class="signup-box">
-        <div class="signup-title">// Create your profile</div>
-        <div class="signup-sub">This is a demo. Your info stays local — no accounts, no servers.</div>
-        <div class="field-group">
-          <div class="field-label">NAME</div>
-          <input class="field-input" id="signup-name" placeholder="e.g. Alex" />
-        </div>
-        <div class="field-group">
-          <div class="field-label">EMAIL</div>
-          <input class="field-input" id="signup-email" type="email" placeholder="e.g. alex@school.com" />
-        </div>
-        <div class="field-group">
-          <div class="field-label">LANGUAGE</div>
-          <select class="field-input baint-select" id="signup-lang" style="width:100%">
-            <option value="en">🇺🇸 English</option>
-            <option value="zh">🇨🇳 Chinese</option>
-            <option value="fr">🇫🇷 French</option>
-            <option value="es">🇪🇸 Spanish</option>
-            <option value="th">🇹🇭 Thai</option>
-            <option value="ko">🇰🇷 Korean</option>
-            <option value="vi">🇻🇳 Vietnamese</option>
-          </select>
-        </div>
-        <button class="btn-primary" onclick="completeSignup()">Enter BAINT OS →</button>
-        <div class="skip-link" onclick="skipSignup()">Skip for now</div>
-      </div>
+    <!-- LAUNCH -->
+    <div id="app-launcher" class="section">
+      <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
+      <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
+      <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
     </div>
 
     <!-- BOOT -->
-    <div id="screen-boot" class="screen-panel">
-      <div class="boot-terminal" id="boot-terminal">
-        <span class="boot-cursor"></span>
+    <div class="section" id="boot" style="display:none;">
+      <div style="background:#111;color:#0f0;font-family:monospace;padding:20px;">
+        <div id="boot-log"></div>
       </div>
     </div>
 
     <!-- DEMO -->
-    <div id="screen-demo" class="screen-panel">
-      <div class="sidebar">
-        <div class="sidebar-logo">
-          <img src="logo.png" alt="BAINT">
-          <span>BAINT OS</span>
-        </div>
-        <div class="sidebar-label">Subject</div>
-        <div class="sidebar-item active" id="sb-biology"  onclick="setSub('biology')">🧬 Biology</div>
-        <div class="sidebar-item"        id="sb-history"  onclick="setSub('history')">📜 History</div>
-        <div class="sidebar-item"        id="sb-science"  onclick="setSub('science')">🔬 Science</div>
-        <div class="sidebar-item"        id="sb-math"     onclick="setSub('math')">📐 Math</div>
-        <div class="sidebar-item"        id="sb-computer" onclick="setSub('computer')">💻 Computer Sci</div>
-        <div class="sidebar-label" style="margin-top:8px;">Language</div>
-        <select class="baint-select" id="demo-lang" onchange="switchLang()" style="width:100%;margin:0 2px;">
+    <div id="demo" style="display:none;">
+
+      <div class="section">
+        <h4 id="label-setup">Learning Setup</h4>
+
+        <select id="language" onchange="switchLanguage()">
           <option value="en">🇺🇸 English</option>
           <option value="zh">🇨🇳 Chinese</option>
           <option value="fr">🇫🇷 French</option>
@@ -642,207 +178,204 @@ body {
           <option value="ko">🇰🇷 Korean</option>
           <option value="vi">🇻🇳 Vietnamese</option>
         </select>
-        <div class="user-chip">
-          <div class="name" id="chip-name">Guest</div>
-          <div class="email" id="chip-email">demo mode</div>
-        </div>
+
+        <select id="mode" onchange="updateContent()">
+          <option value="step">Step-by-step</option>
+          <option value="simple">Simple</option>
+          <option value="logic">Logical</option>
+          <option value="context">Context</option>
+          <option value="human">Human</option>
+        </select>
+
+        <select id="subject" onchange="updateTopics(); updateContent();">
+          <option value="biology">Biology</option>
+          <option value="history">History</option>
+          <option value="science">Science</option>
+          <option value="math">Mathematics</option>
+          <option value="computer">Computer Science</option>
+        </select>
+
+        <select id="topic" onchange="updateContent()"></select>
       </div>
 
-      <div class="main-area">
-        <div class="main-header">
-          <div class="selects-row">
-            <select class="baint-select" id="demo-topic" onchange="loadTopic()"></select>
-            <select class="baint-select" id="demo-mode" onchange="loadTopic()">
-              <option value="step">Step-by-step</option>
-              <option value="simple">Simple</option>
-              <option value="logic">Logical</option>
-              <option value="context">Context</option>
-              <option value="human">Human</option>
-            </select>
-          </div>
-          <button class="btn-voice" onclick="speakLast()" title="Listen">🔊</button>
-        </div>
-        <div class="chat-area" id="chat-area"></div>
-        <div class="input-bar">
-          <input class="chat-input" id="chat-input"
-            placeholder="Ask BAINT AI anything..."
-            onkeydown="if(event.key==='Enter') sendMessage()" />
-          <button class="btn-voice" onclick="speakLast()">🎙️</button>
-          <button class="btn-send" onclick="sendMessage()">➤</button>
-        </div>
+      <div class="section">
+        <h4 id="label-assistant">BAINT AI Classroom Assistant</h4>
+        <div class="card" id="explanation"></div>
+        <button id="btn-speak" onclick="speak()">🎙️ BAINT Voice Explainer</button>
+        <button id="btn-stop" onclick="stopVoice()">⏹ Stop Voice</button>
       </div>
+
+      <div class="section">
+        <input type="text" id="studentQuestion" placeholder="Ask BAINT AI..." />
+        <button id="btn-ask" onclick="answerQuestion()">Ask</button>
+        <div class="card" id="teacherReply"></div>
+        <!-- NEW: option buttons appear here after answer -->
+        <div class="reply-options" id="replyOptions" style="display:none;">
+          <button onclick="applyStyle('simple')">1. Simple way</button>
+          <button onclick="applyStyle('step')">2. Step-by-step</button>
+          <button onclick="applyStyle('context')">3. Example</button>
+        </div>
+        <button id="btn-listen" onclick="speakReply()">🔊 Listen Answer</button>
+      </div>
+
+      <div class="section">
+        <h4 id="label-feedback">Feedback</h4>
+        <input type="text" id="feedbackInput" />
+        <button id="btn-feedback" onclick="submitFeedback()">Submit</button>
+        <div class="card" id="feedbackList"></div>
+      </div>
+
+      <div class="section waitlist">
+        <h4 id="label-waitlist">Join BAINT Waitlist</h4>
+        <input type="email" id="waitlistEmail" />
+        <button id="btn-join" onclick="joinWaitlist()">Join</button>
+        <div id="waitlistMessage" class="success"></div>
+      </div>
+
     </div>
-
   </div>
 </div>
 
 <div class="subtitles" id="subtitles"></div>
 
 <script>
-/* ── MEMORY ── */
-const memory = {
-  name: "Guest",
-  email: "",
-  lang: "en",
-  subject: "biology",
-  preferredStyle: null,
-  lastState: "neutral",
-  awaitingChoice: false,
-  awaitingClarify: false,
-  lastExplanation: ""
-};
 
-/* ── SCREEN SWITCHER ── */
-function show(id){
-  document.querySelectorAll('.screen-panel').forEach(p=>{
-    p.classList.remove('active');
-    p.style.display = 'none';
-  });
-  const el = document.getElementById(id);
-  el.style.display = 'flex';
-  el.classList.add('active');
-}
-
-/* ── INSTALL ── */
-const installLines = [
-  "Fetching BAINT OS packages...",
-  "Installing Classroom Engine v2.4...",
-  "Loading language modules [7/7]...",
-  "Activating Adaptive AI Core...",
-  "Compiling behavior engine...",
-  "Mounting voice system...",
-  "✓ Installation complete."
-];
-
-function startInstall(){
-  show('screen-installing');
-  const log = document.getElementById('install-log');
-  const bar = document.getElementById('progress-fill');
-  let i = 0;
-  log.innerHTML = '';
-  function next(){
-    if(i < installLines.length){
-      log.innerHTML += installLines[i] + '\n';
-      bar.style.width = ((i+1)/installLines.length*100) + '%';
-      i++;
-      setTimeout(next, 420);
-    } else {
-      setTimeout(()=> show('screen-signup'), 600);
-    }
-  }
-  next();
-}
-
-function completeSignup(){
-  memory.name  = document.getElementById('signup-name').value.trim()  || 'Student';
-  memory.email = document.getElementById('signup-email').value.trim() || 'demo@baint.ai';
-  memory.lang  = document.getElementById('signup-lang').value;
-  bootInto();
-}
-
-function skipSignup(){ bootInto(); }
-
-/* ── BOOT ── */
-function bootInto(){
-  show('screen-boot');
-  const terminal = document.getElementById('boot-terminal');
-  const lines = (ui[memory.lang]||ui.en).boot;
-  terminal.innerHTML = '';
-  let i = 0;
-  function run(){
-    if(i < lines.length){
-      terminal.innerHTML += lines[i] + '<br>';
-      i++;
-      setTimeout(run, 480);
-    } else {
-      setTimeout(launchDemo, 500);
-    }
-  }
-  run();
-}
-
-function launchDemo(){
-  show('screen-demo');
-  document.getElementById('demo-lang').value    = memory.lang;
-  document.getElementById('chip-name').innerText  = memory.name;
-  document.getElementById('chip-email').innerText = memory.email || 'demo mode';
-  setSub(memory.subject, true);
-  addAIMessage(
-    `👋 Hey ${memory.name}! I'm BAINT AI.\n\n` +
-    `🔒 This is a demo — no data is stored. Explore freely.\n\n` +
-    `I'll adapt to how you learn. Just ask me anything about the topic, ` +
-    `and I'll pick up on whether you're confused, curious, or ready to go deep.\n\nLet's start! 🚀`
-  );
-}
+const appLauncher = document.getElementById("app-launcher");
+const bootScreen  = document.getElementById("boot");
+const demoScreen  = document.getElementById("demo");
+const bootLog     = document.getElementById("boot-log");
 
 /* ── UI TRANSLATIONS ── */
 const ui = {
   en: {
-    boot: ["Booting BAINT AI...","Loading Classroom Engine...","Activating Adaptive Core...","Ready."],
-    placeholder: "Ask BAINT AI anything...",
-    reflection: "Does this make sense, or should I explain it differently?",
-    hesitation: "It seems like this might not be fully clear yet.\nDo you want me to simplify it or try a different approach?",
-    clarify: "Before I explain — what part is unclear?\n\n• concept\n• example\n• everything\n• not sure",
-    options: "I can explain this in different ways:\n\n1️⃣ Simple explanation\n2️⃣ Step-by-step\n3️⃣ Real-life example\n\nWhich would you prefer?",
-    stateLabels: { confused:"😕 confused", curious:"🤔 curious", frustrated:"😤 frustrated", clear:"✅ clear", neutral:"— neutral" }
+    setup:       "Learning Setup",
+    assistant:   "BAINT AI Classroom Assistant",
+    speak:       "🎙️ BAINT Voice Explainer",
+    stop:        "⏹ Stop Voice",
+    ask:         "Ask",
+    placeholder: "Ask BAINT AI...",
+    listen:      "🔊 Listen Answer",
+    feedback:    "Feedback",
+    submit:      "Submit",
+    waitlist:    "Join BAINT Waitlist",
+    join:        "Join",
+    replyDefault:"BAINT AI will respond here...",
+    waitlistOk:  "You're on the waitlist!",
+    boot: ["Booting BAINT AI...","Loading Classroom Engine...","Activating Voice System...","Ready."],
+    modes: ["Step-by-step","Simple","Logical","Context","Human"],
+    subjects: ["Biology","History","Science","Mathematics","Computer Science"]
   },
   zh: {
-    boot: ["正在启动 BAINT AI...","加载课堂引擎...","激活自适应核心...","准备就绪。"],
+    setup:       "学习设置",
+    assistant:   "BAINT AI 课堂助手",
+    speak:       "🎙️ 语音讲解",
+    stop:        "⏹ 停止语音",
+    ask:         "提问",
     placeholder: "向 BAINT AI 提问...",
-    reflection: "这清楚了吗？或者我换种方式解释？",
-    hesitation: "看起来还不太清楚。\n要我简化一下，还是换个方式讲？",
-    clarify: "解释之前，哪部分不清楚？\n\n• 概念\n• 例子\n• 全部\n• 不确定",
-    options: "我可以用不同方式解释：\n\n1️⃣ 简单说明\n2️⃣ 逐步讲解\n3️⃣ 生活例子\n\n你喜欢哪种？",
-    stateLabels: { confused:"😕 困惑", curious:"🤔 好奇", frustrated:"😤 挫败", clear:"✅ 清楚", neutral:"— 一般" }
+    listen:      "🔊 收听答案",
+    feedback:    "反馈",
+    submit:      "提交",
+    waitlist:    "加入候补名单",
+    join:        "加入",
+    replyDefault:"BAINT AI 将在此处回复...",
+    waitlistOk:  "您已加入候补名单！",
+    boot: ["正在启动 BAINT AI...","加载课堂引擎...","激活语音系统...","准备就绪。"],
+    modes: ["逐步讲解","简单","逻辑分析","情境联系","人性化"],
+    subjects: ["生物学","历史","科学","数学","计算机科学"]
   },
   fr: {
-    boot: ["Démarrage de BAINT AI...","Chargement du moteur...","Activation du noyau adaptatif...","Prêt."],
+    setup:       "Configuration d'apprentissage",
+    assistant:   "Assistant IA BAINT en classe",
+    speak:       "🎙️ Explication vocale BAINT",
+    stop:        "⏹ Arrêter la voix",
+    ask:         "Demander",
     placeholder: "Posez une question à BAINT AI...",
-    reflection: "Est-ce que c'est clair, ou je dois expliquer autrement ?",
-    hesitation: "Ça semble pas encore tout à fait clair.\nVoulez-vous que je simplifie ou essaie une autre approche ?",
-    clarify: "Avant d'expliquer — quelle partie n'est pas claire ?\n\n• concept\n• exemple\n• tout\n• pas sûr(e)",
-    options: "Je peux expliquer de différentes façons :\n\n1️⃣ Explication simple\n2️⃣ Étape par étape\n3️⃣ Exemple concret\n\nLaquelle préférez-vous ?",
-    stateLabels: { confused:"😕 confus", curious:"🤔 curieux", frustrated:"😤 frustré", clear:"✅ clair", neutral:"— neutre" }
+    listen:      "🔊 Écouter la réponse",
+    feedback:    "Retour d'information",
+    submit:      "Soumettre",
+    waitlist:    "Rejoindre la liste d'attente",
+    join:        "Rejoindre",
+    replyDefault:"BAINT AI répondra ici...",
+    waitlistOk:  "Vous êtes sur la liste d'attente !",
+    boot: ["Démarrage de BAINT AI...","Chargement du moteur de classe...","Activation du système vocal...","Prêt."],
+    modes: ["Étape par étape","Simple","Logique","Contexte","Humain"],
+    subjects: ["Biologie","Histoire","Science","Mathématiques","Informatique"]
   },
   es: {
-    boot: ["Iniciando BAINT AI...","Cargando motor...","Activando núcleo adaptativo...","Listo."],
+    setup:       "Configuración de aprendizaje",
+    assistant:   "Asistente IA BAINT en el aula",
+    speak:       "🎙️ Explicador de voz BAINT",
+    stop:        "⏹ Detener voz",
+    ask:         "Preguntar",
     placeholder: "Pregunta a BAINT AI...",
-    reflection: "¿Tiene sentido, o lo explico de otra forma?",
-    hesitation: "Parece que esto no quedó del todo claro.\n¿Quieres que lo simplifique o pruebe otra forma?",
-    clarify: "Antes de explicar — ¿qué parte no está clara?\n\n• concepto\n• ejemplo\n• todo\n• no estoy seguro/a",
-    options: "Puedo explicarlo de distintas formas:\n\n1️⃣ Explicación simple\n2️⃣ Paso a paso\n3️⃣ Ejemplo real\n\n¿Cuál prefieres?",
-    stateLabels: { confused:"😕 confundido", curious:"🤔 curioso", frustrated:"😤 frustrado", clear:"✅ claro", neutral:"— neutral" }
+    listen:      "🔊 Escuchar respuesta",
+    feedback:    "Comentarios",
+    submit:      "Enviar",
+    waitlist:    "Unirse a la lista de espera",
+    join:        "Unirse",
+    replyDefault:"BAINT AI responderá aquí...",
+    waitlistOk:  "¡Estás en la lista de espera!",
+    boot: ["Iniciando BAINT AI...","Cargando motor de clase...","Activando sistema de voz...","Listo."],
+    modes: ["Paso a paso","Simple","Lógico","Contexto","Humano"],
+    subjects: ["Biología","Historia","Ciencia","Matemáticas","Informática"]
   },
   th: {
-    boot: ["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือ...","เปิดใช้งานระบบปรับตัว...","พร้อมแล้ว"],
+    setup:       "การตั้งค่าการเรียนรู้",
+    assistant:   "ผู้ช่วย AI BAINT ในห้องเรียน",
+    speak:       "🎙️ อธิบายด้วยเสียง BAINT",
+    stop:        "⏹ หยุดเสียง",
+    ask:         "ถาม",
     placeholder: "ถาม BAINT AI...",
-    reflection: "เข้าใจแล้วหรือยัง หรืออยากให้อธิบายแบบอื่น?",
-    hesitation: "ดูเหมือนยังไม่ค่อยชัดเจน\nอยากให้ทำให้ง่ายขึ้น หรือลองวิธีอื่นดีไหม?",
-    clarify: "ก่อนอธิบาย — ส่วนไหนที่ไม่เข้าใจ?\n\n• แนวคิด\n• ตัวอย่าง\n• ทั้งหมด\n• ไม่แน่ใจ",
-    options: "ฉันอธิบายได้หลายแบบ:\n\n1️⃣ อธิบายแบบง่าย\n2️⃣ ทีละขั้นตอน\n3️⃣ ตัวอย่างจากชีวิตจริง\n\nชอบแบบไหน?",
-    stateLabels: { confused:"😕 สับสน", curious:"🤔 อยากรู้", frustrated:"😤 หงุดหงิด", clear:"✅ เข้าใจ", neutral:"— ปกติ" }
+    listen:      "🔊 ฟังคำตอบ",
+    feedback:    "ข้อเสนอแนะ",
+    submit:      "ส่ง",
+    waitlist:    "เข้าร่วมรายการรอ",
+    join:        "เข้าร่วม",
+    replyDefault:"BAINT AI จะตอบที่นี่...",
+    waitlistOk:  "คุณอยู่ในรายการรอแล้ว!",
+    boot: ["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือห้องเรียน...","กำลังเปิดใช้งานระบบเสียง...","พร้อมแล้ว"],
+    modes: ["ทีละขั้นตอน","เรียบง่าย","เชิงตรรกะ","บริบท","แบบมนุษย์"],
+    subjects: ["ชีววิทยา","ประวัติศาสตร์","วิทยาศาสตร์","คณิตศาสตร์","วิทยาการคอมพิวเตอร์"]
   },
   ko: {
-    boot: ["BAINT AI 부팅 중...","교실 엔진 로딩...","적응형 코어 활성화...","준비 완료."],
+    setup:       "학습 설정",
+    assistant:   "BAINT AI 교실 어시스턴트",
+    speak:       "🎙️ BAINT 음성 설명",
+    stop:        "⏹ 음성 중지",
+    ask:         "질문하기",
     placeholder: "BAINT AI에게 질문하세요...",
-    reflection: "이해가 됐나요, 아니면 다르게 설명해 드릴까요?",
-    hesitation: "아직 완전히 이해되지 않은 것 같아요.\n더 쉽게 설명할까요, 다른 방법을 써볼까요?",
-    clarify: "설명 전에 — 어떤 부분이 불명확한가요?\n\n• 개념\n• 예시\n• 전부\n• 잘 모르겠어요",
-    options: "다양한 방식으로 설명할 수 있어요:\n\n1️⃣ 간단한 설명\n2️⃣ 단계별 설명\n3️⃣ 실생활 예시\n\n어떤 걸 원하세요?",
-    stateLabels: { confused:"😕 혼란", curious:"🤔 궁금", frustrated:"😤 답답", clear:"✅ 명확", neutral:"— 보통" }
+    listen:      "🔊 답변 듣기",
+    feedback:    "피드백",
+    submit:      "제출",
+    waitlist:    "대기자 명단 등록",
+    join:        "등록",
+    replyDefault:"BAINT AI가 여기에 응답합니다...",
+    waitlistOk:  "대기자 명단에 등록되었습니다!",
+    boot: ["BAINT AI 부팅 중...","교실 엔진 로딩 중...","음성 시스템 활성화 중...","준비 완료."],
+    modes: ["단계별","간단히","논리적","맥락","인간적"],
+    subjects: ["생물학","역사","과학","수학","컴퓨터 과학"]
   },
   vi: {
-    boot: ["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Kích hoạt lõi thích ứng...","Sẵn sàng."],
+    setup:       "Cài đặt học tập",
+    assistant:   "Trợ lý AI BAINT trong lớp học",
+    speak:       "🎙️ Giải thích bằng giọng nói BAINT",
+    stop:        "⏹ Dừng giọng nói",
+    ask:         "Hỏi",
     placeholder: "Hỏi BAINT AI...",
-    reflection: "Bạn đã hiểu chưa, hay tôi nên giải thích theo cách khác?",
-    hesitation: "Có vẻ như chưa hoàn toàn rõ ràng.\nBạn muốn tôi đơn giản hóa hay thử cách khác?",
-    clarify: "Trước khi giải thích — phần nào chưa rõ?\n\n• khái niệm\n• ví dụ\n• tất cả\n• không chắc",
-    options: "Tôi có thể giải thích theo nhiều cách:\n\n1️⃣ Giải thích đơn giản\n2️⃣ Từng bước\n3️⃣ Ví dụ thực tế\n\nBạn thích cách nào?",
-    stateLabels: { confused:"😕 bối rối", curious:"🤔 tò mò", frustrated:"😤 nản lòng", clear:"✅ rõ ràng", neutral:"— bình thường" }
+    listen:      "🔊 Nghe câu trả lời",
+    feedback:    "Phản hồi",
+    submit:      "Gửi",
+    waitlist:    "Tham gia danh sách chờ",
+    join:        "Tham gia",
+    replyDefault:"BAINT AI sẽ trả lời ở đây...",
+    waitlistOk:  "Bạn đã có trong danh sách chờ!",
+    boot: ["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Đang kích hoạt hệ thống giọng nói...","Sẵn sàng."],
+    modes: ["Từng bước","Đơn giản","Logic","Bối cảnh","Nhân văn"],
+    subjects: ["Sinh học","Lịch sử","Khoa học","Toán học","Khoa học máy tính"]
   }
 };
 
-/* ── CONTENT DATA ── */
+/* ── CONTENT DATA (all 7 languages) ── */
 const data = {
   en: {
     biology: {
@@ -894,49 +427,49 @@ const data = {
   },
   fr: {
     biology: {
-      photosynthesis: `La photosynthèse est le processus par lequel les plantes fabriquent leur nourriture.\n\nÉtape 1 : Les plantes captent la lumière du soleil par leurs feuilles\nÉtape 2 : Elles absorbent le dioxyde de carbone\nÉtape 3 : L'eau est absorbée par les racines\nÉtape 4 : La chlorophylle convertit l'énergie en glucose\n\nExemple : Un arbre utilise la lumière pour faire pousser ses fruits.\n\nRésumé : Les plantes "mangent" la lumière du soleil.`,
+      photosynthesis: `La photosynthèse est le processus par lequel les plantes fabriquent leur nourriture.\n\nÉtape 1 : Les plantes captent la lumière du soleil par leurs feuilles\nÉtape 2 : Elles absorbent le dioxyde de carbone de l'air\nÉtape 3 : L'eau est absorbée par les racines\nÉtape 4 : La chlorophylle convertit l'énergie en glucose\n\nExemple : Un arbre utilise la lumière du soleil pour faire pousser ses fruits et feuilles.\n\nRésumé : Les plantes "mangent" la lumière du soleil pour survivre.`,
       cell: `Les cellules sont les unités de base de la vie.\n\nÉtape 1 : Tous les êtres vivants sont composés de cellules\nÉtape 2 : Les cellules ont un noyau, une membrane et un cytoplasme\nÉtape 3 : Elles accomplissent les fonctions vitales\n\nExemple : Ta peau est composée de millions de cellules.\n\nRésumé : Cellule = petite unité constituant la vie.`,
-      digestion: `La digestion décompose la nourriture dans le corps.\n\nÉtape 1 : La nourriture entre par la bouche\nÉtape 2 : L'estomac la décompose\nÉtape 3 : Les nutriments sont absorbés\n\nExemple : Le riz devient de l'énergie.\n\nRésumé : Digestion = transformer la nourriture en énergie.`,
-      genetics: `La génétique étudie la transmission des traits.\n\nÉtape 1 : L'ADN porte l'information\nÉtape 2 : Les gènes contrôlent les traits\nÉtape 3 : Les traits sont hérités\n\nExemple : La couleur des yeux vient des parents.\n\nRésumé : Gènes = transfert d'information biologique.`
+      digestion: `La digestion est la façon dont la nourriture est décomposée dans le corps.\n\nÉtape 1 : La nourriture entre par la bouche\nÉtape 2 : L'estomac la décompose\nÉtape 3 : Les nutriments sont absorbés\n\nExemple : Le riz devient de l'énergie dans ton corps.\n\nRésumé : Digestion = transformer la nourriture en énergie.`,
+      genetics: `La génétique étudie comment les traits sont transmis des parents aux enfants.\n\nÉtape 1 : L'ADN porte l'information\nÉtape 2 : Les gènes contrôlent les traits\nÉtape 3 : Les traits sont hérités\n\nExemple : La couleur des yeux vient des parents.\n\nRésumé : Gènes = transfert d'information biologique.`
     },
     math: {
-      algebra: `L'algèbre résout des valeurs inconnues avec des symboles.\n\nÉtape 1 : Identifier l'inconnu (x)\nÉtape 2 : Former l'équation\nÉtape 3 : Résoudre\n\nExemple : x + 5 = 10 → x = 5\n\nRésumé : Algèbre = résoudre des nombres manquants.`,
+      algebra: `L'algèbre consiste à résoudre des valeurs inconnues à l'aide de symboles.\n\nÉtape 1 : Identifier l'inconnu (x)\nÉtape 2 : Former l'équation\nÉtape 3 : Résoudre étape par étape\n\nExemple : x + 5 = 10 → x = 5\n\nRésumé : Algèbre = résoudre des nombres manquants.`,
       ratio: `Les ratios comparent deux quantités.\n\nÉtape 1 : Écrire les valeurs\nÉtape 2 : Simplifier\n\nExemple : 2:4 = 1:2\n\nRésumé : Ratio = outil de comparaison.`
     },
     science: {
-      gravity: `La gravité attire les objets vers le bas.\n\nÉtape 1 : La Terre a une masse\nÉtape 2 : La masse crée une attraction\nÉtape 3 : Tout tombe vers la Terre\n\nExemple : Une pomme tombe d'un arbre.\n\nRésumé : Gravité = force d'attraction de la Terre.`,
-      energy: `L'énergie est la capacité à effectuer un travail.\n\nÉtape 1 : Existe sous de nombreuses formes\nÉtape 2 : Peut changer de forme\nÉtape 3 : Ne peut pas être détruite\n\nExemple : Nourriture → énergie\n\nRésumé : Énergie = puissance pour travailler.`
+      gravity: `La gravité est une force qui attire les objets vers le bas.\n\nÉtape 1 : La Terre a une masse\nÉtape 2 : La masse crée une attraction\nÉtape 3 : Tout tombe vers la Terre\n\nExemple : Une pomme tombe d'un arbre.\n\nRésumé : Gravité = force d'attraction de la Terre.`,
+      energy: `L'énergie est la capacité à effectuer un travail.\n\nÉtape 1 : Existe sous de nombreuses formes\nÉtape 2 : Peut changer de forme\nÉtape 3 : Ne peut pas être détruite\n\nExemple : Nourriture → énergie pour le mouvement\n\nRésumé : Énergie = puissance pour travailler.`
     },
     history: {
       revolution: `Une révolution est un changement majeur dans la société.\n\nÉtape 1 : Le peuple est mécontent\nÉtape 2 : Un conflit commence\nÉtape 3 : Le gouvernement change\n\nExemple : La Révolution française a transformé la France.\n\nRésumé : Révolution = grand changement politique.`,
       ww1: `La Première Guerre mondiale était un conflit mondial.\n\nÉtape 1 : Tensions politiques\nÉtape 2 : Formation d'alliances\nÉtape 3 : La guerre commence en 1914\n\nRésumé : WWI = guerre mondiale entre nations.`
     },
     computer: {
-      ai: `L'IA simule l'intelligence humaine par des machines.\n\nÉtape 1 : Les machines apprennent des données\nÉtape 2 : Les modèles sont reconnus\nÉtape 3 : Des décisions sont prises\n\nExemple : Des chatbots répondant à des questions.\n\nRésumé : IA = système de réflexion des machines.`,
+      ai: `L'IA est la simulation de l'intelligence humaine par des machines.\n\nÉtape 1 : Les machines apprennent des données\nÉtape 2 : Les modèles sont reconnus\nÉtape 3 : Des décisions sont prises\n\nExemple : Des chatbots répondant à des questions.\n\nRésumé : IA = système de réflexion des machines.`,
       internet: `Internet connecte les ordinateurs du monde entier.\n\nÉtape 1 : Les appareils se connectent\nÉtape 2 : Les données sont partagées\nÉtape 3 : La communication se produit\n\nRésumé : Internet = réseau de communication mondial.`
     }
   },
   es: {
     biology: {
-      photosynthesis: `La fotosíntesis es el proceso mediante el cual las plantas producen su alimento.\n\nPaso 1: Las plantas absorben la luz solar a través de las hojas\nPaso 2: Absorben dióxido de carbono del aire\nPaso 3: El agua es absorbida por las raíces\nPaso 4: La clorofila convierte la energía en glucosa\n\nEjemplo: Un árbol usa la luz solar para crecer.\n\nResumen: Las plantas "comen" luz solar para sobrevivir.`,
+      photosynthesis: `La fotosíntesis es el proceso mediante el cual las plantas producen su alimento.\n\nPaso 1: Las plantas absorben la luz solar a través de las hojas\nPaso 2: Absorben dióxido de carbono del aire\nPaso 3: El agua es absorbida por las raíces\nPaso 4: La clorofila convierte la energía en glucosa\n\nEjemplo: Un árbol usa la luz solar para hacer crecer sus frutos y hojas.\n\nResumen: Las plantas "comen" luz solar para sobrevivir.`,
       cell: `Las células son los bloques fundamentales de la vida.\n\nPaso 1: Todos los seres vivos están formados por células\nPaso 2: Las células tienen núcleo, membrana y citoplasma\nPaso 3: Realizan las funciones vitales\n\nEjemplo: Tu piel está formada por millones de células.\n\nResumen: Célula = unidad pequeña que forma la vida.`,
-      digestion: `La digestión descompone el alimento en el cuerpo.\n\nPaso 1: El alimento entra por la boca\nPaso 2: El estómago lo descompone\nPaso 3: Los nutrientes son absorbidos\n\nEjemplo: El arroz se convierte en energía.\n\nResumen: Digestión = convertir alimento en energía.`,
-      genetics: `La genética estudia cómo se transmiten los rasgos.\n\nPaso 1: El ADN lleva la información\nPaso 2: Los genes controlan los rasgos\nPaso 3: Los rasgos son heredados\n\nEjemplo: El color de ojos viene de los padres.\n\nResumen: Genes = transferencia de información biológica.`
+      digestion: `La digestión es cómo se descompone el alimento en el cuerpo.\n\nPaso 1: El alimento entra por la boca\nPaso 2: El estómago lo descompone\nPaso 3: Los nutrientes son absorbidos\n\nEjemplo: El arroz se convierte en energía en tu cuerpo.\n\nResumen: Digestión = convertir alimento en energía.`,
+      genetics: `La genética estudia cómo se transmiten los rasgos de padres a hijos.\n\nPaso 1: El ADN lleva la información\nPaso 2: Los genes controlan los rasgos\nPaso 3: Los rasgos son heredados\n\nEjemplo: El color de ojos viene de los padres.\n\nResumen: Genes = transferencia de información biológica.`
     },
     math: {
-      algebra: `El álgebra resuelve valores desconocidos usando símbolos.\n\nPaso 1: Identificar el desconocido (x)\nPaso 2: Formar la ecuación\nPaso 3: Resolver\n\nEjemplo: x + 5 = 10 → x = 5\n\nResumen: Álgebra = resolver números faltantes.`,
+      algebra: `El álgebra consiste en resolver valores desconocidos usando símbolos.\n\nPaso 1: Identificar el desconocido (x)\nPaso 2: Formar la ecuación\nPaso 3: Resolver paso a paso\n\nEjemplo: x + 5 = 10 → x = 5\n\nResumen: Álgebra = resolver números faltantes.`,
       ratio: `Las razones comparan dos cantidades.\n\nPaso 1: Escribir los valores\nPaso 2: Simplificar\n\nEjemplo: 2:4 = 1:2\n\nResumen: Razón = herramienta de comparación.`
     },
     science: {
-      gravity: `La gravedad atrae los objetos hacia abajo.\n\nPaso 1: La Tierra tiene masa\nPaso 2: La masa crea atracción\nPaso 3: Todo cae hacia la Tierra\n\nEjemplo: Una manzana cayendo de un árbol.\n\nResumen: Gravedad = fuerza de atracción de la Tierra.`,
-      energy: `La energía es la capacidad de realizar trabajo.\n\nPaso 1: Existe en muchas formas\nPaso 2: Puede cambiar de forma\nPaso 3: No puede ser destruida\n\nEjemplo: Alimento → energía\n\nResumen: Energía = poder para trabajar.`
+      gravity: `La gravedad es una fuerza que atrae los objetos hacia abajo.\n\nPaso 1: La Tierra tiene masa\nPaso 2: La masa crea atracción\nPaso 3: Todo cae hacia la Tierra\n\nEjemplo: Una manzana cayendo de un árbol.\n\nResumen: Gravedad = fuerza de atracción de la Tierra.`,
+      energy: `La energía es la capacidad de realizar trabajo.\n\nPaso 1: Existe en muchas formas\nPaso 2: Puede cambiar de forma\nPaso 3: No puede ser destruida\n\nEjemplo: Alimento → energía para moverse\n\nResumen: Energía = poder para trabajar.`
     },
     history: {
       revolution: `Una revolución es un cambio importante en la sociedad.\n\nPaso 1: El pueblo está insatisfecho\nPaso 2: Comienza el conflicto\nPaso 3: El gobierno cambia\n\nEjemplo: La Revolución Francesa transformó Francia.\n\nResumen: Revolución = gran cambio político.`,
       ww1: `La Primera Guerra Mundial fue un conflicto global.\n\nPaso 1: Tensión política\nPaso 2: Se forman alianzas\nPaso 3: La guerra comienza en 1914\n\nResumen: WWI = guerra global entre naciones.`
     },
     computer: {
-      ai: `La IA simula la inteligencia humana en máquinas.\n\nPaso 1: Las máquinas aprenden datos\nPaso 2: Se reconocen patrones\nPaso 3: Se toman decisiones\n\nEjemplo: Chatbots respondiendo preguntas.\n\nResumen: IA = sistema de pensamiento de máquinas.`,
+      ai: `La IA es la simulación de la inteligencia humana por máquinas.\n\nPaso 1: Las máquinas aprenden datos\nPaso 2: Se reconocen patrones\nPaso 3: Se toman decisiones\n\nEjemplo: Chatbots respondiendo preguntas.\n\nResumen: IA = sistema de pensamiento de máquinas.`,
       internet: `Internet conecta computadoras de todo el mundo.\n\nPaso 1: Los dispositivos se conectan\nPaso 2: Los datos se comparten\nPaso 3: La comunicación ocurre\n\nResumen: Internet = red de comunicación global.`
     }
   },
@@ -945,7 +478,7 @@ const data = {
       photosynthesis: `การสังเคราะห์แสงคือกระบวนการที่พืชใช้ในการสร้างอาหาร\n\nขั้นที่ 1: พืชรับแสงอาทิตย์ผ่านใบ\nขั้นที่ 2: ดูดซับคาร์บอนไดออกไซด์จากอากาศ\nขั้นที่ 3: รากดูดซับน้ำ\nขั้นที่ 4: คลอโรฟิลล์แปลงพลังงานเป็นกลูโคส\n\nตัวอย่าง: ต้นไม้ใช้แสงอาทิตย์เพื่อเจริญเติบโต\n\nสรุป: พืช "กิน" แสงอาทิตย์เพื่อความอยู่รอด`,
       cell: `เซลล์คือหน่วยพื้นฐานของสิ่งมีชีวิต\n\nขั้นที่ 1: สิ่งมีชีวิตทุกชนิดประกอบด้วยเซลล์\nขั้นที่ 2: เซลล์มีนิวเคลียส เยื่อหุ้มเซลล์ และไซโตพลาสซึม\nขั้นที่ 3: เซลล์ทำหน้าที่ต่างๆ ของสิ่งมีชีวิต\n\nตัวอย่าง: ผิวหนังของคุณประกอบด้วยเซลล์หลายล้านเซลล์\n\nสรุป: เซลล์ = หน่วยเล็กๆ ที่ประกอบเป็นสิ่งมีชีวิต`,
       digestion: `การย่อยอาหารคือกระบวนการที่ร่างกายย่อยสลายอาหาร\n\nขั้นที่ 1: อาหารเข้าสู่ปาก\nขั้นที่ 2: กระเพาะย่อยสลายอาหาร\nขั้นที่ 3: สารอาหารถูกดูดซึม\n\nตัวอย่าง: ข้าวกลายเป็นพลังงานในร่างกาย\n\nสรุป: การย่อยอาหาร = การเปลี่ยนอาหารเป็นพลังงาน`,
-      genetics: `พันธุศาสตร์คือการศึกษาการถ่ายทอดลักษณะจากพ่อแม่\n\nขั้นที่ 1: DNA บรรจุข้อมูลทางพันธุกรรม\nขั้นที่ 2: ยีนควบคุมลักษณะต่างๆ\nขั้นที่ 3: ลักษณะถูกถ่ายทอดทางพันธุกรรม\n\nตัวอย่าง: สีตามาจากพ่อแม่\n\nสรุป: ยีน = การถ่ายทอดข้อมูลทางชีววิทยา`
+      genetics: `พันธุศาสตร์คือการศึกษาการถ่ายทอดลักษณะจากพ่อแม่สู่ลูก\n\nขั้นที่ 1: DNA บรรจุข้อมูลทางพันธุกรรม\nขั้นที่ 2: ยีนควบคุมลักษณะต่างๆ\nขั้นที่ 3: ลักษณะถูกถ่ายทอดทางพันธุกรรม\n\nตัวอย่าง: สีตามาจากพ่อแม่\n\nสรุป: ยีน = การถ่ายทอดข้อมูลทางชีววิทยา`
     },
     math: {
       algebra: `พีชคณิตคือการหาค่าที่ไม่รู้จักโดยใช้สัญลักษณ์\n\nขั้นที่ 1: ระบุค่าที่ไม่รู้จัก (x)\nขั้นที่ 2: สร้างสมการ\nขั้นที่ 3: แก้สมการทีละขั้น\n\nตัวอย่าง: x + 5 = 10 → x = 5\n\nสรุป: พีชคณิต = การหาตัวเลขที่หายไป`,
@@ -957,7 +490,7 @@ const data = {
     },
     history: {
       revolution: `การปฏิวัติคือการเปลี่ยนแปลงครั้งใหญ่ในสังคม\n\nขั้นที่ 1: ประชาชนไม่พอใจ\nขั้นที่ 2: ความขัดแย้งเริ่มต้น\nขั้นที่ 3: รัฐบาลเปลี่ยนแปลง\n\nตัวอย่าง: การปฏิวัติฝรั่งเศสเปลี่ยนแปลงฝรั่งเศส\n\nสรุป: การปฏิวัติ = การเปลี่ยนแปลงทางการเมืองครั้งใหญ่`,
-      ww1: `สงครามโลกครั้งที่ 1 เป็นความขัดแย้งระดับโลก\n\nขั้นที่ 1: ความตึงเครียดทางการเมือง\nขั้นที่ 2: การก่อตั้งพันธมิตร\nขั้นที่ 3: สงครามเริ่มต้นในปี 1914\n\nสรุป: สงครามโลกครั้งที่ 1 = สงครามระดับโลก`
+      ww1: `สงครามโลกครั้งที่ 1 เป็นความขัดแย้งระดับโลก\n\nขั้นที่ 1: ความตึงเครียดทางการเมือง\nขั้นที่ 2: การก่อตั้งพันธมิตร\nขั้นที่ 3: สงครามเริ่มต้นในปี 1914\n\nสรุป: สงครามโลกครั้งที่ 1 = สงครามระดับโลกระหว่างประเทศต่างๆ`
     },
     computer: {
       ai: `ปัญญาประดิษฐ์คือเครื่องจักรที่จำลองสติปัญญาของมนุษย์\n\nขั้นที่ 1: เครื่องจักรเรียนรู้จากข้อมูล\nขั้นที่ 2: จดจำรูปแบบ\nขั้นที่ 3: ตัดสินใจ\n\nตัวอย่าง: แชทบอตตอบคำถาม\n\nสรุป: AI = ระบบการคิดของเครื่องจักร`,
@@ -990,10 +523,10 @@ const data = {
   },
   vi: {
     biology: {
-      photosynthesis: `Quang hợp là quá trình thực vật tạo ra thức ăn.\n\nBước 1: Thực vật hấp thụ ánh sáng mặt trời qua lá\nBước 2: Hấp thụ khí CO2 từ không khí\nBước 3: Rễ hút nước\nBước 4: Chất diệp lục chuyển đổi năng lượng thành glucose\n\nVí dụ: Cây dùng ánh sáng để phát triển.\n\nTóm tắt: Thực vật "ăn" ánh sáng mặt trời để tồn tại.`,
+      photosynthesis: `Quang hợp là quá trình thực vật tạo ra thức ăn.\n\nBước 1: Thực vật hấp thụ ánh sáng mặt trời qua lá\nBước 2: Hấp thụ khí CO2 từ không khí\nBước 3: Rễ hút nước\nBước 4: Chất diệp lục chuyển đổi năng lượng thành glucose\n\nVí dụ: Cây dùng ánh sáng mặt trời để phát triển quả và lá.\n\nTóm tắt: Thực vật "ăn" ánh sáng mặt trời để tồn tại.`,
       cell: `Tế bào là đơn vị cơ bản cấu tạo nên sự sống.\n\nBước 1: Mọi sinh vật đều được tạo thành từ tế bào\nBước 2: Tế bào có nhân, màng tế bào và tế bào chất\nBước 3: Chúng thực hiện các chức năng sống\n\nVí dụ: Da của bạn được tạo thành từ hàng triệu tế bào.\n\nTóm tắt: Tế bào = đơn vị nhỏ tạo nên sự sống.`,
-      digestion: `Tiêu hóa là cách thức ăn được phân giải trong cơ thể.\n\nBước 1: Thức ăn vào miệng\nBước 2: Dạ dày phân giải\nBước 3: Chất dinh dưỡng được hấp thụ\n\nVí dụ: Cơm trở thành năng lượng trong cơ thể.\n\nTóm tắt: Tiêu hóa = biến thức ăn thành năng lượng.`,
-      genetics: `Di truyền học nghiên cứu cách các đặc điểm được truyền từ cha mẹ.\n\nBước 1: ADN mang thông tin di truyền\nBước 2: Gen kiểm soát các đặc điểm\nBước 3: Các đặc điểm được di truyền\n\nVí dụ: Màu mắt đến từ bố mẹ.\n\nTóm tắt: Gen = truyền thông tin sinh học.`
+      digestion: `Tiêu hóa là cách thức ăn được phân giải trong cơ thể.\n\nBước 1: Thức ăn vào miệng\nBước 2: Dạ dày phân giải thức ăn\nBước 3: Các chất dinh dưỡng được hấp thụ\n\nVí dụ: Cơm trở thành năng lượng trong cơ thể bạn.\n\nTóm tắt: Tiêu hóa = biến thức ăn thành năng lượng.`,
+      genetics: `Di truyền học nghiên cứu cách các đặc điểm được truyền từ cha mẹ sang con.\n\nBước 1: ADN mang thông tin di truyền\nBước 2: Gen kiểm soát các đặc điểm\nBước 3: Các đặc điểm được di truyền\n\nVí dụ: Màu mắt đến từ bố mẹ.\n\nTóm tắt: Gen = truyền thông tin sinh học.`
     },
     math: {
       algebra: `Đại số là giải các giá trị ẩn bằng ký hiệu.\n\nBước 1: Xác định ẩn số (x)\nBước 2: Lập phương trình\nBước 3: Giải từng bước\n\nVí dụ: x + 5 = 10 → x = 5\n\nTóm tắt: Đại số = tìm số còn thiếu.`,
@@ -1001,11 +534,11 @@ const data = {
     },
     science: {
       gravity: `Trọng lực là lực kéo các vật xuống phía dưới.\n\nBước 1: Trái Đất có khối lượng\nBước 2: Khối lượng tạo ra lực hút\nBước 3: Mọi thứ đều rơi về phía Trái Đất\n\nVí dụ: Quả táo rơi từ cây.\n\nTóm tắt: Trọng lực = lực hút của Trái Đất.`,
-      energy: `Năng lượng là khả năng thực hiện công việc.\n\nBước 1: Tồn tại dưới nhiều dạng\nBước 2: Có thể chuyển đổi dạng\nBước 3: Không thể bị tiêu hủy\n\nVí dụ: Thức ăn → năng lượng\n\nTóm tắt: Năng lượng = sức mạnh để làm việc.`
+      energy: `Năng lượng là khả năng thực hiện công việc.\n\nBước 1: Tồn tại dưới nhiều dạng\nBước 2: Có thể chuyển đổi dạng\nBước 3: Không thể bị tiêu hủy\n\nVí dụ: Thức ăn → năng lượng để di chuyển\n\nTóm tắt: Năng lượng = sức mạnh để làm việc.`
     },
     history: {
       revolution: `Cách mạng là sự thay đổi lớn trong xã hội.\n\nBước 1: Người dân không hài lòng\nBước 2: Xung đột bắt đầu\nBước 3: Chính phủ thay đổi\n\nVí dụ: Cách mạng Pháp đã thay đổi nước Pháp.\n\nTóm tắt: Cách mạng = thay đổi chính trị lớn.`,
-      ww1: `Chiến tranh Thế giới thứ nhất là một cuộc xung đột toàn cầu.\n\nBước 1: Căng thẳng chính trị\nBước 2: Các liên minh hình thành\nBước 3: Chiến tranh bắt đầu năm 1914\n\nTóm tắt: WWI = chiến tranh toàn cầu.`
+      ww1: `Chiến tranh Thế giới thứ nhất là một cuộc xung đột toàn cầu.\n\nBước 1: Căng thẳng chính trị\nBước 2: Các liên minh hình thành\nBước 3: Chiến tranh bắt đầu năm 1914\n\nTóm tắt: WWI = chiến tranh toàn cầu giữa các quốc gia.`
     },
     computer: {
       ai: `AI là máy móc mô phỏng trí tuệ con người.\n\nBước 1: Máy móc học từ dữ liệu\nBước 2: Nhận dạng các mẫu\nBước 3: Đưa ra quyết định\n\nVí dụ: Chatbot trả lời câu hỏi.\n\nTóm tắt: AI = hệ thống tư duy của máy móc.`,
@@ -1014,270 +547,232 @@ const data = {
   }
 };
 
-/* ── STATE DETECTION ── */
-function detectState(input){
-  const t = input.toLowerCase().trim();
-  if(t.length < 5 || ["ok","hmm","idk","huh","eh","uh","what","k"].includes(t)) return "hesitation";
-  if(/don'?t understand|not getting|makes no sense|confusing|hard|difficult|ugh|argh|still don'?t/.test(t)) return "frustrated";
-  if(/what (is|are|does|do)|i'?m? ?(confused|lost|unclear)|not sure|can you explain|explain|help me/.test(t)) return "confused";
-  if(/how|why|tell me more|what about|interesting|really|deeper|more detail|elaborate/.test(t)) return "curious";
-  if(t.split(' ').length <= 2) return "vague";
-  return "clear";
-}
+/* ── VOICE LANG MAP ── */
+const voiceMap = { en:"en", zh:"zh", fr:"fr", es:"es", th:"th", ko:"ko", vi:"vi" };
 
-/* ── RESPONSE GENERATOR ── */
-function generateResponse(input, state){
-  const lang  = memory.lang;
-  const t     = ui[lang] || ui.en;
-  const base  = data[lang]?.[memory.subject]?.[getCurrentTopic()] || data.en[memory.subject]?.[getCurrentTopic()] || "";
-  const style = memory.preferredStyle || "step";
-  let response = "", quickReplies = [], showOptions = false, showReflection = false;
-
-  switch(state){
-    case "hesitation":
-      response = t.hesitation;
-      quickReplies = ["Simplify it", "Try different approach", "I understand now ✓"];
-      memory.awaitingChoice = true;
-      break;
-    case "frustrated":
-      response = `I hear you — this can be tricky. Let's slow down.\n\n` + getStyled(base, "simple");
-      quickReplies = ["That helped!", "Still confused", "Show me an example"];
-      showReflection = true;
-      break;
-    case "confused":
-      if(memory.awaitingClarify){
-        memory.awaitingClarify = false;
-        response = getStyled(base, "simple");
-        showReflection = true;
-      } else {
-        response = t.clarify;
-        memory.awaitingClarify = true;
-        quickReplies = ["concept", "example", "everything", "not sure"];
-      }
-      break;
-    case "curious":
-      response = getStyled(base, style);
-      showOptions = true;
-      showReflection = true;
-      break;
-    case "vague":
-      response = t.clarify;
-      memory.awaitingClarify = true;
-      quickReplies = ["concept", "example", "everything", "not sure"];
-      break;
-    default:
-      response = getStyled(base, style);
-      showOptions = true;
-      showReflection = true;
-      break;
-  }
-
-  if(showOptions){
-    response += "\n\n" + t.options;
-    memory.awaitingChoice = true;
-  }
-  if(showReflection && !showOptions){
-    response += "\n\n" + t.reflection;
-  }
-
-  memory.lastExplanation = response;
-  return { response, quickReplies, state };
-}
-
-function getStyled(base, style){
-  if(!base) return "I don't have content for that yet. Try another topic!";
-  switch(style){
-    case "simple":  return base.split("\n")[0];
-    case "logic":   return "Logical breakdown:\n\n" + base;
-    case "context": return "Real-life context:\n\n" + base;
-    case "human":   return "Think of it like this:\n\n" + base;
-    default:        return base;
-  }
-}
-
-/* ── CHOICE HANDLER ── */
-function handleChoice(choice){
-  const c = choice.toLowerCase();
-  const base = data[memory.lang]?.[memory.subject]?.[getCurrentTopic()] || "";
-
-  if(c.includes("simple")||c==="1"){
-    memory.preferredStyle = "simple";
-    addAIMessage(getStyled(base,"simple"), "clear");
-    memory.awaitingChoice = false; return;
-  }
-  if(c.includes("step")||c==="2"){
-    memory.preferredStyle = "step";
-    addAIMessage(getStyled(base,"step"), "clear");
-    memory.awaitingChoice = false; return;
-  }
-  if(c.includes("example")||c.includes("real")||c==="3"){
-    memory.preferredStyle = "context";
-    addAIMessage(getStyled(base,"context"), "clear");
-    memory.awaitingChoice = false; return;
-  }
-  if(c.includes("simplify")){
-    addAIMessage(getStyled(base,"simple"), "clear");
-    memory.awaitingChoice = false; return;
-  }
-  if(c.includes("understand")||c.includes("✓")){
-    addAIMessage("Great! " + (ui[memory.lang]||ui.en).reflection, "clear");
-    memory.awaitingChoice = false; return;
-  }
-  if(["concept","example","everything","not sure"].some(k=>c.includes(k))){
-    addAIMessage(getStyled(base,"simple"), "clear");
-    memory.awaitingClarify = false; return;
-  }
-  processInput(choice);
-}
-
-/* ── CHAT UI ── */
-function addUserMessage(text){
-  const area = document.getElementById('chat-area');
-  const msg = document.createElement('div');
-  msg.className = 'msg user';
-  msg.innerHTML = `<div class="msg-avatar">👤</div><div class="msg-bubble">${escHtml(text)}</div>`;
-  area.appendChild(msg);
-  area.scrollTop = area.scrollHeight;
-}
-
-function addAIMessage(text, state){
-  const area = document.getElementById('chat-area');
-  const typing = document.createElement('div');
-  typing.className = 'msg ai';
-  typing.innerHTML = `<div class="msg-avatar">🤖</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
-  area.appendChild(typing);
-  area.scrollTop = area.scrollHeight;
-
-  setTimeout(()=>{
-    typing.remove();
-    const msg = document.createElement('div');
-    msg.className = 'msg ai';
-    const stateLabel = state && (ui[memory.lang]||ui.en).stateLabels?.[state];
-    const badge = stateLabel ? `<div class="state-badge state-${state}">${stateLabel}</div>` : '';
-    msg.innerHTML = `<div class="msg-avatar">🤖</div><div class="msg-bubble">${badge}${escHtml(text)}</div>`;
-    area.appendChild(msg);
-    area.scrollTop = area.scrollHeight;
-    memory.lastExplanation = text;
-  }, 700 + Math.random()*400);
-}
-
-function addAIMessageWithReplies(text, quickReplies, state){
-  const area = document.getElementById('chat-area');
-  const typing = document.createElement('div');
-  typing.className = 'msg ai';
-  typing.innerHTML = `<div class="msg-avatar">🤖</div><div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
-  area.appendChild(typing);
-  area.scrollTop = area.scrollHeight;
-
-  setTimeout(()=>{
-    typing.remove();
-    const msg = document.createElement('div');
-    msg.className = 'msg ai';
-    const stateLabel = state && (ui[memory.lang]||ui.en).stateLabels?.[state];
-    const badge = stateLabel ? `<div class="state-badge state-${state}">${stateLabel}</div>` : '';
-    let qrHTML = '';
-    if(quickReplies && quickReplies.length){
-      qrHTML = `<div class="quick-replies">${quickReplies.map(r=>`<button class="qr-btn" onclick="handleChoice('${r}')">${r}</button>`).join('')}</div>`;
+/* ── BOOT ── */
+function launchDemo(){
+  appLauncher.style.display = "none";
+  bootScreen.style.display  = "block";
+  const lang = document.getElementById("language").value;
+  const lines = ui[lang].boot;
+  let i = 0;
+  function run(){
+    if(i < lines.length){
+      bootLog.innerHTML += lines[i] + "<br>";
+      i++;
+      setTimeout(run, 500);
+    } else {
+      setTimeout(() => {
+        bootScreen.style.display = "none";
+        demoScreen.style.display = "block";
+        switchLanguage();
+      }, 500);
     }
-    msg.innerHTML = `<div class="msg-avatar">🤖</div><div class="msg-bubble">${badge}${escHtml(text)}${qrHTML}</div>`;
-    area.appendChild(msg);
-    area.scrollTop = area.scrollHeight;
-    memory.lastExplanation = text;
-  }, 700 + Math.random()*400);
-}
-
-function escHtml(s){
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-}
-
-/* ── INPUT HANDLER ── */
-function sendMessage(){
-  const input = document.getElementById('chat-input');
-  const text  = input.value.trim();
-  if(!text) return;
-  addUserMessage(text);
-  input.value = '';
-  if(memory.awaitingChoice || memory.awaitingClarify){
-    setTimeout(()=> handleChoice(text), 100);
-    return;
   }
-  processInput(text);
+  run();
 }
 
-function processInput(text){
-  const state = detectState(text);
-  memory.lastState = state;
-  const { response, quickReplies } = generateResponse(text, state);
-  addAIMessageWithReplies(response, quickReplies, state === "hesitation" ? "confused" : state);
+/* ── SWITCH LANGUAGE ── */
+function switchLanguage(){
+  const lang = document.getElementById("language").value;
+  const t    = ui[lang];
+  document.getElementById("label-setup").innerText     = t.setup;
+  document.getElementById("label-assistant").innerText = t.assistant;
+  document.getElementById("label-feedback").innerText  = t.feedback;
+  document.getElementById("label-waitlist").innerText  = t.waitlist;
+  document.getElementById("btn-speak").innerText       = t.speak;
+  document.getElementById("btn-stop").innerText        = t.stop;
+  document.getElementById("btn-ask").innerText         = t.ask;
+  document.getElementById("btn-listen").innerText      = t.listen;
+  document.getElementById("btn-feedback").innerText    = t.submit;
+  document.getElementById("btn-join").innerText        = t.join;
+  document.getElementById("studentQuestion").placeholder = t.placeholder;
+  document.getElementById("teacherReply").innerText    = t.replyDefault;
+  const modeEl = document.getElementById("mode");
+  ["step","simple","logic","context","human"].forEach((v,i) => { modeEl.options[i].text = t.modes[i]; });
+  const subjectEl = document.getElementById("subject");
+  ["biology","history","science","math","computer"].forEach((v,i) => { subjectEl.options[i].text = t.subjects[i]; });
+  updateTopics();
+  updateContent();
 }
 
-/* ── SUBJECT / TOPIC / LANGUAGE ── */
-function setSub(sub, silent){
-  memory.subject = sub;
-  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
-  const el = document.getElementById('sb-'+sub);
-  if(el) el.classList.add('active');
-  populateTopics();
-  if(!silent) loadTopic();
-}
-
-function populateTopics(){
-  const lang = memory.lang, sub = memory.subject;
-  const el   = document.getElementById('demo-topic');
-  el.innerHTML = '';
-  const keys = Object.keys(data[lang]?.[sub] || data.en[sub] || {});
-  keys.forEach(k=>{
-    const opt = document.createElement('option');
-    opt.value = k;
-    opt.innerText = k.charAt(0).toUpperCase()+k.slice(1);
-    el.appendChild(opt);
+/* ── TOPICS ── */
+function updateTopics(){
+  const lang    = document.getElementById("language").value;
+  const subject = document.getElementById("subject").value;
+  const topicEl = document.getElementById("topic");
+  topicEl.innerHTML = "";
+  const keys = Object.keys(data[lang][subject]);
+  keys.forEach(k => {
+    const opt = document.createElement("option");
+    opt.value    = k;
+    opt.innerText = k.charAt(0).toUpperCase() + k.slice(1);
+    topicEl.appendChild(opt);
   });
+  topicEl.value = keys[0];
 }
 
-function getCurrentTopic(){
-  return document.getElementById('demo-topic')?.value || 'photosynthesis';
-}
-
-function loadTopic(){
-  const lang  = memory.lang, sub = memory.subject;
-  const topic = getCurrentTopic();
-  const mode  = document.getElementById('demo-mode').value;
-  const base  = data[lang]?.[sub]?.[topic] || data.en?.[sub]?.[topic] || "Content coming soon.";
-  addAIMessage(`📖 ${topic.charAt(0).toUpperCase()+topic.slice(1)}\n\n${getStyled(base, mode)}`, "neutral");
-}
-
-function switchLang(){
-  memory.lang = document.getElementById('demo-lang').value;
-  document.getElementById('chat-input').placeholder = (ui[memory.lang]||ui.en).placeholder;
-  populateTopics();
-  loadTopic();
+/* ── CONTENT ── */
+function updateContent(){
+  const lang  = document.getElementById("language").value;
+  const s     = document.getElementById("subject").value;
+  const t     = document.getElementById("topic").value;
+  const mode  = document.getElementById("mode").value;
+  if(!data[lang] || !data[lang][s] || !data[lang][s][t]) return;
+  const base = data[lang][s][t];
+  let output = "";
+  if(mode === "step")         output = ui[lang].modes[0] + ":\n\n" + base;
+  else if(mode === "simple")  output = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
+  else if(mode === "logic")   output = ui[lang].modes[2] + ":\n\n" + base;
+  else if(mode === "context") output = ui[lang].modes[3] + ":\n\n" + base;
+  else if(mode === "human")   output = ui[lang].modes[4] + ":\n\n" + base;
+  document.getElementById("explanation").innerText = ui[lang].assistant + "\n\n" + output;
 }
 
 /* ── VOICE ── */
-const voiceMap = {en:"en",zh:"zh",fr:"fr",es:"es",th:"th",ko:"ko",vi:"vi"};
 let utterance;
 
 function getVoice(lang){
   const voices = speechSynthesis.getVoices();
-  return voices.find(v=>v.lang.toLowerCase().includes(lang)) ||
-         voices.find(v=>v.lang.toLowerCase().includes("en"));
+  return voices.find(v => v.lang.toLowerCase().includes(lang)) ||
+         voices.find(v => v.lang.toLowerCase().includes("en"));
 }
 
-function speakLast(){
-  if(!memory.lastExplanation) return;
-  speechSynthesis.cancel();
-  const sub = document.getElementById('subtitles');
-  sub.style.display = "block";
-  sub.innerText = memory.lastExplanation;
-  utterance = new SpeechSynthesisUtterance(memory.lastExplanation);
-  const vl = voiceMap[memory.lang] || "en";
-  utterance.voice = getVoice(vl);
-  utterance.lang  = vl;
-  utterance.onend = ()=>{ sub.style.display="none"; };
+function speak(){
+  stopVoice();
+  const lang = document.getElementById("language").value;
+  const text = document.getElementById("explanation").innerText;
+  document.getElementById("subtitles").style.display = "block";
+  document.getElementById("subtitles").innerText = text;
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = getVoice(voiceMap[lang]);
+  utterance.lang  = voiceMap[lang];
   speechSynthesis.speak(utterance);
 }
 
-speechSynthesis.onvoiceschanged = ()=>{ speechSynthesis.getVoices(); };
+function speakReply(){
+  stopVoice();
+  const lang = document.getElementById("language").value;
+  const text = document.getElementById("teacherReply").innerText;
+  document.getElementById("subtitles").style.display = "block";
+  document.getElementById("subtitles").innerText = text;
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = getVoice(voiceMap[lang]);
+  utterance.lang  = voiceMap[lang];
+  speechSynthesis.speak(utterance);
+}
+
+function stopVoice(){
+  speechSynthesis.cancel();
+  document.getElementById("subtitles").style.display = "none";
+}
+
+speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
+
+/* ════════════════════════════════════════
+   NEW: STATE DETECTION
+════════════════════════════════════════ */
+function detectUserState(input){
+  const t = input.toLowerCase().trim();
+  if(/don'?t understand|confused|not clear|lost|unclear|what does|what is|help/.test(t))
+    return "confused";
+  if(/how|why|tell me more|explain more|what about|curious|interesting|deeper/.test(t))
+    return "curious";
+  return "neutral";
+}
+
+/* ════════════════════════════════════════
+   UPDATED: ANSWER QUESTION with state logic
+════════════════════════════════════════ */
+function answerQuestion(){
+  const lang  = document.getElementById("language").value;
+  const q     = document.getElementById("studentQuestion").value.trim();
+  const s     = document.getElementById("subject").value;
+  const t     = document.getElementById("topic").value;
+  const mode  = document.getElementById("mode").value;
+
+  if(!q) return;
+
+  const base  = data[lang][s][t];
+  const state = detectUserState(q);
+  let reply   = "";
+  let badge   = "";
+
+  if(state === "confused"){
+    // Short, simple, ends with a clarifying question
+    badge = `<span class="state-badge state-confused">😕 I sense some confusion — let me simplify</span>\n`;
+    reply = base.split("\n")[0] + "\n\nDo you want it even simpler or step-by-step?";
+  }
+  else if(state === "curious"){
+    // Full structured answer
+    badge = `<span class="state-badge state-curious">🤔 Great question — here's a deeper look</span>\n`;
+    if(mode === "step")         reply = ui[lang].modes[0] + ":\n\n" + base;
+    else if(mode === "simple")  reply = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
+    else if(mode === "logic")   reply = ui[lang].modes[2] + ":\n\n" + base;
+    else if(mode === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
+    else if(mode === "human")   reply = ui[lang].modes[4] + ":\n\n" + base;
+  }
+  else {
+    // Neutral — normal response
+    badge = `<span class="state-badge state-neutral">— BAINT AI Response</span>\n`;
+    if(mode === "step")         reply = ui[lang].modes[0] + ":\n\n" + base;
+    else if(mode === "simple")  reply = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
+    else if(mode === "logic")   reply = ui[lang].modes[2] + ":\n\n" + base;
+    else if(mode === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
+    else if(mode === "human")   reply = ui[lang].modes[4] + ":\n\n" + base;
+  }
+
+  // Show reply with badge
+  const replyEl = document.getElementById("teacherReply");
+  replyEl.innerHTML = badge +
+    `<strong>Q: ${q}</strong>\n\n` + reply.replace(/\n/g,"<br>");
+
+  // Show response options
+  document.getElementById("replyOptions").style.display = "flex";
+}
+
+/* ════════════════════════════════════════
+   NEW: APPLY STYLE from option buttons
+════════════════════════════════════════ */
+function applyStyle(style){
+  const lang = document.getElementById("language").value;
+  const s    = document.getElementById("subject").value;
+  const t    = document.getElementById("topic").value;
+  const base = data[lang][s][t];
+  const q    = document.getElementById("studentQuestion").value.trim();
+  let reply  = "";
+
+  if(style === "simple")  reply = base.split("\n")[0];
+  else if(style === "step")    reply = base;
+  else if(style === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
+
+  document.getElementById("teacherReply").innerHTML =
+    `<span class="state-badge state-neutral">— Re-explained</span>\n` +
+    `<strong>Q: ${q}</strong>\n\n`.replace(/\n/g,"<br>") +
+    reply.replace(/\n/g,"<br>");
+}
+
+/* ── FEEDBACK ── */
+function submitFeedback(){
+  const f    = document.getElementById("feedbackInput").value;
+  let list   = JSON.parse(localStorage.getItem("baint_feedback")) || [];
+  list.push(f);
+  localStorage.setItem("baint_feedback", JSON.stringify(list));
+  document.getElementById("feedbackList").innerHTML = list.map(x => "• " + x).join("<br>");
+}
+
+/* ── WAITLIST ── */
+function joinWaitlist(){
+  const lang  = document.getElementById("language").value;
+  const email = document.getElementById("waitlistEmail").value;
+  let list    = JSON.parse(localStorage.getItem("baint_waitlist")) || [];
+  list.push(email);
+  localStorage.setItem("baint_waitlist", JSON.stringify(list));
+  window.location.href = `mailto:baintcomputer@gmail.com?subject=BAINT Waitlist&body=New signup: ${email}`;
+  document.getElementById("waitlistMessage").innerText = ui[lang].waitlistOk;
+}
+
 </script>
 </body>
 </html>
