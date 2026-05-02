@@ -109,7 +109,7 @@ button {
 
 .disclaimer { font-size: 12px; color: #6b7280; margin-top: 6px; }
 
-/* ── NEW: Response option buttons ── */
+/* Response option buttons */
 .reply-options {
   margin-top: 10px;
   display: flex;
@@ -128,18 +128,23 @@ button {
 }
 .reply-options button:hover { background: #2563eb; color: #fff; }
 
-/* ── NEW: State badge ── */
-.state-badge {
-  display: inline-block;
-  font-size: 11px;
-  padding: 2px 10px;
+/* Was this clearer? follow-up buttons */
+.followup-btn {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #16a34a;
+  padding: 5px 14px;
   border-radius: 20px;
-  margin-bottom: 6px;
-  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 0;
+  margin-right: 6px;
 }
-.state-confused  { background: #fef3c7; color: #92400e; }
-.state-curious   { background: #dbeafe; color: #1e40af; }
-.state-neutral   { background: #f3f4f6; color: #374151; }
+.followup-btn.alt {
+  background: #f3f4f6;
+  color: #2563eb;
+  border-color: #2563eb;
+}
 </style>
 </head>
 
@@ -209,7 +214,6 @@ button {
         <input type="text" id="studentQuestion" placeholder="Ask BAINT AI..." />
         <button id="btn-ask" onclick="answerQuestion()">Ask</button>
         <div class="card" id="teacherReply"></div>
-        <!-- NEW: option buttons appear here after answer -->
         <div class="reply-options" id="replyOptions" style="display:none;">
           <button onclick="applyStyle('simple')">1. Simple way</button>
           <button onclick="applyStyle('step')">2. Step-by-step</button>
@@ -248,168 +252,110 @@ const bootLog     = document.getElementById("boot-log");
 /* ── UI TRANSLATIONS ── */
 const ui = {
   en: {
-    setup:       "Learning Setup",
-    assistant:   "BAINT AI Classroom Assistant",
-    speak:       "🎙️ BAINT Voice Explainer",
-    stop:        "⏹ Stop Voice",
-    ask:         "Ask",
-    placeholder: "Ask BAINT AI...",
-    listen:      "🔊 Listen Answer",
-    feedback:    "Feedback",
-    submit:      "Submit",
-    waitlist:    "Join BAINT Waitlist",
-    join:        "Join",
-    replyDefault:"BAINT AI will respond here...",
-    waitlistOk:  "You're on the waitlist!",
-    boot: ["Booting BAINT AI...","Loading Classroom Engine...","Activating Voice System...","Ready."],
-    modes: ["Step-by-step","Simple","Logical","Context","Human"],
-    subjects: ["Biology","History","Science","Mathematics","Computer Science"]
+    setup:"Learning Setup", assistant:"BAINT AI Classroom Assistant",
+    speak:"🎙️ BAINT Voice Explainer", stop:"⏹ Stop Voice", ask:"Ask",
+    placeholder:"Ask BAINT AI...", listen:"🔊 Listen Answer",
+    feedback:"Feedback", submit:"Submit", waitlist:"Join BAINT Waitlist", join:"Join",
+    replyDefault:"BAINT AI will respond here...", waitlistOk:"You're on the waitlist!",
+    boot:["Booting BAINT AI...","Loading Classroom Engine...","Activating Voice System...","Ready."],
+    modes:["Step-by-step","Simple","Logical","Context","Human"],
+    subjects:["Biology","History","Science","Mathematics","Computer Science"],
+    clarify:"Was this clearer?", yes:"✓ Yes, got it", tryAgain:"Try another way"
   },
   zh: {
-    setup:       "学习设置",
-    assistant:   "BAINT AI 课堂助手",
-    speak:       "🎙️ 语音讲解",
-    stop:        "⏹ 停止语音",
-    ask:         "提问",
-    placeholder: "向 BAINT AI 提问...",
-    listen:      "🔊 收听答案",
-    feedback:    "反馈",
-    submit:      "提交",
-    waitlist:    "加入候补名单",
-    join:        "加入",
-    replyDefault:"BAINT AI 将在此处回复...",
-    waitlistOk:  "您已加入候补名单！",
-    boot: ["正在启动 BAINT AI...","加载课堂引擎...","激活语音系统...","准备就绪。"],
-    modes: ["逐步讲解","简单","逻辑分析","情境联系","人性化"],
-    subjects: ["生物学","历史","科学","数学","计算机科学"]
+    setup:"学习设置", assistant:"BAINT AI 课堂助手",
+    speak:"🎙️ 语音讲解", stop:"⏹ 停止语音", ask:"提问",
+    placeholder:"向 BAINT AI 提问...", listen:"🔊 收听答案",
+    feedback:"反馈", submit:"提交", waitlist:"加入候补名单", join:"加入",
+    replyDefault:"BAINT AI 将在此处回复...", waitlistOk:"您已加入候补名单！",
+    boot:["正在启动 BAINT AI...","加载课堂引擎...","激活语音系统...","准备就绪。"],
+    modes:["逐步讲解","简单","逻辑分析","情境联系","人性化"],
+    subjects:["生物学","历史","科学","数学","计算机科学"],
+    clarify:"这样更清楚了吗？", yes:"✓ 明白了", tryAgain:"换一种方式"
   },
   fr: {
-    setup:       "Configuration d'apprentissage",
-    assistant:   "Assistant IA BAINT en classe",
-    speak:       "🎙️ Explication vocale BAINT",
-    stop:        "⏹ Arrêter la voix",
-    ask:         "Demander",
-    placeholder: "Posez une question à BAINT AI...",
-    listen:      "🔊 Écouter la réponse",
-    feedback:    "Retour d'information",
-    submit:      "Soumettre",
-    waitlist:    "Rejoindre la liste d'attente",
-    join:        "Rejoindre",
-    replyDefault:"BAINT AI répondra ici...",
-    waitlistOk:  "Vous êtes sur la liste d'attente !",
-    boot: ["Démarrage de BAINT AI...","Chargement du moteur de classe...","Activation du système vocal...","Prêt."],
-    modes: ["Étape par étape","Simple","Logique","Contexte","Humain"],
-    subjects: ["Biologie","Histoire","Science","Mathématiques","Informatique"]
+    setup:"Configuration d'apprentissage", assistant:"Assistant IA BAINT en classe",
+    speak:"🎙️ Explication vocale BAINT", stop:"⏹ Arrêter la voix", ask:"Demander",
+    placeholder:"Posez une question à BAINT AI...", listen:"🔊 Écouter la réponse",
+    feedback:"Retour d'information", submit:"Soumettre", waitlist:"Rejoindre la liste d'attente", join:"Rejoindre",
+    replyDefault:"BAINT AI répondra ici...", waitlistOk:"Vous êtes sur la liste d'attente !",
+    boot:["Démarrage de BAINT AI...","Chargement du moteur de classe...","Activation du système vocal...","Prêt."],
+    modes:["Étape par étape","Simple","Logique","Contexte","Humain"],
+    subjects:["Biologie","Histoire","Science","Mathématiques","Informatique"],
+    clarify:"C'était plus clair ?", yes:"✓ Oui, compris", tryAgain:"Essayer autrement"
   },
   es: {
-    setup:       "Configuración de aprendizaje",
-    assistant:   "Asistente IA BAINT en el aula",
-    speak:       "🎙️ Explicador de voz BAINT",
-    stop:        "⏹ Detener voz",
-    ask:         "Preguntar",
-    placeholder: "Pregunta a BAINT AI...",
-    listen:      "🔊 Escuchar respuesta",
-    feedback:    "Comentarios",
-    submit:      "Enviar",
-    waitlist:    "Unirse a la lista de espera",
-    join:        "Unirse",
-    replyDefault:"BAINT AI responderá aquí...",
-    waitlistOk:  "¡Estás en la lista de espera!",
-    boot: ["Iniciando BAINT AI...","Cargando motor de clase...","Activando sistema de voz...","Listo."],
-    modes: ["Paso a paso","Simple","Lógico","Contexto","Humano"],
-    subjects: ["Biología","Historia","Ciencia","Matemáticas","Informática"]
+    setup:"Configuración de aprendizaje", assistant:"Asistente IA BAINT en el aula",
+    speak:"🎙️ Explicador de voz BAINT", stop:"⏹ Detener voz", ask:"Preguntar",
+    placeholder:"Pregunta a BAINT AI...", listen:"🔊 Escuchar respuesta",
+    feedback:"Comentarios", submit:"Enviar", waitlist:"Unirse a la lista de espera", join:"Unirse",
+    replyDefault:"BAINT AI responderá aquí...", waitlistOk:"¡Estás en la lista de espera!",
+    boot:["Iniciando BAINT AI...","Cargando motor de clase...","Activando sistema de voz...","Listo."],
+    modes:["Paso a paso","Simple","Lógico","Contexto","Humano"],
+    subjects:["Biología","Historia","Ciencia","Matemáticas","Informática"],
+    clarify:"¿Fue más claro?", yes:"✓ Sí, entendido", tryAgain:"Intentar de otra forma"
   },
   th: {
-    setup:       "การตั้งค่าการเรียนรู้",
-    assistant:   "ผู้ช่วย AI BAINT ในห้องเรียน",
-    speak:       "🎙️ อธิบายด้วยเสียง BAINT",
-    stop:        "⏹ หยุดเสียง",
-    ask:         "ถาม",
-    placeholder: "ถาม BAINT AI...",
-    listen:      "🔊 ฟังคำตอบ",
-    feedback:    "ข้อเสนอแนะ",
-    submit:      "ส่ง",
-    waitlist:    "เข้าร่วมรายการรอ",
-    join:        "เข้าร่วม",
-    replyDefault:"BAINT AI จะตอบที่นี่...",
-    waitlistOk:  "คุณอยู่ในรายการรอแล้ว!",
-    boot: ["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือห้องเรียน...","กำลังเปิดใช้งานระบบเสียง...","พร้อมแล้ว"],
-    modes: ["ทีละขั้นตอน","เรียบง่าย","เชิงตรรกะ","บริบท","แบบมนุษย์"],
-    subjects: ["ชีววิทยา","ประวัติศาสตร์","วิทยาศาสตร์","คณิตศาสตร์","วิทยาการคอมพิวเตอร์"]
+    setup:"การตั้งค่าการเรียนรู้", assistant:"ผู้ช่วย AI BAINT ในห้องเรียน",
+    speak:"🎙️ อธิบายด้วยเสียง BAINT", stop:"⏹ หยุดเสียง", ask:"ถาม",
+    placeholder:"ถาม BAINT AI...", listen:"🔊 ฟังคำตอบ",
+    feedback:"ข้อเสนอแนะ", submit:"ส่ง", waitlist:"เข้าร่วมรายการรอ", join:"เข้าร่วม",
+    replyDefault:"BAINT AI จะตอบที่นี่...", waitlistOk:"คุณอยู่ในรายการรอแล้ว!",
+    boot:["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือห้องเรียน...","กำลังเปิดใช้งานระบบเสียง...","พร้อมแล้ว"],
+    modes:["ทีละขั้นตอน","เรียบง่าย","เชิงตรรกะ","บริบท","แบบมนุษย์"],
+    subjects:["ชีววิทยา","ประวัติศาสตร์","วิทยาศาสตร์","คณิตศาสตร์","วิทยาการคอมพิวเตอร์"],
+    clarify:"ชัดเจนขึ้นไหม?", yes:"✓ เข้าใจแล้ว", tryAgain:"ลองวิธีอื่น"
   },
   ko: {
-    setup:       "학습 설정",
-    assistant:   "BAINT AI 교실 어시스턴트",
-    speak:       "🎙️ BAINT 음성 설명",
-    stop:        "⏹ 음성 중지",
-    ask:         "질문하기",
-    placeholder: "BAINT AI에게 질문하세요...",
-    listen:      "🔊 답변 듣기",
-    feedback:    "피드백",
-    submit:      "제출",
-    waitlist:    "대기자 명단 등록",
-    join:        "등록",
-    replyDefault:"BAINT AI가 여기에 응답합니다...",
-    waitlistOk:  "대기자 명단에 등록되었습니다!",
-    boot: ["BAINT AI 부팅 중...","교실 엔진 로딩 중...","음성 시스템 활성화 중...","준비 완료."],
-    modes: ["단계별","간단히","논리적","맥락","인간적"],
-    subjects: ["생물학","역사","과학","수학","컴퓨터 과학"]
+    setup:"학습 설정", assistant:"BAINT AI 교실 어시스턴트",
+    speak:"🎙️ BAINT 음성 설명", stop:"⏹ 음성 중지", ask:"질문하기",
+    placeholder:"BAINT AI에게 질문하세요...", listen:"🔊 답변 듣기",
+    feedback:"피드백", submit:"제출", waitlist:"대기자 명단 등록", join:"등록",
+    replyDefault:"BAINT AI가 여기에 응답합니다...", waitlistOk:"대기자 명단에 등록되었습니다!",
+    boot:["BAINT AI 부팅 중...","교실 엔진 로딩 중...","음성 시스템 활성화 중...","준비 완료."],
+    modes:["단계별","간단히","논리적","맥락","인간적"],
+    subjects:["생물학","역사","과학","수학","컴퓨터 과학"],
+    clarify:"더 명확했나요?", yes:"✓ 네, 이해했어요", tryAgain:"다른 방법 시도"
   },
   vi: {
-    setup:       "Cài đặt học tập",
-    assistant:   "Trợ lý AI BAINT trong lớp học",
-    speak:       "🎙️ Giải thích bằng giọng nói BAINT",
-    stop:        "⏹ Dừng giọng nói",
-    ask:         "Hỏi",
-    placeholder: "Hỏi BAINT AI...",
-    listen:      "🔊 Nghe câu trả lời",
-    feedback:    "Phản hồi",
-    submit:      "Gửi",
-    waitlist:    "Tham gia danh sách chờ",
-    join:        "Tham gia",
-    replyDefault:"BAINT AI sẽ trả lời ở đây...",
-    waitlistOk:  "Bạn đã có trong danh sách chờ!",
-    boot: ["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Đang kích hoạt hệ thống giọng nói...","Sẵn sàng."],
-    modes: ["Từng bước","Đơn giản","Logic","Bối cảnh","Nhân văn"],
-    subjects: ["Sinh học","Lịch sử","Khoa học","Toán học","Khoa học máy tính"]
+    setup:"Cài đặt học tập", assistant:"Trợ lý AI BAINT trong lớp học",
+    speak:"🎙️ Giải thích bằng giọng nói BAINT", stop:"⏹ Dừng giọng nói", ask:"Hỏi",
+    placeholder:"Hỏi BAINT AI...", listen:"🔊 Nghe câu trả lời",
+    feedback:"Phản hồi", submit:"Gửi", waitlist:"Tham gia danh sách chờ", join:"Tham gia",
+    replyDefault:"BAINT AI sẽ trả lời ở đây...", waitlistOk:"Bạn đã có trong danh sách chờ!",
+    boot:["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Đang kích hoạt hệ thống giọng nói...","Sẵn sàng."],
+    modes:["Từng bước","Đơn giản","Logic","Bối cảnh","Nhân văn"],
+    subjects:["Sinh học","Lịch sử","Khoa học","Toán học","Khoa học máy tính"],
+    clarify:"Rõ hơn chưa?", yes:"✓ Rõ rồi", tryAgain:"Thử cách khác"
   }
 };
 
 /* ── CONTENT DATA (all 7 languages) ── */
-
 const data = {
   en: {
     biology: {
       photosynthesis: `Alright, let's talk about photosynthesis — and I promise it's simpler than it sounds.\n\nPlants are actually making their own food, right inside their leaves. Here's how it works:\n\nFirst, the leaf soaks up sunlight like a solar panel.\nThen it pulls in carbon dioxide — that's the gas we breathe out.\nMeanwhile, the roots are drinking up water from the soil.\nNow here's the magic — a green pigment called chlorophyll takes all of that and turns it into glucose, which is basically sugar the plant uses for energy.\n\nThink of it like a recipe: sunlight + water + CO2 = food for the plant.\n\nA simple way to remember it: plants eat sunlight. That's literally what they do.\n\nDoes that make sense so far? Try asking me anything you're unsure about.`,
-
       cell: `Okay, cells — this is one of my favourite topics because once you get it, everything in biology starts to click.\n\nEvery single living thing — you, me, a tree, a bacteria — is made of cells. They're the smallest unit of life.\n\nNow inside a cell, you've got a few key players:\n— The nucleus is like the brain. It holds your DNA and controls what the cell does.\n— The membrane is the outer wall — it decides what comes in and what stays out.\n— The cytoplasm is the jelly-like fluid that holds everything together inside.\n\nHere's a real-life example: right now, your skin is made of billions of cells. Each one is doing its job — protecting you, repairing itself, communicating with neighbours.\n\nRemember: no cells = no life. It's that fundamental.`,
-
       digestion: `Let's walk through what actually happens when you eat something — say, a bowl of rice.\n\nThe moment food enters your mouth, digestion has already started. Your saliva has enzymes that begin breaking things down.\n\nThen it travels down to your stomach, which is basically a powerful acid chamber. It churns and breaks the food into a thick liquid.\n\nFrom there, it moves into your small intestine — and this is where the real magic happens. Nutrients get absorbed into your bloodstream and carried to every part of your body.\n\nWhat's left over? That gets passed to the large intestine and eventually leaves the body.\n\nSo when you eat rice, your body is basically running a full factory — breaking it down, extracting the energy, and throwing out the waste.\n\nPretty efficient system, right?`,
-
       genetics: `Let me explain genetics the way I wish someone had explained it to me.\n\nYou know how you might have your mum's eyes or your dad's nose? That's genetics at work.\n\nInside almost every cell in your body is DNA — think of it as a really long instruction manual. It's wound up tightly into structures called chromosomes.\n\nSmall sections of that DNA are called genes. Each gene carries instructions for a specific trait — eye colour, hair type, height, and thousands of other things.\n\nWhen your parents had you, you got half your DNA from mum and half from dad. That mix is what makes you uniquely you.\n\nSometimes one gene is stronger — we call that dominant. The weaker one is called recessive. That's why brown eyes tend to show up more than blue.\n\nGenetics is basically biology's way of passing a message down through generations.`
     },
     math: {
       algebra: `Algebra sounds scary but honestly — it's just detective work with numbers.\n\nHere's the idea: sometimes we don't know a value, so we give it a name. Usually we call it x.\n\nLet's say I tell you: x + 5 = 10.\nYou're basically asking — what number, when I add 5 to it, gives me 10?\n\nYou already know the answer is 5. You just did algebra in your head.\n\nThe formal way: subtract 5 from both sides.\nx + 5 - 5 = 10 - 5\nx = 5\n\nThe golden rule of algebra: whatever you do to one side, you must do to the other. Always keep it balanced — like a scale.\n\nOnce you get that idea, you can solve almost anything. Want to try a practice one?`,
-
       ratio: `A ratio is just a way of comparing two things.\n\nLet's say in a class there are 2 teachers and 10 students. The ratio of teachers to students is 2:10 — but we can simplify that to 1:5. One teacher for every five students.\n\nRatios show up everywhere — in recipes, in maps, in mixing paint, in finance.\n\nIf a recipe says mix flour and sugar in a 3:1 ratio, that means for every 3 cups of flour, you add 1 cup of sugar. Simple.\n\nTo simplify a ratio, find the biggest number that divides both sides evenly — that's called the highest common factor.\n\n2:10 → divide both by 2 → 1:5\n\nRatios are one of those things that once you see them in real life, you notice them everywhere.`
     },
     science: {
       gravity: `Let me ask you something — why does a ball fall down when you drop it, and not up?\n\nThe answer is gravity.\n\nGravity is a force — an invisible pull that every object with mass creates. The bigger the mass, the stronger the pull.\n\nEarth is massive, so its gravitational pull is strong enough to keep us on the ground, keep the moon orbiting us, and pull everything downward.\n\nIsaac Newton famously figured this out when he saw an apple fall from a tree. He asked — why does it always fall down? And that question led to one of the most important discoveries in science.\n\nOn the moon, gravity is much weaker — that's why astronauts bounce around when they walk there.\n\nGravity isn't just about falling. It's what holds our entire solar system together.`,
-
       energy: `Energy is one of those concepts that sounds abstract until you realise — it's literally everywhere.\n\nThe simplest definition: energy is the ability to do work. To move something, heat something, light something up.\n\nHere's what's fascinating — energy never disappears. It just changes form.\n\nWhen you eat food, chemical energy gets converted into movement energy so you can walk, run, think.\nWhen you charge your phone, electrical energy gets stored as chemical energy in the battery.\nWhen the sun shines on a solar panel, light energy becomes electrical energy.\n\nThere are many types — kinetic (movement), potential (stored), thermal (heat), electrical, chemical, nuclear.\n\nThe law of conservation of energy says energy cannot be created or destroyed — only transformed.\n\nSo every time you move, speak, or even think — you're transforming energy. Pretty remarkable.`
     },
     history: {
       revolution: `When I say revolution, I don't just mean fighting and chaos — though that's often part of it.\n\nA revolution is what happens when a society reaches a breaking point. When enough people feel that the system is so unfair, so broken, that it has to change completely.\n\nHere's the pattern you'll see in almost every revolution:\n\nFirst, there's deep inequality or injustice — people are suffering and angry.\nThen, a spark ignites things — a bad law, a violent event, a leader who pushes too far.\nPeople organise, protest, sometimes fight.\nAnd eventually, the old power structure collapses and something new takes its place.\n\nThe French Revolution is a perfect example. The people were starving while the king lived in luxury. That tension exploded in 1789 and changed France — and honestly, the whole world — forever.\n\nRevolutions are messy, painful, and unpredictable. But they're also how history changes direction.`,
-
       ww1: `World War One is one of those events that starts simply and then unravels into something enormous.\n\nHere's the honest version: Europe in 1914 was like a room full of people who all hated each other and were all holding weapons.\n\nCountries had formed two big alliance systems. If one country got attacked, all its allies had to join in. It was like a chain reaction waiting to happen.\n\nThe spark? Archduke Franz Ferdinand of Austria was assassinated in Sarajevo in June 1914. Austria blamed Serbia. Russia backed Serbia. Germany backed Austria. France and Britain got pulled in.\n\nWithin weeks, most of Europe was at war.\n\nWhat followed was four years of brutal trench warfare. Millions died — soldiers and civilians alike.\n\nBy 1918 it was over, but the peace terms were so harsh on Germany that they set the stage for World War Two just twenty years later.\n\nHistory doesn't always learn from itself.`
     },
     computer: {
       ai: `Let me explain AI the way I think about it — not with jargon, but with common sense.\n\nArtificial Intelligence is when we build systems that can do things that normally require human thinking — like recognising faces, translating languages, recommending what to watch next, or holding a conversation.\n\nBut how does it actually work?\n\nMost modern AI learns from examples. You show it millions of photos of cats, and it learns what a cat looks like. You give it billions of sentences, and it learns how language works.\n\nIt finds patterns. That's really the core of it.\n\nThe more data it gets, the better it becomes — like a student who gets smarter the more they study.\n\nAI isn't magic. It doesn't truly understand things the way humans do. But it's incredibly powerful at recognising patterns and making predictions.\n\nAnd right now, AI is changing almost every industry — medicine, education, finance, transport. We're living through one of the most significant technological shifts in human history.`,
-
       internet: `The internet is so normal to us now that we barely think about what it actually is.\n\nHere's the honest explanation: the internet is a massive global network of computers all connected together, able to send and receive information instantly.\n\nWhen you open a website, your device sends a request to a server somewhere in the world. That server sends back the page — and this whole conversation happens in milliseconds.\n\nThe information travels as data — broken into small packets, sent across cables and satellites, then reassembled at your end.\n\nThe World Wide Web (what we usually mean when we say "internet") was invented by Tim Berners-Lee in 1989. Before that, computers existed but couldn't easily talk to each other.\n\nToday, over 5 billion people use the internet. It has changed how we communicate, learn, shop, work, fall in love, and understand the world.\n\nIt's probably the most transformative invention of the last 100 years.`
     }
   },
-
   zh: {
     biology: {
       photosynthesis: `好，我们来聊聊光合作用——我保证它比听起来简单得多。\n\n植物其实是在自己制造食物，就在叶片里。过程是这样的：\n\n首先，叶片像太阳能板一样吸收阳光。\n然后它吸入二氧化碳——就是我们呼出的那种气体。\n与此同时，根部从土壤中汲取水分。\n接下来见证奇迹——一种叫叶绿素的绿色物质把这些全部转化为葡萄糖，也就是植物用来获取能量的糖分。\n\n你可以把它想成一个食谱：阳光 + 水 + 二氧化碳 = 植物的食物。\n\n最简单的记法：植物"吃"阳光。就是这样。\n\n到目前为止清楚吗？有什么不明白的地方都可以问我。`,
@@ -434,7 +380,6 @@ const data = {
       internet: `互联网对我们来说已经太普通了，以至于我们几乎不去想它到底是什么。\n\n真实解释：互联网是一个巨大的全球计算机网络，所有计算机连接在一起，能够即时收发信息。\n\n当你打开一个网站，你的设备向世界某处的服务器发送一个请求。那台服务器把页面发回来——整个过程在毫秒内完成。\n\n信息以数据形式传输——拆分成小包，通过电缆和卫星传送，然后在你的终端重新组合。\n\n万维网（我们通常说的"互联网"）是蒂姆·伯纳斯-李在1989年发明的。在那之前，计算机存在，但彼此无法轻易通信。\n\n今天，超过50亿人使用互联网。它改变了我们沟通、学习、购物、工作、恋爱和理解世界的方式。\n\n它可能是过去100年里最具变革性的发明。`
     }
   },
-
   fr: {
     biology: {
       photosynthesis: `Bien, parlons de la photosynthèse — et je te promets que c'est plus simple qu'il n'y paraît.\n\nLes plantes fabriquent leur propre nourriture, directement dans leurs feuilles. Voici comment ça fonctionne :\n\nD'abord, la feuille absorbe la lumière du soleil comme un panneau solaire.\nEnsuite, elle aspire du dioxyde de carbone — c'est le gaz que nous expirons.\nPendant ce temps, les racines absorbent l'eau du sol.\nEt voilà la magie — un pigment vert appelé chlorophylle transforme tout ça en glucose, le sucre que la plante utilise comme énergie.\n\nPense à une recette : lumière + eau + CO2 = nourriture pour la plante.\n\nLa façon la plus simple de s'en souvenir : les plantes mangent la lumière du soleil. C'est littéralement ce qu'elles font.\n\nEst-ce que c'est clair jusqu'ici ? Pose-moi toutes tes questions.`,
@@ -459,7 +404,6 @@ const data = {
       internet: `Internet est tellement normal pour nous maintenant qu'on pense à peine à ce que c'est vraiment.\n\nL'explication honnête : Internet est un immense réseau mondial d'ordinateurs tous connectés ensemble, capables d'envoyer et de recevoir des informations instantanément.\n\nQuand tu ouvres un site web, ton appareil envoie une demande à un serveur quelque part dans le monde. Ce serveur renvoie la page — et toute cette conversation se passe en quelques millisecondes.\n\nL'information voyage sous forme de données — découpée en petits paquets, envoyée par câbles et satellites, puis réassemblée chez toi.\n\nLe World Wide Web a été inventé par Tim Berners-Lee en 1989. Avant ça, les ordinateurs existaient mais ne pouvaient pas facilement communiquer entre eux.\n\nAujourd'hui, plus de 5 milliards de personnes utilisent Internet. Il a changé la façon dont nous communiquons, apprenons, faisons nos achats, travaillons et comprenons le monde.`
     }
   },
-
   es: {
     biology: {
       photosynthesis: `Muy bien, hablemos de la fotosíntesis — y te prometo que es más sencillo de lo que parece.\n\nLas plantas fabrican su propio alimento, justo dentro de sus hojas. Así es como funciona:\n\nPrimero, la hoja absorbe la luz solar como un panel solar.\nLuego absorbe dióxido de carbono — ese es el gas que nosotros exhalamos.\nMientras tanto, las raíces beben agua del suelo.\nAhora viene la magia — un pigmento verde llamado clorofila toma todo eso y lo convierte en glucosa, que básicamente es el azúcar que la planta usa como energía.\n\nPiénsalo como una receta: luz + agua + CO2 = alimento para la planta.\n\nLa forma más fácil de recordarlo: las plantas comen luz solar. Eso es literalmente lo que hacen.\n\n¿Tiene sentido hasta aquí? Pregúntame cualquier duda que tengas.`,
@@ -484,7 +428,6 @@ const data = {
       internet: `Internet es tan normal para nosotros ahora que apenas pensamos en lo que realmente es.\n\nLa explicación honesta: Internet es una enorme red global de computadoras todas conectadas, capaces de enviar y recibir información al instante.\n\nCuando abres un sitio web, tu dispositivo envía una solicitud a un servidor en algún lugar del mundo. Ese servidor devuelve la página — y toda esa conversación ocurre en milisegundos.\n\nLa información viaja como datos — dividida en pequeños paquetes, enviada por cables y satélites, luego reensamblada en tu extremo.\n\nLa World Wide Web fue inventada por Tim Berners-Lee en 1989. Antes de eso, las computadoras existían pero no podían comunicarse fácilmente entre sí.\n\nHoy, más de 5 mil millones de personas usan Internet. Ha cambiado cómo nos comunicamos, aprendemos, compramos, trabajamos y entendemos el mundo.`
     }
   },
-
   th: {
     biology: {
       photosynthesis: `โอเค เรามาคุยเรื่องการสังเคราะห์แสงกัน — และฉันสัญญาว่ามันง่ายกว่าที่คิด\n\nพืชสร้างอาหารเองได้ภายในใบของมัน นี่คือวิธีการ:\n\nแรกเลย ใบดูดซับแสงอาทิตย์เหมือนแผงโซลาร์เซลล์\nจากนั้นมันดูดซับคาร์บอนไดออกไซด์ — นั่นคือก๊าซที่เราหายใจออก\nขณะเดียวกัน รากก็ดื่มน้ำจากดิน\nนี่คือเวทมนตร์ — สารสีเขียวที่เรียกว่าคลอโรฟิลล์นำทุกอย่างนั้นมาเปลี่ยนเป็นกลูโคส ซึ่งก็คือน้ำตาลที่พืชใช้เป็นพลังงาน\n\nคิดแบบนี้เลย: แสง + น้ำ + CO2 = อาหารของพืช\n\nจำง่ายๆ แบบนี้: พืช "กิน" แสงอาทิตย์ นั่นคือสิ่งที่พวกมันทำจริงๆ\n\nเข้าใจไหมจนถึงตรงนี้? ถามได้เลยถ้ายังสงสัย`,
@@ -498,7 +441,7 @@ const data = {
     },
     science: {
       gravity: `ขอถามหน่อยนะ — ทำไมลูกบอลถึงตกลงเมื่อคุณปล่อยมัน ไม่ใช่ลอยขึ้น?\n\nคำตอบคือแรงโน้มถ่วง\n\nแรงโน้มถ่วงเป็นแรง — แรงดึงดูดที่มองไม่เห็นซึ่งวัตถุทุกชนิดที่มีมวลสร้างขึ้น ยิ่งมวลมาก แรงดึงดูดยิ่งแรง\n\nโลกมีขนาดใหญ่มาก ดังนั้นแรงโน้มถ่วงของมันแข็งแกร่งพอที่จะยึดเราไว้กับพื้น ให้ดวงจันทร์โคจรรอบเรา และดึงทุกสิ่งลงด้านล่าง\n\nไอแซก นิวตัน ค้นพบสิ่งนี้เมื่อเขาเห็นแอปเปิลร่วงจากต้นไม้ เขาถามว่า — ทำไมมันถึงตกลงเสมอ? คำถามนั้นนำไปสู่การค้นพบที่สำคัญที่สุดอย่างหนึ่งในวิทยาศาสตร์\n\nบนดวงจันทร์ แรงโน้มถ่วงอ่อนกว่ามาก — นั่นเป็นเหตุผลที่นักบินอวกาศกระโดดโลดเต้นเมื่อเดินที่นั่น\n\nแรงโน้มถ่วงไม่ใช่แค่เรื่องการตก มันคือสิ่งที่ยึดระบบสุริยะทั้งหมดของเราเข้าด้วยกัน`,
-      energy: `พลังงานเป็นแนวคิดที่ฟังดูนามธรรม จนกว่าคุณจะตระหนักว่า — มันอยู่ทุกที่จริงๆ\n\นิยามที่ง่ายที่สุด: พลังงานคือความสามารถในการทำงาน เคลื่อนย้ายสิ่งของ ให้ความร้อน หรือให้แสงสว่าง\n\nนี่คือสิ่งที่น่าสนใจ — พลังงานไม่เคยหายไป มันแค่เปลี่ยนรูปแบบ\n\nเมื่อคุณกินอาหาร พลังงานเคมีถูกแปลงเป็นพลังงานการเคลื่อนไหวเพื่อให้คุณเดิน วิ่ง คิด\nเมื่อคุณชาร์จโทรศัพท์ พลังงานไฟฟ้าถูกเก็บเป็นพลังงานเคมีในแบตเตอรี่\nเมื่อแสงอาทิตย์ส่องแผงโซลาร์เซลล์ พลังงานแสงกลายเป็นพลังงานไฟฟ้า\n\nมีหลายประเภท — จลน์ ศักย์ ความร้อน ไฟฟ้า เคมี นิวเคลียร์\n\nกฎการอนุรักษ์พลังงานบอกว่า พลังงานไม่สามารถสร้างหรือทำลายได้ — เพียงแปลงรูปเท่านั้น\n\nดังนั้นทุกครั้งที่คุณเคลื่อนไหว พูด หรือแม้แต่คิด — คุณกำลังแปลงพลังงาน น่าทึ่งมากใช่ไหม?`
+      energy: `พลังงานเป็นแนวคิดที่ฟังดูนามธรรม จนกว่าคุณจะตระหนักว่า — มันอยู่ทุกที่จริงๆ\n\nนิยามที่ง่ายที่สุด: พลังงานคือความสามารถในการทำงาน เคลื่อนย้ายสิ่งของ ให้ความร้อน หรือให้แสงสว่าง\n\nนี่คือสิ่งที่น่าสนใจ — พลังงานไม่เคยหายไป มันแค่เปลี่ยนรูปแบบ\n\nเมื่อคุณกินอาหาร พลังงานเคมีถูกแปลงเป็นพลังงานการเคลื่อนไหวเพื่อให้คุณเดิน วิ่ง คิด\nเมื่อคุณชาร์จโทรศัพท์ พลังงานไฟฟ้าถูกเก็บเป็นพลังงานเคมีในแบตเตอรี่\nเมื่อแสงอาทิตย์ส่องแผงโซลาร์เซลล์ พลังงานแสงกลายเป็นพลังงานไฟฟ้า\n\nมีหลายประเภท — จลน์ ศักย์ ความร้อน ไฟฟ้า เคมี นิวเคลียร์\n\nกฎการอนุรักษ์พลังงานบอกว่า พลังงานไม่สามารถสร้างหรือทำลายได้ — เพียงแปลงรูปเท่านั้น\n\nดังนั้นทุกครั้งที่คุณเคลื่อนไหว พูด หรือแม้แต่คิด — คุณกำลังแปลงพลังงาน น่าทึ่งมากใช่ไหม?`
     },
     history: {
       revolution: `เมื่อฉันพูดว่าการปฏิวัติ ฉันไม่ได้หมายถึงแค่การต่อสู้และความวุ่นวาย — แม้ว่านั่นมักเป็นส่วนหนึ่งของมัน\n\nการปฏิวัติคือสิ่งที่เกิดขึ้นเมื่อสังคมถึงจุดแตกหัก เมื่อคนพอมากรู้สึกว่าระบบไม่ยุติธรรมและพังทลายจนต้องเปลี่ยนแปลงอย่างสิ้นเชิง\n\nนี่คือรูปแบบที่คุณจะเห็นในเกือบทุกการปฏิวัติ:\n\nแรก มีความไม่เท่าเทียมหรือความอยุติธรรมอย่างลึกซึ้ง — ผู้คนกำลังทุกข์ทรมานและโกรธ\nจากนั้น ประกายไฟจุดประทุทุกอย่าง — กฎหมายเลวร้าย เหตุการณ์รุนแรง ผู้นำที่ผลักดันไปไกลเกินไป\nผู้คนรวมตัว ประท้วง บางครั้งก็ต่อสู้\nและในที่สุด โครงสร้างอำนาจเก่าก็พังทลายและสิ่งใหม่เข้ามาแทนที่\n\nการปฏิวัติฝรั่งเศสเป็นตัวอย่างที่ดีที่สุด ประชาชนอดอยากในขณะที่กษัตริย์ใช้ชีวิตหรูหรา ความตึงเครียดนั้นระเบิดในปี 1789 และเปลี่ยนแปลงฝรั่งเศส — และจริงๆ แล้วทั้งโลก — ตลอดไป`,
@@ -509,7 +452,6 @@ const data = {
       internet: `อินเทอร์เน็ตกลายเป็นเรื่องปกติสำหรับเราจนเราแทบไม่คิดถึงว่ามันคืออะไรจริงๆ\n\nคำอธิบายที่ตรงไปตรงมา: อินเทอร์เน็ตเป็นเครือข่ายคอมพิวเตอร์ทั่วโลกขนาดใหญ่ที่เชื่อมต่อกัน สามารถส่งและรับข้อมูลได้ทันที\n\nเมื่อคุณเปิดเว็บไซต์ อุปกรณ์ของคุณส่งคำขอไปยังเซิร์ฟเวอร์ที่ไหนสักแห่งในโลก เซิร์ฟเวอร์นั้นส่งหน้าเว็บกลับมา — และการสนทนาทั้งหมดนี้เกิดขึ้นในเสี้ยววินาที\n\nข้อมูลเดินทางเป็นแพ็กเก็ตเล็กๆ ผ่านสายเคเบิลและดาวเทียม แล้วประกอบขึ้นใหม่ที่ปลายทางของคุณ\n\nเวิลด์ไวด์เว็บถูกประดิษฐ์โดย ทิม เบอร์เนอร์ส-ลี ในปี 1989 ก่อนนั้น คอมพิวเตอร์มีอยู่แต่ไม่สามารถสื่อสารกันได้ง่ายๆ\n\nวันนี้ มากกว่า 5 พันล้านคนใช้อินเทอร์เน็ต มันเปลี่ยนวิธีที่เราสื่อสาร เรียนรู้ ช้อปปิ้ง ทำงาน และเข้าใจโลก\n\nมันน่าจะเป็นสิ่งประดิษฐ์ที่เปลี่ยนแปลงมากที่สุดในช่วง 100 ปีที่ผ่านมา`
     }
   },
-
   ko: {
     biology: {
       photosynthesis: `좋아요, 광합성에 대해 이야기해 봅시다 — 약속하건대 생각보다 훨씬 간단해요.\n\n식물은 잎사귀 안에서 직접 자신의 먹이를 만들어요. 어떻게 작동하는지 보여드릴게요:\n\n먼저, 잎이 태양광 패널처럼 햇빛을 흡수해요.\n그런 다음 이산화탄소를 빨아들여요 — 우리가 내쉬는 바로 그 가스예요.\n한편, 뿌리는 흙에서 물을 빨아올리고 있어요.\n이제 마법이 일어나요 — 엽록소라는 녹색 색소가 이 모든 것을 포도당으로 바꾸는데, 이게 바로 식물이 에너지로 쓰는 당분이에요.\n\n이렇게 생각해보세요: 햇빛 + 물 + CO2 = 식물의 먹이.\n\n가장 쉽게 기억하는 법: 식물은 햇빛을 먹어요. 말 그대로 그게 그들이 하는 일이에요.\n\n여기까지 이해되나요? 궁금한 점은 뭐든 물어보세요.`,
@@ -534,7 +476,6 @@ const data = {
       internet: `인터넷은 이제 너무 당연해서 실제로 뭔지 거의 생각하지 않게 됐어요.\n\n정직한 설명: 인터넷은 모두 연결된 거대한 전 세계 컴퓨터 네트워크로, 즉시 정보를 주고받을 수 있어요.\n\n웹사이트를 열면, 기기가 세계 어딘가의 서버에 요청을 보내요. 그 서버가 페이지를 돌려보내요 — 이 모든 대화가 밀리초 안에 일어나요.\n\n정보는 데이터로 이동해요 — 작은 패킷으로 나뉘고, 케이블과 위성을 통해 전송되고, 당신 쪽에서 다시 조립돼요.\n\n월드 와이드 웹은 1989년 팀 버너스-리가 발명했어요. 그 전에는 컴퓨터가 존재했지만 쉽게 소통할 수 없었어요.\n\n오늘날 50억 명 이상이 인터넷을 사용해요. 소통하고, 배우고, 쇼핑하고, 일하고, 세상을 이해하는 방식을 바꿨어요.`
     }
   },
-
   vi: {
     biology: {
       photosynthesis: `Được rồi, hãy nói về quang hợp — và tôi hứa nó đơn giản hơn bạn nghĩ.\n\nCây cối thực sự tự tạo ra thức ăn của mình, ngay bên trong lá của chúng. Đây là cách nó hoạt động:\n\nĐầu tiên, lá hấp thụ ánh sáng mặt trời như một tấm pin mặt trời.\nSau đó nó hút khí carbon dioxide — đó là khí chúng ta thở ra.\nTrong khi đó, rễ đang uống nước từ đất.\nBây giờ là phép màu — một sắc tố màu xanh gọi là chất diệp lục lấy tất cả những thứ đó và biến thành glucose, về cơ bản là đường mà cây sử dụng làm năng lượng.\n\nHãy nghĩ như một công thức: ánh sáng + nước + CO2 = thức ăn cho cây.\n\nCách nhớ đơn giản nhất: cây "ăn" ánh sáng mặt trời. Đó là nghĩa đen những gì chúng làm.\n\nĐến đây có ý nghĩa chưa? Hỏi tôi bất cứ điều gì bạn chưa chắc.`,
@@ -560,6 +501,7 @@ const data = {
     }
   }
 };
+
 /* ── VOICE LANG MAP ── */
 const voiceMap = { en:"en", zh:"zh", fr:"fr", es:"es", th:"th", ko:"ko", vi:"vi" };
 
@@ -626,7 +568,7 @@ function updateTopics(){
   topicEl.value = keys[0];
 }
 
-/* ── CONTENT ── */
+/* ── CONTENT — NO labels, just clean text ── */
 function updateContent(){
   const lang  = document.getElementById("language").value;
   const s     = document.getElementById("subject").value;
@@ -634,33 +576,50 @@ function updateContent(){
   const mode  = document.getElementById("mode").value;
   if(!data[lang] || !data[lang][s] || !data[lang][s][t]) return;
   const base = data[lang][s][t];
-  let output = "";
-  if(mode === "step")         output = ui[lang].modes[0] + ":\n\n" + base;
-  else if(mode === "simple")  output = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
-  else if(mode === "logic")   output = ui[lang].modes[2] + ":\n\n" + base;
-  else if(mode === "context") output = ui[lang].modes[3] + ":\n\n" + base;
-  else if(mode === "human")   output = ui[lang].modes[4] + ":\n\n" + base;
-  document.getElementById("explanation").innerText = ui[lang].assistant + "\n\n" + output;
+
+  // No mode label prefix — just the content directly
+  const output = (mode === "simple") ? base.split("\n")[0] : base;
+  document.getElementById("explanation").innerText = output;
 }
 
-/* ── VOICE ── */
+/* ── VOICE (upgraded) ── */
 let utterance;
 
-function getVoice(lang){
+function getBestVoice(langCode){
   const voices = speechSynthesis.getVoices();
-  return voices.find(v => v.lang.toLowerCase().includes(lang)) ||
-         voices.find(v => v.lang.toLowerCase().includes("en"));
+  const prefixMap = {
+    en: ["en-GB","en-AU","en-US"],
+    zh: ["zh-TW","zh-HK","zh-CN"],
+    fr: ["fr-FR","fr-BE","fr-CA"],
+    es: ["es-ES","es-MX","es-US"],
+    th: ["th-TH","th"],
+    ko: ["ko-KR","ko"],
+    vi: ["vi-VN","vi"]
+  };
+  const preferred = prefixMap[langCode] || ["en-US"];
+  for(const locale of preferred){
+    const match = voices.find(v => v.lang === locale);
+    if(match) return match;
+  }
+  const fallback = voices.find(v => v.lang.toLowerCase().startsWith(langCode));
+  if(fallback) return fallback;
+  return voices.find(v => v.lang.startsWith("en")) || voices[0];
 }
 
 function speak(){
   stopVoice();
   const lang = document.getElementById("language").value;
   const text = document.getElementById("explanation").innerText;
+  if(!text) return;
   document.getElementById("subtitles").style.display = "block";
   document.getElementById("subtitles").innerText = text;
   utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = getVoice(voiceMap[lang]);
-  utterance.lang  = voiceMap[lang];
+  utterance.voice  = getBestVoice(lang);
+  utterance.lang   = utterance.voice ? utterance.voice.lang : lang;
+  utterance.rate   = 0.92;
+  utterance.pitch  = 1.05;
+  utterance.volume = 1;
+  utterance.onend  = () => { document.getElementById("subtitles").style.display = "none"; };
   speechSynthesis.speak(utterance);
 }
 
@@ -668,11 +627,16 @@ function speakReply(){
   stopVoice();
   const lang = document.getElementById("language").value;
   const text = document.getElementById("teacherReply").innerText;
+  if(!text) return;
   document.getElementById("subtitles").style.display = "block";
   document.getElementById("subtitles").innerText = text;
   utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = getVoice(voiceMap[lang]);
-  utterance.lang  = voiceMap[lang];
+  utterance.voice  = getBestVoice(lang);
+  utterance.lang   = utterance.voice ? utterance.voice.lang : lang;
+  utterance.rate   = 0.92;
+  utterance.pitch  = 1.05;
+  utterance.volume = 1;
+  utterance.onend  = () => { document.getElementById("subtitles").style.display = "none"; };
   speechSynthesis.speak(utterance);
 }
 
@@ -683,87 +647,93 @@ function stopVoice(){
 
 speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
 
-/* ════════════════════════════════════════
-   NEW: STATE DETECTION
-════════════════════════════════════════ */
+/* ── STATE DETECTION ── */
 function detectUserState(input){
   const t = input.toLowerCase().trim();
-  if(/don'?t understand|confused|not clear|lost|unclear|what does|what is|help/.test(t))
-    return "confused";
-  if(/how|why|tell me more|explain more|what about|curious|interesting|deeper/.test(t))
-    return "curious";
+  if(/don'?t understand|confused|not clear|lost|unclear|what does|what is|help/.test(t)) return "confused";
+  if(/how|why|tell me more|explain more|what about|curious|interesting|deeper/.test(t)) return "curious";
   return "neutral";
 }
 
-/* ════════════════════════════════════════
-   UPDATED: ANSWER QUESTION with state logic
-════════════════════════════════════════ */
+/* ── ANSWER QUESTION — no badges, no labels ── */
 function answerQuestion(){
   const lang  = document.getElementById("language").value;
   const q     = document.getElementById("studentQuestion").value.trim();
   const s     = document.getElementById("subject").value;
   const t     = document.getElementById("topic").value;
-  const mode  = document.getElementById("mode").value;
-
   if(!q) return;
 
   const base  = data[lang][s][t];
   const state = detectUserState(q);
   let reply   = "";
-  let badge   = "";
 
+  // Natural teacher language — no system labels shown
   if(state === "confused"){
-    // Short, simple, ends with a clarifying question
-    badge = `<span class="state-badge state-confused">😕 I sense some confusion — let me simplify</span>\n`;
-    reply = base.split("\n")[0] + "\n\nDo you want it even simpler or step-by-step?";
+    reply = "No worries — let me make this really simple.\n\n"
+      + base.split("\n")[0]
+      + "\n\nDoes that help? Or would you like me to try a different approach?";
   }
   else if(state === "curious"){
-    // Full structured answer
-    badge = `<span class="state-badge state-curious">🤔 Great question — here's a deeper look</span>\n`;
-    if(mode === "step")         reply = ui[lang].modes[0] + ":\n\n" + base;
-    else if(mode === "simple")  reply = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
-    else if(mode === "logic")   reply = ui[lang].modes[2] + ":\n\n" + base;
-    else if(mode === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
-    else if(mode === "human")   reply = ui[lang].modes[4] + ":\n\n" + base;
+    reply = "Great question! Let me give you a deeper look.\n\n" + base;
   }
   else {
-    // Neutral — normal response
-    badge = `<span class="state-badge state-neutral">— BAINT AI Response</span>\n`;
-    if(mode === "step")         reply = ui[lang].modes[0] + ":\n\n" + base;
-    else if(mode === "simple")  reply = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
-    else if(mode === "logic")   reply = ui[lang].modes[2] + ":\n\n" + base;
-    else if(mode === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
-    else if(mode === "human")   reply = ui[lang].modes[4] + ":\n\n" + base;
+    reply = "Let me walk you through this.\n\n" + base;
   }
 
-  // Show reply with badge
-  const replyEl = document.getElementById("teacherReply");
-  replyEl.innerHTML = badge +
-    `<strong>Q: ${q}</strong>\n\n` + reply.replace(/\n/g,"<br>");
+  // Show reply — no badge, no Q: label
+  document.getElementById("teacherReply").innerHTML = reply.replace(/\n/g,"<br>");
 
-  // Show response options
-  document.getElementById("replyOptions").style.display = "flex";
+  // Show style options with natural prompt
+  const optionsEl = document.getElementById("replyOptions");
+  optionsEl.style.display = "flex";
 }
 
-/* ════════════════════════════════════════
-   NEW: APPLY STYLE from option buttons
-════════════════════════════════════════ */
+/* ── APPLY STYLE — each button gives genuinely different output ── */
 function applyStyle(style){
   const lang = document.getElementById("language").value;
   const s    = document.getElementById("subject").value;
   const t    = document.getElementById("topic").value;
   const base = data[lang][s][t];
-  const q    = document.getElementById("studentQuestion").value.trim();
+  const T    = ui[lang];
   let reply  = "";
 
-  if(style === "simple")  reply = base.split("\n")[0];
-  else if(style === "step")    reply = base;
-  else if(style === "context") reply = ui[lang].modes[3] + ":\n\n" + base;
+  if(style === "simple"){
+    // First sentence only — stripped down
+    reply = "Let's start with the simplest version.\n\n" + base.split("\n")[0];
+  }
+  else if(style === "step"){
+    // Full explanation
+    reply = "Let me go through this step by step.\n\n" + base;
+  }
+  else if(style === "context"){
+    // Pull the example line only
+    const lines = base.split("\n");
+    const exLine = lines.find(l => l.toLowerCase().includes("example")) || lines[0];
+    reply = "Let me explain this with a real example.\n\n" + exLine;
+  }
 
+  // Show updated reply + "Was this clearer?" follow-up in correct language
   document.getElementById("teacherReply").innerHTML =
-    `<span class="state-badge state-neutral">— Re-explained</span>\n` +
-    `<strong>Q: ${q}</strong>\n\n`.replace(/\n/g,"<br>") +
-    reply.replace(/\n/g,"<br>");
+    reply.replace(/\n/g,"<br>") +
+    `<br><br><span style="color:#6b7280;font-size:13px;">${T.clarify}</span><br>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+      <button class="followup-btn" onclick="gotIt()">${T.yes}</button>
+      <button class="followup-btn alt" onclick="showOptions()">${T.tryAgain}</button>
+    </div>`;
+}
+
+/* ── FOLLOW-UP ACTIONS ── */
+function gotIt(){
+  // Remove the follow-up — keep only the explanation text
+  const el   = document.getElementById("teacherReply");
+  const text = el.innerText.split(ui[document.getElementById("language").value].clarify)[0].trim();
+  el.innerHTML = text.replace(/\n/g,"<br>");
+  document.getElementById("replyOptions").style.display = "none";
+}
+
+function showOptions(){
+  document.getElementById("replyOptions").style.display = "flex";
+  document.getElementById("replyOptions").scrollIntoView({ behavior:"smooth" });
 }
 
 /* ── FEEDBACK ── */
