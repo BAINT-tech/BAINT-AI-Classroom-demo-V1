@@ -91,10 +91,9 @@ button {
 <div class="laptop">
   <div class="top-bar">BAINT OS — Classroom Assistant Demo</div>
   <div class="screen-shell">
-
-    <div id="app-launcher" class="section">
+ <div id="app-launcher" class="section">
       <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
-      <h3 style="cursor:pointer;" <button onclick="launchDemo()">Launch Demo</button>
+      <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
       <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
     </div>
 
@@ -103,6 +102,7 @@ button {
         <div id="boot-log"></div>
       </div>
     </div>
+    
 
     <div id="demo" style="display:none;">
       <div class="section">
@@ -497,38 +497,45 @@ function generateExample(lang, subject, topic){
 /* ══════════════════════════════════════════
    BOOT & LAUNCH
 ══════════════════════════════════════════ */
-function launchDemo() {
-  // Hide launcher
+function launchDemo(){
+  // Get elements fresh each time — fixes timing issues
+  const appLauncher = document.getElementById("app-launcher");
+  const bootScreen  = document.getElementById("boot");
+  const demoScreen  = document.getElementById("demo");
+  const bootLog     = document.getElementById("boot-log");
+
+  if(!appLauncher || !bootScreen || !demoScreen || !bootLog){
+    alert("Demo failed to load. Please refresh the page.");
+    return;
+  }
+
   appLauncher.style.display = "none";
-
-  // Show boot screen
-  bootScreen.style.display = "block";
-
-  // Clear old logs
+  bootScreen.style.display  = "block";
   bootLog.innerHTML = "";
 
-  // Boot messages
-  const logs = ui.en.boot;
+  const lang  = document.getElementById("language") 
+                ? document.getElementById("language").value 
+                : "en";
+  const lines = (ui[lang] || ui.en).boot;
   let i = 0;
 
-  function showNextLog() {
-    if (i < logs.length) {
-      const line = document.createElement("div");
-      line.textContent = logs[i];
-      bootLog.appendChild(line);
+  function run(){
+    if(i < lines.length){
+      bootLog.innerHTML += lines[i] + "<br>";
       i++;
-      setTimeout(showNextLog, 600);
+      setTimeout(run, 500);
     } else {
-      // After boot, show demo
       setTimeout(() => {
         bootScreen.style.display = "none";
         demoScreen.style.display = "block";
-      }, 800);
+        switchLanguage();
+      }, 500);
     }
   }
+  run();
+     }
 
-  showNextLog();
-  }
+
 
 /* ── SWITCH LANGUAGE ── */
 function switchLanguage(){
