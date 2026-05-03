@@ -499,27 +499,38 @@ function generateExample(lang, subject, topic){
 /* ══════════════════════════════════════════
    BOOT & LAUNCH
 ══════════════════════════════════════════ */
-function launchDemo(){
+function launchDemo() {
+  // Hide launcher
   appLauncher.style.display = "none";
-  bootScreen.style.display  = "block";
-  const lang  = document.getElementById("language").value;
-  const lines = ui[lang].boot;
+
+  // Show boot screen
+  bootScreen.style.display = "block";
+
+  // Clear old logs
+  bootLog.innerHTML = "";
+
+  // Boot messages
+  const logs = ui.en.boot;
   let i = 0;
-  function run(){
-    if(i < lines.length){
-      bootLog.innerHTML += lines[i] + "<br>";
+
+  function showNextLog() {
+    if (i < logs.length) {
+      const line = document.createElement("div");
+      line.textContent = logs[i];
+      bootLog.appendChild(line);
       i++;
-      setTimeout(run, 500);
+      setTimeout(showNextLog, 600);
     } else {
+      // After boot, show demo
       setTimeout(() => {
         bootScreen.style.display = "none";
         demoScreen.style.display = "block";
-        switchLanguage();
-      }, 500);
+      }, 800);
     }
   }
-  run();
-}
+
+  showNextLog();
+  }
 
 /* ── SWITCH LANGUAGE ── */
 function switchLanguage(){
