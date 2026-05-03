@@ -172,7 +172,11 @@ button {
 <div class="subtitles" id="subtitles"></div>
 
 <script>
-
+const appLauncher = document.getElementById("app-launcher");
+const bootScreen  = document.getElementById("boot");
+const demoScreen  = document.getElementById("demo");
+const bootLog     = document.getElementById("boot-log");
+  
 /* ── UI TRANSLATIONS ── */
 const ui = {
   en: {
@@ -490,46 +494,6 @@ function generateExample(lang, subject, topic){
   return s[lang]?.[subject]?.[topic] || s.en?.[subject]?.[topic] || "Here's a real-world way to think about this.";
 }
 
-/* ══════════════════════════════════════════
-   BOOT & LAUNCH
-══════════════════════════════════════════ */
-function launchDemo(){
-  // Get elements fresh each time — fixes timing issues
-  const appLauncher = document.getElementById("app-launcher");
-  const bootScreen  = document.getElementById("boot");
-  const demoScreen  = document.getElementById("demo");
-  const bootLog     = document.getElementById("boot-log");
-
-  if(!appLauncher || !bootScreen || !demoScreen || !bootLog){
-    alert("Demo failed to load. Please refresh the page.");
-    return;
-  }
-
-  appLauncher.style.display = "none";
-  bootScreen.style.display  = "block";
-  bootLog.innerHTML = "";
-
-  const lang  = document.getElementById("language") 
-                ? document.getElementById("language").value 
-                : "en";
-  const lines = (ui[lang] || ui.en).boot;
-  let i = 0;
-
-  function run(){
-    if(i < lines.length){
-      bootLog.innerHTML += lines[i] + "<br>";
-      i++;
-      setTimeout(run, 500);
-    } else {
-      setTimeout(() => {
-        bootScreen.style.display = "none";
-        demoScreen.style.display = "block";
-        switchLanguage();
-      }, 500);
-    }
-  }
-  run();
-     }
 
 
 
@@ -619,6 +583,31 @@ function getBestVoice(langCode){
   return voices.find(v => v.lang.startsWith("en")) || voices[0];
 }
 
+/* ── BOOT ── */
+function launchDemo(){
+  appLauncher.style.display = "none";
+  bootScreen.style.display  = "block";
+
+  const lang = document.getElementById("language").value;
+  const lines = ui[lang].boot;
+  let i = 0;
+
+  function run(){
+    if(i < lines.length){
+      bootLog.innerHTML += lines[i] + "<br>";
+      i++;
+      setTimeout(run, 500);
+    } else {
+      setTimeout(() => {
+        bootScreen.style.display = "none";
+        demoScreen.style.display = "block";
+        switchLanguage();
+      }, 500);
+    }
+  }
+  run();
+}
+  
 function speak(){
   stopVoice();
   const lang = document.getElementById("language").value;
