@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>BAINT OS – Classroom Assistant Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -14,78 +15,102 @@ body {
   align-items: center;
   height: 100vh;
 }
+
 .laptop {
-  width: 960px; height: 650px;
-  background: #000; border-radius: 28px;
+  width: 960px;
+  height: 650px;
+  background: #000;
+  border-radius: 28px;
   padding: 16px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 .top-bar {
-  height: 36px; background: #1c1c1c;
+  height: 36px;
+  background: #1c1c1c;
   border-radius: 18px 18px 0 0;
-  color: #fff; display: flex; align-items: center;
-  padding: 0 16px; font-size: 14px; font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: bold;
 }
+
 .screen-shell {
-  flex: 1; background: #f9fafb;
+  flex: 1;
+  background: #f9fafb;
   border-radius: 0 0 28px 28px;
-  margin-top: 6px; padding: 22px; overflow-y: auto;
+  margin-top: 6px;
+  padding: 22px;
+  overflow-y: auto;
 }
+
 .section { margin-bottom: 20px; }
 .section h4 { margin: 0 0 8px; font-size: 15px; }
+
 select, input {
-  padding: 8px 10px; border-radius: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
   border: 1px solid #d1d5db;
-  font-size: 14px; margin-right: 8px;
+  font-size: 14px;
+  margin-right: 8px;
 }
+
 input[type="text"], input[type="email"] { width: 60%; }
+
 .card {
-  background: #fff; border-radius: 14px;
-  padding: 16px; border: 1px solid #e5e7eb;
-  font-size: 14px; line-height: 1.6;
-  min-height: 60px; white-space: pre-wrap;
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 60px;
+  white-space: pre-wrap;
 }
+
 button {
-  background: #2563eb; border: none;
-  padding: 10px 18px; border-radius: 10px;
-  color: #fff; cursor: pointer;
-  font-size: 14px; margin-top: 6px;
+  background: #2563eb;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 6px;
 }
+
 .waitlist {
   background: #eef2ff;
   border: 1px dashed #6366f1;
-  border-radius: 14px; padding: 16px;
+  border-radius: 14px;
+  padding: 16px;
 }
+
 .success { color: #047857; font-size: 13px; margin-top: 8px; }
+
 .subtitles {
-  position: fixed; bottom: 20px; left: 50%;
-  transform: translateX(-50%); width: 80%;
-  background: rgba(0,0,0,0.8); color: #fff;
-  padding: 12px; border-radius: 12px;
-  font-size: 13px; display: none; text-align: center;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  display: none;
+  text-align: center;
 }
+
 .disclaimer { font-size: 12px; color: #6b7280; margin-top: 6px; }
-.reply-options {
-  margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;
-}
-.reply-options button {
-  background: #f3f4f6; color: #2563eb;
-  border: 1px solid #2563eb;
-  padding: 6px 14px; font-size: 13px;
-  border-radius: 20px; margin-top: 0; cursor: pointer;
-}
-.reply-options button:hover { background: #2563eb; color: #fff; }
-.followup-btn {
-  background: #f0fdf4; color: #16a34a;
-  border: 1px solid #16a34a;
-  padding: 5px 14px; border-radius: 20px;
-  font-size: 12px; cursor: pointer;
-  margin-top: 0; margin-right: 6px;
-}
-.followup-btn.alt { background: #f3f4f6; color: #2563eb; border-color: #2563eb; }
 </style>
 </head>
+
 <body>
 
 <div class="laptop">
@@ -95,7 +120,7 @@ button {
     <!-- LAUNCH -->
     <div id="app-launcher" class="section">
       <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
-      <button id="launchBtn">Click to Launch BAINT Classroom Demo</button>
+      <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
       <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
     </div>
 
@@ -105,11 +130,13 @@ button {
         <div id="boot-log"></div>
       </div>
     </div>
-    
 
+    <!-- DEMO -->
     <div id="demo" style="display:none;">
+
       <div class="section">
         <h4 id="label-setup">Learning Setup</h4>
+
         <select id="language" onchange="switchLanguage()">
           <option value="en">🇺🇸 English</option>
           <option value="zh">🇨🇳 Chinese</option>
@@ -119,13 +146,15 @@ button {
           <option value="ko">🇰🇷 Korean</option>
           <option value="vi">🇻🇳 Vietnamese</option>
         </select>
+
         <select id="mode" onchange="updateContent()">
           <option value="step">Step-by-step</option>
           <option value="simple">Simple</option>
           <option value="logic">Logical</option>
-          <option value="context">Example</option>
+          <option value="context">Context</option>
           <option value="human">Human</option>
         </select>
+
         <select id="subject" onchange="updateTopics(); updateContent();">
           <option value="biology">Biology</option>
           <option value="history">History</option>
@@ -133,6 +162,7 @@ button {
           <option value="math">Mathematics</option>
           <option value="computer">Computer Science</option>
         </select>
+
         <select id="topic" onchange="updateContent()"></select>
       </div>
 
@@ -147,11 +177,6 @@ button {
         <input type="text" id="studentQuestion" placeholder="Ask BAINT AI..." />
         <button id="btn-ask" onclick="answerQuestion()">Ask</button>
         <div class="card" id="teacherReply"></div>
-        <div class="reply-options" id="replyOptions" style="display:none;">
-          <button onclick="applyStyle('simple')">1. Simple way</button>
-          <button onclick="applyStyle('step')">2. Step-by-step</button>
-          <button onclick="applyStyle('context')">3. Example</button>
-        </div>
         <button id="btn-listen" onclick="speakReply()">🔊 Listen Answer</button>
       </div>
 
@@ -168,6 +193,7 @@ button {
         <button id="btn-join" onclick="joinWaitlist()">Join</button>
         <div id="waitlistMessage" class="success"></div>
       </div>
+
     </div>
   </div>
 </div>
@@ -175,417 +201,334 @@ button {
 <div class="subtitles" id="subtitles"></div>
 
 <script>
+
 const appLauncher = document.getElementById("app-launcher");
 const bootScreen  = document.getElementById("boot");
 const demoScreen  = document.getElementById("demo");
 const bootLog     = document.getElementById("boot-log");
-  
-  
+
 /* ── UI TRANSLATIONS ── */
 const ui = {
   en: {
-    setup:"Learning Setup", assistant:"BAINT AI Classroom Assistant",
-    speak:"🎙️ BAINT Voice Explainer", stop:"⏹ Stop Voice", ask:"Ask",
-    placeholder:"Ask BAINT AI...", listen:"🔊 Listen Answer",
-    feedback:"Feedback", submit:"Submit",
-    waitlist:"Join BAINT Waitlist", join:"Join",
+    setup:       "Learning Setup",
+    assistant:   "BAINT AI Classroom Assistant",
+    speak:       "🎙️ BAINT Voice Explainer",
+    stop:        "⏹ Stop Voice",
+    ask:         "Ask",
+    placeholder: "Ask BAINT AI...",
+    listen:      "🔊 Listen Answer",
+    feedback:    "Feedback",
+    submit:      "Submit",
+    waitlist:    "Join BAINT Waitlist",
+    join:        "Join",
     replyDefault:"BAINT AI will respond here...",
-    waitlistOk:"You're on the waitlist!",
-    boot:["Booting BAINT AI...","Loading Classroom Engine...","Activating Voice System...","Ready."],
-    modes:["Step-by-step","Simple","Logical","Example","Human"],
-    subjects:["Biology","History","Science","Mathematics","Computer Science"],
-    clarify:"Was this clearer?", yes:"✓ Yes, got it", tryAgain:"Try another way"
+    waitlistOk:  "You're on the waitlist!",
+    boot: ["Booting BAINT AI...","Loading Classroom Engine...","Activating Voice System...","Ready."],
+    modes: ["Step-by-step","Simple","Logical","Context","Human"],
+    subjects: ["Biology","History","Science","Mathematics","Computer Science"]
   },
   zh: {
-    setup:"学习设置", assistant:"BAINT AI 课堂助手",
-    speak:"🎙️ 语音讲解", stop:"⏹ 停止语音", ask:"提问",
-    placeholder:"向 BAINT AI 提问...", listen:"🔊 收听答案",
-    feedback:"反馈", submit:"提交",
-    waitlist:"加入候补名单", join:"加入",
+    setup:       "学习设置",
+    assistant:   "BAINT AI 课堂助手",
+    speak:       "🎙️ 语音讲解",
+    stop:        "⏹ 停止语音",
+    ask:         "提问",
+    placeholder: "向 BAINT AI 提问...",
+    listen:      "🔊 收听答案",
+    feedback:    "反馈",
+    submit:      "提交",
+    waitlist:    "加入候补名单",
+    join:        "加入",
     replyDefault:"BAINT AI 将在此处回复...",
-    waitlistOk:"您已加入候补名单！",
-    boot:["正在启动 BAINT AI...","加载课堂引擎...","激活语音系统...","准备就绪。"],
-    modes:["逐步讲解","简单","逻辑分析","示例","人性化"],
-    subjects:["生物学","历史","科学","数学","计算机科学"],
-    clarify:"这样更清楚了吗？", yes:"✓ 明白了", tryAgain:"换一种方式"
+    waitlistOk:  "您已加入候补名单！",
+    boot: ["正在启动 BAINT AI...","加载课堂引擎...","激活语音系统...","准备就绪。"],
+    modes: ["逐步讲解","简单","逻辑分析","情境联系","人性化"],
+    subjects: ["生物学","历史","科学","数学","计算机科学"]
   },
   fr: {
-    setup:"Configuration d'apprentissage", assistant:"Assistant IA BAINT en classe",
-    speak:"🎙️ Explication vocale BAINT", stop:"⏹ Arrêter la voix", ask:"Demander",
-    placeholder:"Posez une question à BAINT AI...", listen:"🔊 Écouter la réponse",
-    feedback:"Retour d'information", submit:"Soumettre",
-    waitlist:"Rejoindre la liste d'attente", join:"Rejoindre",
+    setup:       "Configuration d'apprentissage",
+    assistant:   "Assistant IA BAINT en classe",
+    speak:       "🎙️ Explication vocale BAINT",
+    stop:        "⏹ Arrêter la voix",
+    ask:         "Demander",
+    placeholder: "Posez une question à BAINT AI...",
+    listen:      "🔊 Écouter la réponse",
+    feedback:    "Retour d'information",
+    submit:      "Soumettre",
+    waitlist:    "Rejoindre la liste d'attente",
+    join:        "Rejoindre",
     replyDefault:"BAINT AI répondra ici...",
-    waitlistOk:"Vous êtes sur la liste d'attente !",
-    boot:["Démarrage de BAINT AI...","Chargement du moteur de classe...","Activation du système vocal...","Prêt."],
-    modes:["Étape par étape","Simple","Logique","Exemple","Humain"],
-    subjects:["Biologie","Histoire","Science","Mathématiques","Informatique"],
-    clarify:"C'était plus clair ?", yes:"✓ Oui, compris", tryAgain:"Essayer autrement"
+    waitlistOk:  "Vous êtes sur la liste d'attente !",
+    boot: ["Démarrage de BAINT AI...","Chargement du moteur de classe...","Activation du système vocal...","Prêt."],
+    modes: ["Étape par étape","Simple","Logique","Contexte","Humain"],
+    subjects: ["Biologie","Histoire","Science","Mathématiques","Informatique"]
   },
   es: {
-    setup:"Configuración de aprendizaje", assistant:"Asistente IA BAINT en el aula",
-    speak:"🎙️ Explicador de voz BAINT", stop:"⏹ Detener voz", ask:"Preguntar",
-    placeholder:"Pregunta a BAINT AI...", listen:"🔊 Escuchar respuesta",
-    feedback:"Comentarios", submit:"Enviar",
-    waitlist:"Unirse a la lista de espera", join:"Unirse",
+    setup:       "Configuración de aprendizaje",
+    assistant:   "Asistente IA BAINT en el aula",
+    speak:       "🎙️ Explicador de voz BAINT",
+    stop:        "⏹ Detener voz",
+    ask:         "Preguntar",
+    placeholder: "Pregunta a BAINT AI...",
+    listen:      "🔊 Escuchar respuesta",
+    feedback:    "Comentarios",
+    submit:      "Enviar",
+    waitlist:    "Unirse a la lista de espera",
+    join:        "Unirse",
     replyDefault:"BAINT AI responderá aquí...",
-    waitlistOk:"¡Estás en la lista de espera!",
-    boot:["Iniciando BAINT AI...","Cargando motor de clase...","Activando sistema de voz...","Listo."],
-    modes:["Paso a paso","Simple","Lógico","Ejemplo","Humano"],
-    subjects:["Biología","Historia","Ciencia","Matemáticas","Informática"],
-    clarify:"¿Fue más claro?", yes:"✓ Sí, entendido", tryAgain:"Intentar de otra forma"
+    waitlistOk:  "¡Estás en la lista de espera!",
+    boot: ["Iniciando BAINT AI...","Cargando motor de clase...","Activando sistema de voz...","Listo."],
+    modes: ["Paso a paso","Simple","Lógico","Contexto","Humano"],
+    subjects: ["Biología","Historia","Ciencia","Matemáticas","Informática"]
   },
   th: {
-    setup:"การตั้งค่าการเรียนรู้", assistant:"ผู้ช่วย AI BAINT ในห้องเรียน",
-    speak:"🎙️ อธิบายด้วยเสียง BAINT", stop:"⏹ หยุดเสียง", ask:"ถาม",
-    placeholder:"ถาม BAINT AI...", listen:"🔊 ฟังคำตอบ",
-    feedback:"ข้อเสนอแนะ", submit:"ส่ง",
-    waitlist:"เข้าร่วมรายการรอ", join:"เข้าร่วม",
+    setup:       "การตั้งค่าการเรียนรู้",
+    assistant:   "ผู้ช่วย AI BAINT ในห้องเรียน",
+    speak:       "🎙️ อธิบายด้วยเสียง BAINT",
+    stop:        "⏹ หยุดเสียง",
+    ask:         "ถาม",
+    placeholder: "ถาม BAINT AI...",
+    listen:      "🔊 ฟังคำตอบ",
+    feedback:    "ข้อเสนอแนะ",
+    submit:      "ส่ง",
+    waitlist:    "เข้าร่วมรายการรอ",
+    join:        "เข้าร่วม",
     replyDefault:"BAINT AI จะตอบที่นี่...",
-    waitlistOk:"คุณอยู่ในรายการรอแล้ว!",
-    boot:["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือห้องเรียน...","กำลังเปิดใช้งานระบบเสียง...","พร้อมแล้ว"],
-    modes:["ทีละขั้นตอน","เรียบง่าย","เชิงตรรกะ","ตัวอย่าง","แบบมนุษย์"],
-    subjects:["ชีววิทยา","ประวัติศาสตร์","วิทยาศาสตร์","คณิตศาสตร์","วิทยาการคอมพิวเตอร์"],
-    clarify:"ชัดเจนขึ้นไหม?", yes:"✓ เข้าใจแล้ว", tryAgain:"ลองวิธีอื่น"
+    waitlistOk:  "คุณอยู่ในรายการรอแล้ว!",
+    boot: ["กำลังบู๊ต BAINT AI...","กำลังโหลดเครื่องมือห้องเรียน...","กำลังเปิดใช้งานระบบเสียง...","พร้อมแล้ว"],
+    modes: ["ทีละขั้นตอน","เรียบง่าย","เชิงตรรกะ","บริบท","แบบมนุษย์"],
+    subjects: ["ชีววิทยา","ประวัติศาสตร์","วิทยาศาสตร์","คณิตศาสตร์","วิทยาการคอมพิวเตอร์"]
   },
   ko: {
-    setup:"학습 설정", assistant:"BAINT AI 교실 어시스턴트",
-    speak:"🎙️ BAINT 음성 설명", stop:"⏹ 음성 중지", ask:"질문하기",
-    placeholder:"BAINT AI에게 질문하세요...", listen:"🔊 답변 듣기",
-    feedback:"피드백", submit:"제출",
-    waitlist:"대기자 명단 등록", join:"등록",
+    setup:       "학습 설정",
+    assistant:   "BAINT AI 교실 어시스턴트",
+    speak:       "🎙️ BAINT 음성 설명",
+    stop:        "⏹ 음성 중지",
+    ask:         "질문하기",
+    placeholder: "BAINT AI에게 질문하세요...",
+    listen:      "🔊 답변 듣기",
+    feedback:    "피드백",
+    submit:      "제출",
+    waitlist:    "대기자 명단 등록",
+    join:        "등록",
     replyDefault:"BAINT AI가 여기에 응답합니다...",
-    waitlistOk:"대기자 명단에 등록되었습니다!",
-    boot:["BAINT AI 부팅 중...","교실 엔진 로딩 중...","음성 시스템 활성화 중...","준비 완료."],
-    modes:["단계별","간단히","논리적","예시","인간적"],
-    subjects:["생물학","역사","과학","수학","컴퓨터 과학"],
-    clarify:"더 명확했나요?", yes:"✓ 네, 이해했어요", tryAgain:"다른 방법 시도"
+    waitlistOk:  "대기자 명단에 등록되었습니다!",
+    boot: ["BAINT AI 부팅 중...","교실 엔진 로딩 중...","음성 시스템 활성화 중...","준비 완료."],
+    modes: ["단계별","간단히","논리적","맥락","인간적"],
+    subjects: ["생물학","역사","과학","수학","컴퓨터 과학"]
   },
   vi: {
-    setup:"Cài đặt học tập", assistant:"Trợ lý AI BAINT trong lớp học",
-    speak:"🎙️ Giải thích bằng giọng nói BAINT", stop:"⏹ Dừng giọng nói", ask:"Hỏi",
-    placeholder:"Hỏi BAINT AI...", listen:"🔊 Nghe câu trả lời",
-    feedback:"Phản hồi", submit:"Gửi",
-    waitlist:"Tham gia danh sách chờ", join:"Tham gia",
+    setup:       "Cài đặt học tập",
+    assistant:   "Trợ lý AI BAINT trong lớp học",
+    speak:       "🎙️ Giải thích bằng giọng nói BAINT",
+    stop:        "⏹ Dừng giọng nói",
+    ask:         "Hỏi",
+    placeholder: "Hỏi BAINT AI...",
+    listen:      "🔊 Nghe câu trả lời",
+    feedback:    "Phản hồi",
+    submit:      "Gửi",
+    waitlist:    "Tham gia danh sách chờ",
+    join:        "Tham gia",
     replyDefault:"BAINT AI sẽ trả lời ở đây...",
-    waitlistOk:"Bạn đã có trong danh sách chờ!",
-    boot:["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Đang kích hoạt hệ thống giọng nói...","Sẵn sàng."],
-    modes:["Từng bước","Đơn giản","Logic","Ví dụ","Nhân văn"],
-    subjects:["Sinh học","Lịch sử","Khoa học","Toán học","Khoa học máy tính"],
-    clarify:"Rõ hơn chưa?", yes:"✓ Rõ rồi", tryAgain:"Thử cách khác"
+    waitlistOk:  "Bạn đã có trong danh sách chờ!",
+    boot: ["Đang khởi động BAINT AI...","Đang tải công cụ lớp học...","Đang kích hoạt hệ thống giọng nói...","Sẵn sàng."],
+    modes: ["Từng bước","Đơn giản","Logic","Bối cảnh","Nhân văn"],
+    subjects: ["Sinh học","Lịch sử","Khoa học","Toán học","Khoa học máy tính"]
   }
 };
 
-/* ══════════════════════════════════════════
-   CONTENT DATA — full teacher-style text
-══════════════════════════════════════════ */
+/* ── CONTENT DATA (all 7 languages) ── */
 const data = {
+
+  /* ═══════════ ENGLISH ═══════════ */
   en: {
     biology: {
-      photosynthesis: `Alright, let's talk about photosynthesis — and I promise it's simpler than it sounds.\n\nPlants are actually making their own food, right inside their leaves. Here's how it works:\n\nFirst, the leaf soaks up sunlight like a solar panel.\nThen it pulls in carbon dioxide — that's the gas we breathe out.\nMeanwhile, the roots are drinking up water from the soil.\nNow here's the magic — a green pigment called chlorophyll takes all of that and turns it into glucose, which is basically sugar the plant uses for energy.\n\nThink of it like a recipe: sunlight + water + CO2 = food for the plant.\n\nA simple way to remember it: plants eat sunlight. That's literally what they do.\n\nDoes that make sense so far? Try asking me anything you're unsure about.`,
-      cell: `Okay, cells — this is one of my favourite topics because once you get it, everything in biology starts to click.\n\nEvery single living thing — you, me, a tree, a bacteria — is made of cells. They're the smallest unit of life.\n\nNow inside a cell, you've got a few key players:\n— The nucleus is like the brain. It holds your DNA and controls what the cell does.\n— The membrane is the outer wall — it decides what comes in and what stays out.\n— The cytoplasm is the jelly-like fluid that holds everything together inside.\n\nHere's a real-life example: right now, your skin is made of billions of cells. Each one is doing its job — protecting you, repairing itself, communicating with neighbours.\n\nRemember: no cells = no life. It's that fundamental.`,
-      digestion: `Let's walk through what actually happens when you eat something — say, a bowl of rice.\n\nThe moment food enters your mouth, digestion has already started. Your saliva has enzymes that begin breaking things down.\n\nThen it travels down to your stomach, which is basically a powerful acid chamber. It churns and breaks the food into a thick liquid.\n\nFrom there, it moves into your small intestine — and this is where the real magic happens. Nutrients get absorbed into your bloodstream and carried to every part of your body.\n\nWhat's left over? That gets passed to the large intestine and eventually leaves the body.\n\nSo when you eat rice, your body is basically running a full factory — breaking it down, extracting the energy, and throwing out the waste.\n\nPretty efficient system, right?`,
-      genetics: `Let me explain genetics the way I wish someone had explained it to me.\n\nYou know how you might have your mum's eyes or your dad's nose? That's genetics at work.\n\nInside almost every cell in your body is DNA — think of it as a really long instruction manual. It's wound up tightly into structures called chromosomes.\n\nSmall sections of that DNA are called genes. Each gene carries instructions for a specific trait — eye colour, hair type, height, and thousands of other things.\n\nWhen your parents had you, you got half your DNA from mum and half from dad. That mix is what makes you uniquely you.\n\nSometimes one gene is stronger — we call that dominant. The weaker one is called recessive. That's why brown eyes tend to show up more than blue.\n\nGenetics is basically biology's way of passing a message down through generations.`
+      photosynthesis: `Photosynthesis is the process plants use to make food.\n\nStep 1: Plants take in sunlight through leaves\nStep 2: They absorb carbon dioxide from air\nStep 3: Water is absorbed from roots\nStep 4: Chlorophyll converts energy into glucose\n\nExample: A tree uses sunlight to grow fruits and leaves.\n\nSummary: Plants "eat" sunlight to survive.`,
+      cell: `Cells are the basic building blocks of life.\n\nStep 1: All living things are made of cells\nStep 2: Cells have nucleus, membrane, cytoplasm\nStep 3: They perform life functions\n\nExample: Your skin is made of millions of cells.\n\nSummary: Cells = tiny units that form life.`,
+      digestion: `Digestion is how food is broken down in the body.\n\nStep 1: Food enters mouth\nStep 2: Stomach breaks it down\nStep 3: Nutrients are absorbed\n\nExample: Rice becomes energy in your body.\n\nSummary: Digestion = turning food into energy.`,
+      genetics: `Genetics is how traits are passed from parents.\n\nStep 1: DNA carries information\nStep 2: Genes control traits\nStep 3: Traits are inherited\n\nExample: Eye color comes from parents.\n\nSummary: Genes = biological information transfer.`
     },
     math: {
-      algebra: `Algebra sounds scary but honestly — it's just detective work with numbers.\n\nHere's the idea: sometimes we don't know a value, so we give it a name. Usually we call it x.\n\nLet's say I tell you: x + 5 = 10.\nYou're basically asking — what number, when I add 5 to it, gives me 10?\n\nYou already know the answer is 5. You just did algebra in your head.\n\nThe formal way: subtract 5 from both sides.\nx + 5 - 5 = 10 - 5\nx = 5\n\nThe golden rule of algebra: whatever you do to one side, you must do to the other. Always keep it balanced — like a scale.\n\nOnce you get that idea, you can solve almost anything. Want to try a practice one?`,
-      ratio: `A ratio is just a way of comparing two things.\n\nLet's say in a class there are 2 teachers and 10 students. The ratio of teachers to students is 2:10 — but we can simplify that to 1:5. One teacher for every five students.\n\nRatios show up everywhere — in recipes, in maps, in mixing paint, in finance.\n\nIf a recipe says mix flour and sugar in a 3:1 ratio, that means for every 3 cups of flour, you add 1 cup of sugar. Simple.\n\nTo simplify a ratio, find the biggest number that divides both sides evenly — that's called the highest common factor.\n\n2:10 → divide both by 2 → 1:5\n\nRatios are one of those things that once you see them in real life, you notice them everywhere.`
+      algebra: `Algebra is solving unknown values using symbols.\n\nStep 1: Identify unknown (x)\nStep 2: Form equation\nStep 3: Solve step-by-step\n\nExample: x + 5 = 10 → x = 5\n\nSummary: Algebra = solving missing numbers.`,
+      ratio: `Ratios compare two quantities.\n\nStep 1: Write values\nStep 2: Simplify\n\nExample: 2:4 = 1:2\n\nSummary: Ratio = comparison tool.`
     },
     science: {
-      gravity: `Let me ask you something — why does a ball fall down when you drop it, and not up?\n\nThe answer is gravity.\n\nGravity is a force — an invisible pull that every object with mass creates. The bigger the mass, the stronger the pull.\n\nEarth is massive, so its gravitational pull is strong enough to keep us on the ground, keep the moon orbiting us, and pull everything downward.\n\nIsaac Newton famously figured this out when he saw an apple fall from a tree. He asked — why does it always fall down? And that question led to one of the most important discoveries in science.\n\nOn the moon, gravity is much weaker — that's why astronauts bounce around when they walk there.\n\nGravity isn't just about falling. It's what holds our entire solar system together.`,
-      energy: `Energy is one of those concepts that sounds abstract until you realise — it's literally everywhere.\n\nThe simplest definition: energy is the ability to do work. To move something, heat something, light something up.\n\nHere's what's fascinating — energy never disappears. It just changes form.\n\nWhen you eat food, chemical energy gets converted into movement energy so you can walk, run, think.\nWhen you charge your phone, electrical energy gets stored as chemical energy in the battery.\nWhen the sun shines on a solar panel, light energy becomes electrical energy.\n\nThere are many types — kinetic (movement), potential (stored), thermal (heat), electrical, chemical, nuclear.\n\nThe law of conservation of energy says energy cannot be created or destroyed — only transformed.\n\nSo every time you move, speak, or even think — you're transforming energy. Pretty remarkable.`
+      gravity: `Gravity is a force that pulls objects down.\n\nStep 1: Earth has mass\nStep 2: Mass creates pull\nStep 3: Everything falls toward Earth\n\nExample: Apple falling from tree.\n\nSummary: Gravity = Earth's pulling force.`,
+      energy: `Energy is the ability to do work.\n\nStep 1: Exists in many forms\nStep 2: Can change form\nStep 3: Cannot be destroyed\n\nExample: Food → energy for movement\n\nSummary: Energy = power to do work.`
     },
     history: {
-      revolution: `When I say revolution, I don't just mean fighting and chaos — though that's often part of it.\n\nA revolution is what happens when a society reaches a breaking point. When enough people feel that the system is so unfair, so broken, that it has to change completely.\n\nHere's the pattern you'll see in almost every revolution:\n\nFirst, there's deep inequality or injustice — people are suffering and angry.\nThen, a spark ignites things — a bad law, a violent event, a leader who pushes too far.\nPeople organise, protest, sometimes fight.\nAnd eventually, the old power structure collapses and something new takes its place.\n\nThe French Revolution is a perfect example. The people were starving while the king lived in luxury. That tension exploded in 1789 and changed France — and honestly, the whole world — forever.\n\nRevolutions are messy, painful, and unpredictable. But they're also how history changes direction.`,
-      ww1: `World War One is one of those events that starts simply and then unravels into something enormous.\n\nHere's the honest version: Europe in 1914 was like a room full of people who all hated each other and were all holding weapons.\n\nCountries had formed two big alliance systems. If one country got attacked, all its allies had to join in. It was like a chain reaction waiting to happen.\n\nThe spark? Archduke Franz Ferdinand of Austria was assassinated in Sarajevo in June 1914. Austria blamed Serbia. Russia backed Serbia. Germany backed Austria. France and Britain got pulled in.\n\nWithin weeks, most of Europe was at war.\n\nWhat followed was four years of brutal trench warfare. Millions died — soldiers and civilians alike.\n\nBy 1918 it was over, but the peace terms were so harsh on Germany that they set the stage for World War Two just twenty years later.\n\nHistory doesn't always learn from itself.`
+      revolution: `A revolution is a major change in society.\n\nStep 1: People are dissatisfied\nStep 2: Conflict begins\nStep 3: Government changes\n\nExample: French Revolution changed France.\n\nSummary: Revolution = big political change.`,
+      ww1: `World War 1 was a global conflict.\n\nStep 1: Political tension\nStep 2: Alliances formed\nStep 3: War begins in 1914\n\nSummary: WW1 = global war between nations.`
     },
     computer: {
-      ai: `Let me explain AI the way I think about it — not with jargon, but with common sense.\n\nArtificial Intelligence is when we build systems that can do things that normally require human thinking — like recognising faces, translating languages, recommending what to watch next, or holding a conversation.\n\nBut how does it actually work?\n\nMost modern AI learns from examples. You show it millions of photos of cats, and it learns what a cat looks like. You give it billions of sentences, and it learns how language works.\n\nIt finds patterns. That's really the core of it.\n\nThe more data it gets, the better it becomes — like a student who gets smarter the more they study.\n\nAI isn't magic. It doesn't truly understand things the way humans do. But it's incredibly powerful at recognising patterns and making predictions.\n\nAnd right now, AI is changing almost every industry — medicine, education, finance, transport. We're living through one of the most significant technological shifts in human history.`,
-      internet: `The internet is so normal to us now that we barely think about what it actually is.\n\nHere's the honest explanation: the internet is a massive global network of computers all connected together, able to send and receive information instantly.\n\nWhen you open a website, your device sends a request to a server somewhere in the world. That server sends back the page — and this whole conversation happens in milliseconds.\n\nThe information travels as data — broken into small packets, sent across cables and satellites, then reassembled at your end.\n\nThe World Wide Web was invented by Tim Berners-Lee in 1989. Before that, computers existed but couldn't easily talk to each other.\n\nToday, over 5 billion people use the internet. It has changed how we communicate, learn, shop, work, and understand the world.\n\nIt's probably the most transformative invention of the last 100 years.`
+      ai: `AI is machines simulating human intelligence.\n\nStep 1: Machines learn data\nStep 2: Patterns are recognized\nStep 3: Decisions are made\n\nExample: Chatbots answering questions.\n\nSummary: AI = machine thinking system.`,
+      internet: `Internet connects computers worldwide.\n\nStep 1: Devices connect\nStep 2: Data is shared\nStep 3: Communication happens\n\nSummary: Internet = global communication network.`
     }
   },
+
+  /* ═══════════ CHINESE ═══════════ */
   zh: {
     biology: {
-      photosynthesis: `好，我们来聊聊光合作用——我保证它比听起来简单得多。\n\n植物其实是在自己制造食物，就在叶片里。过程是这样的：\n\n首先，叶片像太阳能板一样吸收阳光。\n然后它吸入二氧化碳——就是我们呼出的那种气体。\n与此同时，根部从土壤中汲取水分。\n接下来见证奇迹——一种叫叶绿素的绿色物质把这些全部转化为葡萄糖，也就是植物用来获取能量的糖分。\n\n你可以把它想成一个食谱：阳光 + 水 + 二氧化碳 = 植物的食物。\n\n最简单的记法：植物"吃"阳光。就是这样。\n\n到目前为止清楚吗？有什么不明白的地方都可以问我。`,
-      cell: `细胞——这是我最喜欢的话题之一，因为一旦你理解了它，生物学的很多东西就豁然开朗了。\n\n所有生物——你、我、一棵树、一个细菌——都是由细胞构成的。细胞是生命最小的单位。\n\n细胞内部有几个关键部分：\n— 细胞核就像大脑，储存DNA，控制细胞的行为。\n— 细胞膜是外墙，决定什么进来、什么出去。\n— 细胞质是里面的胶状液体，把一切固定在一起。\n\n现实例子：此刻你的皮肤就是由数十亿个细胞构成的，每一个都在默默工作。\n\n记住：没有细胞，就没有生命。就这么重要。`,
-      digestion: `我们来看看当你吃东西的时候，身体里究竟发生了什么——比如吃一碗米饭。\n\n食物一进嘴，消化就开始了。唾液里有酶，开始分解食物。\n\n然后食物进入胃——胃基本上是一个强力酸性腔室，它翻腾搅动，把食物变成浓稠的液体。\n\n接着进入小肠——这里才是真正的魔法发生的地方。营养物质被吸收进血液，输送到身体各处。\n\n剩余的东西？进入大肠，最终排出体外。\n\n效率相当高，对吧？`,
-      genetics: `我来用我希望当初有人告诉我的方式解释遗传学。\n\n你知道为什么你可能有妈妈的眼睛或爸爸的鼻子吗？那就是遗传在起作用。\n\n你身体里几乎每个细胞都含有DNA——把它想成一本很长的说明书。DNA紧紧缠绕形成染色体。\n\nDNA上的一小段叫做基因。每个基因携带某种特征的指令——眼睛颜色、发型、身高等等。\n\n有些基因更强势，叫显性基因；较弱的叫隐性基因。这就是为什么棕色眼睛比蓝色眼睛更常见。\n\n遗传学，就是生物学把信息代代相传的方式。`
+      photosynthesis: `光合作用是植物制造食物的过程。\n\n第1步：植物通过叶片吸收阳光\n第2步：吸收空气中的二氧化碳\n第3步：根部吸收水分\n第4步：叶绿素将能量转化为葡萄糖\n\n例子：一棵树利用阳光生长果实和叶子。\n\n总结：植物靠"吃"阳光生存。`,
+      cell: `细胞是生命的基本组成单位。\n\n第1步：所有生物都由细胞构成\n第2步：细胞具有细胞核、细胞膜、细胞质\n第3步：它们执行生命功能\n\n例子：你的皮肤由数百万个细胞组成。\n\n总结：细胞 = 构成生命的微小单位。`,
+      digestion: `消化是食物在体内被分解的过程。\n\n第1步：食物进入口腔\n第2步：胃将其分解\n第3步：营养物质被吸收\n\n例子：米饭在体内转化为能量。\n\n总结：消化 = 将食物转化为能量。`,
+      genetics: `遗传学研究特征如何从父母传给后代。\n\n第1步：DNA携带遗传信息\n第2步：基因控制特征\n第3步：特征被遗传\n\n例子：眼睛颜色来自父母。\n\n总结：基因 = 生物信息的传递。`
     },
     math: {
-      algebra: `代数听起来难，但说实话——它就是用数字做侦探游戏。\n\n核心思想：有时候我们不知道某个值，就给它起个名字，通常叫x。\n\n比如我告诉你：x + 5 = 10。\n你在问：什么数加上5等于10？\n\n你已经知道答案是5了。你刚才就在做代数。\n\n正式做法：两边同时减去5。\nx + 5 - 5 = 10 - 5\nx = 5\n\n代数的黄金法则：你对一边做的操作，必须对另一边也做。保持平衡——就像天平一样。`,
-      ratio: `比率就是比较两样东西的方式。\n\n比如班里有2位老师和10个学生。老师和学生的比率是2:10——但我们可以化简成1:5。每5个学生对应1位老师。\n\n化简比率：找到能整除两边的最大数——这叫最大公因数。\n\n2:10 → 两边除以2 → 1:5\n\n比率就是这样，一旦在生活中发现了它，你会发现它无处不在。`
+      algebra: `代数是用符号求解未知值的数学。\n\n第1步：识别未知数（x）\n第2步：建立方程\n第3步：逐步求解\n\n例子：x + 5 = 10 → x = 5\n\n总结：代数 = 求解未知数。`,
+      ratio: `比率用于比较两个数量。\n\n第1步：写出数值\n第2步：化简\n\n例子：2:4 = 1:2\n\n总结：比率 = 比较工具。`
     },
     science: {
-      gravity: `我问你一个问题——你扔出一个球，它为什么向下落而不是向上？\n\n答案就是重力。\n\n重力是一种力——每个有质量的物体都会产生的一种无形吸引力。质量越大，吸引力越强。\n\n地球质量巨大，所以它的引力足够强，能把我们固定在地面上，让月球围绕我们运转，并让一切向下坠落。\n\n重力不只是关于下落，它是维系整个太阳系的力量。`,
-      energy: `能量这个概念听起来很抽象，直到你意识到——它其实无处不在。\n\n最简单的定义：能量是做功的能力。移动东西、加热东西、点亮东西。\n\n有趣的是——能量永远不会消失，只会改变形式。\n\n你吃东西时，化学能转化为运动能。你给手机充电时，电能储存为化学能。太阳照射太阳能板时，光能变成电能。\n\n能量守恒定律说：能量不能被创造或消灭——只能转化。`
+      gravity: `重力是将物体向下拉的力。\n\n第1步：地球有质量\n第2步：质量产生引力\n第3步：一切都向地球坠落\n\n例子：苹果从树上落下。\n\n总结：重力 = 地球的吸引力。`,
+      energy: `能量是做功的能力。\n\n第1步：以多种形式存在\n第2步：可以改变形式\n第3步：不能被消灭\n\n例子：食物 → 运动所需能量\n\n总结：能量 = 做功的力量。`
     },
     history: {
-      revolution: `当我说革命，我不只是说战斗和混乱——尽管这些往往都有。\n\n革命是当一个社会到达临界点时发生的事情。当足够多的人觉得这个制度太不公平、太腐烂，必须彻底改变。\n\n法国大革命就是完美的例子。人民在挨饿，而国王住在豪华宫殿里。这种张力在1789年爆发，永远改变了法国——说实话，也改变了整个世界。`,
-      ww1: `第一次世界大战是那种开头简单、却演变成巨大灾难的事件。\n\n真实情况是：1914年的欧洲，就像一个房间里挤满了互相憎恨、人人手持武器的人。\n\n导火索？1914年6月，奥地利大公弗朗茨·斐迪南在萨拉热窝遇刺。几周之内，欧洲大部分地区陷入战争。\n\n1918年战争结束，但对德国的苛刻和约为二十年后的第二次世界大战埋下了种子。`
+      revolution: `革命是社会的重大变革。\n\n第1步：人民不满\n第2步：冲突开始\n第3步：政府改变\n\n例子：法国大革命改变了法国。\n\n总结：革命 = 重大政治变革。`,
+      ww1: `第一次世界大战是一场全球性冲突。\n\n第1步：政治紧张局势\n第2步：联盟形成\n第3步：1914年战争爆发\n\n总结：一战 = 国家之间的全球战争。`
     },
     computer: {
-      ai: `让我用我自己理解的方式解释人工智能——不用术语，用常识。\n\nAI就是我们构建能做通常需要人类思维才能完成的事情的系统——比如识别人脸、翻译语言、进行对话。\n\n大多数现代AI从例子中学习。你给它看几百万张猫的照片，它就学会了猫长什么样。它找规律。数据越多，它就越强——就像一个学得越多就越聪明的学生。`,
-      internet: `互联网对我们来说已经太普通了，以至于我们几乎不去想它到底是什么。\n\n真实解释：互联网是一个巨大的全球计算机网络，所有计算机连接在一起，能够即时收发信息。\n\n当你打开一个网站，你的设备向世界某处的服务器发送一个请求。整个过程在毫秒内完成。`
+      ai: `人工智能是机器模拟人类智能的技术。\n\n第1步：机器学习数据\n第2步：识别模式\n第3步：做出决策\n\n例子：聊天机器人回答问题。\n\n总结：人工智能 = 机器思维系统。`,
+      internet: `互联网将全球计算机连接起来。\n\n第1步：设备连接\n第2步：数据共享\n第3步：通信实现\n\n总结：互联网 = 全球通信网络。`
     }
   },
+
+  /* ═══════════ FRENCH ═══════════ */
   fr: {
     biology: {
-      photosynthesis: `Bien, parlons de la photosynthèse — et je te promets que c'est plus simple qu'il n'y paraît.\n\nLes plantes fabriquent leur propre nourriture, directement dans leurs feuilles.\n\nD'abord, la feuille absorbe la lumière du soleil comme un panneau solaire.\nEnsuite, elle aspire du dioxyde de carbone.\nPendant ce temps, les racines absorbent l'eau du sol.\nEt voilà la magie — un pigment vert appelé chlorophylle transforme tout ça en glucose.\n\nPense à une recette : lumière + eau + CO2 = nourriture pour la plante.\n\nLa façon la plus simple de s'en souvenir : les plantes mangent la lumière du soleil.`,
-      cell: `Les cellules — c'est un de mes sujets préférés.\n\nChaque être vivant — toi, moi, un arbre, une bactérie — est fait de cellules. C'est la plus petite unité de vie.\n\nÀ l'intérieur d'une cellule :\n— Le noyau, c'est comme le cerveau.\n— La membrane, c'est la paroi extérieure.\n— Le cytoplasme, c'est le liquide gélatineux qui maintient tout ensemble.\n\nRetiens bien : pas de cellules = pas de vie.`,
-      digestion: `Voyons ce qui se passe vraiment quand tu manges quelque chose.\n\nDès que la nourriture entre dans ta bouche, la digestion a déjà commencé. Ta salive contient des enzymes.\n\nEnsuite, ça descend dans ton estomac — une puissante chambre acide.\n\nDe là, ça passe dans l'intestin grêle où les nutriments sont absorbés dans le sang.\n\nCe qui reste passe dans le gros intestin et finit par sortir du corps.`,
-      genetics: `Laisse-moi t'expliquer la génétique simplement.\n\nTu sais comment tu peux avoir les yeux de ta mère ou le nez de ton père ? C'est la génétique.\n\nÀ l'intérieur de presque chaque cellule se trouve l'ADN — un très long manuel d'instructions enroulé en chromosomes.\n\nDe petites sections s'appellent des gènes. Chaque gène porte les instructions pour un trait spécifique.\n\nCertains gènes sont dominants, d'autres récessifs. C'est pourquoi les yeux marron apparaissent plus souvent que les yeux bleus.`
+      photosynthesis: `La photosynthèse est le processus par lequel les plantes fabriquent leur nourriture.\n\nÉtape 1 : Les plantes captent la lumière du soleil par leurs feuilles\nÉtape 2 : Elles absorbent le dioxyde de carbone de l'air\nÉtape 3 : L'eau est absorbée par les racines\nÉtape 4 : La chlorophylle convertit l'énergie en glucose\n\nExemple : Un arbre utilise la lumière du soleil pour faire pousser ses fruits et feuilles.\n\nRésumé : Les plantes "mangent" la lumière du soleil pour survivre.`,
+      cell: `Les cellules sont les unités de base de la vie.\n\nÉtape 1 : Tous les êtres vivants sont composés de cellules\nÉtape 2 : Les cellules ont un noyau, une membrane et un cytoplasme\nÉtape 3 : Elles accomplissent les fonctions vitales\n\nExemple : Ta peau est composée de millions de cellules.\n\nRésumé : Cellule = petite unité constituant la vie.`,
+      digestion: `La digestion est la façon dont la nourriture est décomposée dans le corps.\n\nÉtape 1 : La nourriture entre par la bouche\nÉtape 2 : L'estomac la décompose\nÉtape 3 : Les nutriments sont absorbés\n\nExemple : Le riz devient de l'énergie dans ton corps.\n\nRésumé : Digestion = transformer la nourriture en énergie.`,
+      genetics: `La génétique étudie comment les traits sont transmis des parents aux enfants.\n\nÉtape 1 : L'ADN porte l'information\nÉtape 2 : Les gènes contrôlent les traits\nÉtape 3 : Les traits sont hérités\n\nExemple : La couleur des yeux vient des parents.\n\nRésumé : Gènes = transfert d'information biologique.`
     },
     math: {
-      algebra: `L'algèbre fait peur, mais honnêtement — c'est juste du travail de détective avec des chiffres.\n\nDisons que je te dis : x + 5 = 10.\nTu connais déjà la réponse : 5.\n\nLa méthode formelle : soustraire 5 des deux côtés.\nx + 5 - 5 = 10 - 5\nx = 5\n\nLa règle d'or : ce que tu fais d'un côté, tu dois le faire de l'autre.`,
-      ratio: `Un ratio, c'est simplement une façon de comparer deux choses.\n\nDisons que dans une classe il y a 2 professeurs et 10 élèves. Le ratio est 2:10 — mais on peut simplifier à 1:5.\n\nPour simplifier, trouve le plus grand commun diviseur.\n\n2:10 → diviser par 2 → 1:5`
+      algebra: `L'algèbre consiste à résoudre des valeurs inconnues à l'aide de symboles.\n\nÉtape 1 : Identifier l'inconnu (x)\nÉtape 2 : Former l'équation\nÉtape 3 : Résoudre étape par étape\n\nExemple : x + 5 = 10 → x = 5\n\nRésumé : Algèbre = résoudre des nombres manquants.`,
+      ratio: `Les ratios comparent deux quantités.\n\nÉtape 1 : Écrire les valeurs\nÉtape 2 : Simplifier\n\nExemple : 2:4 = 1:2\n\nRésumé : Ratio = outil de comparaison.`
     },
     science: {
-      gravity: `Laisse-moi te poser une question — pourquoi une balle tombe-t-elle vers le bas ?\n\nLa réponse : la gravité.\n\nLa gravité est une force — une attraction invisible que crée tout objet ayant une masse.\n\nIsaac Newton a compris ça en voyant une pomme tomber d'un arbre.\n\nSur la Lune, la gravité est beaucoup plus faible — c'est pourquoi les astronautes rebondissent.`,
-      energy: `L'énergie est un de ces concepts qui semble abstrait jusqu'à ce que tu réalises — elle est littéralement partout.\n\nLa définition la plus simple : l'énergie est la capacité à effectuer un travail.\n\nVoici ce qui est fascinant — l'énergie ne disparaît jamais. Elle change juste de forme.\n\nLa loi de conservation de l'énergie dit que l'énergie ne peut être ni créée ni détruite — seulement transformée.`
+      gravity: `La gravité est une force qui attire les objets vers le bas.\n\nÉtape 1 : La Terre a une masse\nÉtape 2 : La masse crée une attraction\nÉtape 3 : Tout tombe vers la Terre\n\nExemple : Une pomme tombe d'un arbre.\n\nRésumé : Gravité = force d'attraction de la Terre.`,
+      energy: `L'énergie est la capacité à effectuer un travail.\n\nÉtape 1 : Existe sous de nombreuses formes\nÉtape 2 : Peut changer de forme\nÉtape 3 : Ne peut pas être détruite\n\nExemple : Nourriture → énergie pour le mouvement\n\nRésumé : Énergie = puissance pour travailler.`
     },
     history: {
-      revolution: `Quand je dis révolution, je ne parle pas seulement de combats et de chaos.\n\nUne révolution, c'est ce qui se passe quand une société atteint un point de rupture.\n\nLa Révolution française en est l'exemple parfait. Le peuple mourait de faim pendant que le roi vivait dans le luxe. Cette tension a explosé en 1789.`,
-      ww1: `La Première Guerre mondiale est un de ces événements qui commence simplement.\n\nL'Europe en 1914, c'était comme une pièce pleine de gens qui se détestaient tous et portaient tous des armes.\n\nL'étincelle ? L'archiduc François-Ferdinand assassiné à Sarajevo en juin 1914. En quelques semaines, la majeure partie de l'Europe était en guerre.`
+      revolution: `Une révolution est un changement majeur dans la société.\n\nÉtape 1 : Le peuple est mécontent\nÉtape 2 : Un conflit commence\nÉtape 3 : Le gouvernement change\n\nExemple : La Révolution française a transformé la France.\n\nRésumé : Révolution = grand changement politique.`,
+      ww1: `La Première Guerre mondiale était un conflit mondial.\n\nÉtape 1 : Tensions politiques\nÉtape 2 : Formation d'alliances\nÉtape 3 : La guerre commence en 1914\n\nRésumé : WWI = guerre mondiale entre nations.`
     },
     computer: {
-      ai: `Laisse-moi t'expliquer l'IA simplement.\n\nL'Intelligence Artificielle, c'est quand on construit des systèmes capables de faire des choses qui nécessitent normalement la pensée humaine.\n\nLa plupart des IA modernes apprennent par l'exemple. Plus elle reçoit de données, meilleure elle devient.`,
-      internet: `Internet est tellement normal pour nous maintenant.\n\nL'explication honnête : Internet est un immense réseau mondial d'ordinateurs tous connectés ensemble.\n\nQuand tu ouvres un site web, ton appareil envoie une demande à un serveur. Toute cette conversation se passe en quelques millisecondes.`
+      ai: `L'IA est la simulation de l'intelligence humaine par des machines.\n\nÉtape 1 : Les machines apprennent des données\nÉtape 2 : Les modèles sont reconnus\nÉtape 3 : Des décisions sont prises\n\nExemple : Des chatbots répondant à des questions.\n\nRésumé : IA = système de réflexion des machines.`,
+      internet: `Internet connecte les ordinateurs du monde entier.\n\nÉtape 1 : Les appareils se connectent\nÉtape 2 : Les données sont partagées\nÉtape 3 : La communication se produit\n\nRésumé : Internet = réseau de communication mondial.`
     }
   },
+
+  /* ═══════════ SPANISH ═══════════ */
   es: {
     biology: {
-      photosynthesis: `Muy bien, hablemos de la fotosíntesis — y te prometo que es más sencillo de lo que parece.\n\nLas plantas fabrican su propio alimento, justo dentro de sus hojas.\n\nPrimero, la hoja absorbe la luz solar como un panel solar.\nLuego absorbe dióxido de carbono.\nMientras tanto, las raíces beben agua del suelo.\nAhora viene la magia — un pigmento verde llamado clorofila convierte todo eso en glucosa.\n\nLa forma más fácil de recordarlo: las plantas comen luz solar.`,
-      cell: `Las células — este es uno de mis temas favoritos.\n\nTodo ser vivo — tú, yo, un árbol, una bacteria — está hecho de células. Son la unidad más pequeña de vida.\n\nDentro de una célula:\n— El núcleo es como el cerebro.\n— La membrana es la pared exterior.\n— El citoplasma es el líquido gelatinoso que mantiene todo junto.\n\nRecuerda: sin células = sin vida.`,
-      digestion: `Veamos qué pasa realmente cuando comes algo.\n\nEn el momento en que la comida entra a tu boca, la digestión ya ha comenzado.\n\nLuego viaja al estómago — una potente cámara ácida.\n\nDe ahí pasa al intestino delgado donde los nutrientes se absorben a la sangre.\n\nEntonces cuando comes arroz, tu cuerpo está funcionando como una fábrica completa.`,
-      genetics: `Déjame explicarte la genética simplemente.\n\nSabes cómo puedes tener los ojos de tu mamá o la nariz de tu papá. Eso es la genética.\n\nDentro de casi cada célula hay ADN — un manual de instrucciones muy largo enrollado en cromosomas.\n\nAlgunos genes son dominantes, otros recesivos. Por eso los ojos marrones aparecen más que los azules.`
+      photosynthesis: `La fotosíntesis es el proceso mediante el cual las plantas producen su alimento.\n\nPaso 1: Las plantas absorben la luz solar a través de las hojas\nPaso 2: Absorben dióxido de carbono del aire\nPaso 3: El agua es absorbida por las raíces\nPaso 4: La clorofila convierte la energía en glucosa\n\nEjemplo: Un árbol usa la luz solar para hacer crecer sus frutos y hojas.\n\nResumen: Las plantas "comen" luz solar para sobrevivir.`,
+      cell: `Las células son los bloques fundamentales de la vida.\n\nPaso 1: Todos los seres vivos están formados por células\nPaso 2: Las células tienen núcleo, membrana y citoplasma\nPaso 3: Realizan las funciones vitales\n\nEjemplo: Tu piel está formada por millones de células.\n\nResumen: Célula = unidad pequeña que forma la vida.`,
+      digestion: `La digestión es cómo se descompone el alimento en el cuerpo.\n\nPaso 1: El alimento entra por la boca\nPaso 2: El estómago lo descompone\nPaso 3: Los nutrientes son absorbidos\n\nEjemplo: El arroz se convierte en energía en tu cuerpo.\n\nResumen: Digestión = convertir alimento en energía.`,
+      genetics: `La genética estudia cómo se transmiten los rasgos de padres a hijos.\n\nPaso 1: El ADN lleva la información\nPaso 2: Los genes controlan los rasgos\nPaso 3: Los rasgos son heredados\n\nEjemplo: El color de ojos viene de los padres.\n\nResumen: Genes = transferencia de información biológica.`
     },
     math: {
-      algebra: `El álgebra suena intimidante pero honestamente — es solo trabajo de detective con números.\n\nDiga que te digo: x + 5 = 10.\nYa sabes la respuesta: 5.\n\nLa forma formal: restar 5 de ambos lados.\nx + 5 - 5 = 10 - 5\nx = 5\n\nLa regla de oro: lo que haces de un lado, debes hacerlo del otro.`,
-      ratio: `Una razón es simplemente una forma de comparar dos cosas.\n\nDigamos que en una clase hay 2 profesores y 10 estudiantes. La razón es 2:10 — pero podemos simplificar a 1:5.\n\nPara simplificar, encuentra el máximo común divisor.\n\n2:10 → dividir entre 2 → 1:5`
+      algebra: `El álgebra consiste en resolver valores desconocidos usando símbolos.\n\nPaso 1: Identificar el desconocido (x)\nPaso 2: Formar la ecuación\nPaso 3: Resolver paso a paso\n\nEjemplo: x + 5 = 10 → x = 5\n\nResumen: Álgebra = resolver números faltantes.`,
+      ratio: `Las razones comparan dos cantidades.\n\nPaso 1: Escribir los valores\nPaso 2: Simplificar\n\nEjemplo: 2:4 = 1:2\n\nResumen: Razón = herramienta de comparación.`
     },
     science: {
-      gravity: `Déjame hacerte una pregunta — ¿por qué una pelota cae hacia abajo?\n\nLa respuesta es la gravedad.\n\nLa gravedad es una fuerza — una atracción invisible que crea todo objeto con masa.\n\nIsaac Newton descubrió esto cuando vio una manzana caer de un árbol.\n\nEn la Luna, la gravedad es mucho más débil — por eso los astronautas dan saltos.`,
-      energy: `La energía es uno de esos conceptos que parece abstracto.\n\nLa definición más simple: la energía es la capacidad de realizar trabajo.\n\nLo fascinante es esto — la energía nunca desaparece. Solo cambia de forma.\n\nLa ley de conservación de la energía dice que la energía no puede crearse ni destruirse — solo transformarse.`
+      gravity: `La gravedad es una fuerza que atrae los objetos hacia abajo.\n\nPaso 1: La Tierra tiene masa\nPaso 2: La masa crea atracción\nPaso 3: Todo cae hacia la Tierra\n\nEjemplo: Una manzana cayendo de un árbol.\n\nResumen: Gravedad = fuerza de atracción de la Tierra.`,
+      energy: `La energía es la capacidad de realizar trabajo.\n\nPaso 1: Existe en muchas formas\nPaso 2: Puede cambiar de forma\nPaso 3: No puede ser destruida\n\nEjemplo: Alimento → energía para moverse\n\nResumen: Energía = poder para trabajar.`
     },
     history: {
-      revolution: `Cuando digo revolución, no me refiero solo a peleas y caos.\n\nUna revolución es lo que pasa cuando una sociedad llega a un punto de quiebre.\n\nLa Revolución Francesa es el ejemplo perfecto. El pueblo moría de hambre mientras el rey vivía en el lujo. Esa tensión explotó en 1789.`,
-      ww1: `La Primera Guerra Mundial es uno de esos eventos que comienza simplemente.\n\nEuropa en 1914 era como una habitación llena de personas que se odiaban y todas tenían armas.\n\nLa chispa fue el asesinato del Archiduque Franz Ferdinand en junio de 1914. En pocas semanas, la mayor parte de Europa estaba en guerra.`
+      revolution: `Una revolución es un cambio importante en la sociedad.\n\nPaso 1: El pueblo está insatisfecho\nPaso 2: Comienza el conflicto\nPaso 3: El gobierno cambia\n\nEjemplo: La Revolución Francesa transformó Francia.\n\nResumen: Revolución = gran cambio político.`,
+      ww1: `La Primera Guerra Mundial fue un conflicto global.\n\nPaso 1: Tensión política\nPaso 2: Se forman alianzas\nPaso 3: La guerra comienza en 1914\n\nResumen: WWI = guerra global entre naciones.`
     },
     computer: {
-      ai: `Déjame explicarte la IA simplemente.\n\nLa Inteligencia Artificial es cuando construimos sistemas que pueden hacer cosas que normalmente requieren pensamiento humano.\n\nLa mayoría de las IA modernas aprenden de ejemplos. Cuantos más datos recibe, mejor se vuelve.`,
-      internet: `Internet es tan normal para nosotros ahora que apenas pensamos en lo que realmente es.\n\nLa explicación honesta: Internet es una enorme red global de computadoras todas conectadas.\n\nCuando abres un sitio web, tu dispositivo envía una solicitud a un servidor. Toda esa conversación ocurre en milisegundos.`
+      ai: `La IA es la simulación de la inteligencia humana por máquinas.\n\nPaso 1: Las máquinas aprenden datos\nPaso 2: Se reconocen patrones\nPaso 3: Se toman decisiones\n\nEjemplo: Chatbots respondiendo preguntas.\n\nResumen: IA = sistema de pensamiento de máquinas.`,
+      internet: `Internet conecta computadoras de todo el mundo.\n\nPaso 1: Los dispositivos se conectan\nPaso 2: Los datos se comparten\nPaso 3: La comunicación ocurre\n\nResumen: Internet = red de comunicación global.`
     }
   },
+
+  /* ═══════════ THAI ═══════════ */
   th: {
     biology: {
-      photosynthesis: `โอเค เรามาคุยเรื่องการสังเคราะห์แสงกัน — มันง่ายกว่าที่คิด\n\nพืชสร้างอาหารเองได้ภายในใบ:\n\nแรกเลย ใบดูดซับแสงอาทิตย์เหมือนแผงโซลาร์เซลล์\nจากนั้นดูดซับ CO2 จากอากาศ\nรากดูดน้ำจากดิน\nคลอโรฟิลล์เปลี่ยนทุกอย่างเป็นกลูโคส\n\nจำง่ายๆ: พืช "กิน" แสงอาทิตย์`,
-      cell: `เซลล์คือหน่วยชีวิตที่เล็กที่สุด สิ่งมีชีวิตทุกชนิดประกอบด้วยเซลล์\n\nภายในเซลล์:\n— นิวเคลียสเปรียบเหมือนสมอง\n— เยื่อหุ้มเซลล์คือกำแพงด้านนอก\n— ไซโตพลาสซึมคือของเหลวที่รวมทุกอย่าง\n\nไม่มีเซลล์ = ไม่มีชีวิต`,
-      digestion: `มาดูกันว่าอะไรเกิดขึ้นเมื่อคุณกินอาหาร\n\nทันทีที่อาหารเข้าปาก การย่อยก็เริ่ม\nกระเพาะย่อยสลายอาหารเป็นของเหลว\nลำไส้เล็กดูดซึมสารอาหารเข้าเลือด\nของเสียออกทางลำไส้ใหญ่\n\nร่างกายทำสิ่งนี้วันละ 3 ครั้งโดยอัตโนมัติ`,
-      genetics: `พันธุศาสตร์อธิบายว่าทำไมคุณถึงหน้าตาคล้ายพ่อแม่\n\nภายในเซลล์มี DNA — คู่มือคำแนะนำที่ยาวมาก\nส่วนเล็กๆ ของ DNA เรียกว่ายีน\nคุณได้รับ DNA ครึ่งหนึ่งจากแม่และครึ่งหนึ่งจากพ่อ\n\nยีนเด่นจะปรากฏ ยีนด้อยจะซ่อนอยู่แต่ส่งต่อได้`
+      photosynthesis: `การสังเคราะห์แสงคือกระบวนการที่พืชใช้ในการสร้างอาหาร\n\nขั้นที่ 1: พืชรับแสงอาทิตย์ผ่านใบ\nขั้นที่ 2: ดูดซับคาร์บอนไดออกไซด์จากอากาศ\nขั้นที่ 3: รากดูดซับน้ำ\nขั้นที่ 4: คลอโรฟิลล์แปลงพลังงานเป็นกลูโคส\n\nตัวอย่าง: ต้นไม้ใช้แสงอาทิตย์เพื่อเจริญเติบโต\n\nสรุป: พืช "กิน" แสงอาทิตย์เพื่อความอยู่รอด`,
+      cell: `เซลล์คือหน่วยพื้นฐานของสิ่งมีชีวิต\n\nขั้นที่ 1: สิ่งมีชีวิตทุกชนิดประกอบด้วยเซลล์\nขั้นที่ 2: เซลล์มีนิวเคลียส เยื่อหุ้มเซลล์ และไซโตพลาสซึม\nขั้นที่ 3: เซลล์ทำหน้าที่ต่างๆ ของสิ่งมีชีวิต\n\nตัวอย่าง: ผิวหนังของคุณประกอบด้วยเซลล์หลายล้านเซลล์\n\nสรุป: เซลล์ = หน่วยเล็กๆ ที่ประกอบเป็นสิ่งมีชีวิต`,
+      digestion: `การย่อยอาหารคือกระบวนการที่ร่างกายย่อยสลายอาหาร\n\nขั้นที่ 1: อาหารเข้าสู่ปาก\nขั้นที่ 2: กระเพาะย่อยสลายอาหาร\nขั้นที่ 3: สารอาหารถูกดูดซึม\n\nตัวอย่าง: ข้าวกลายเป็นพลังงานในร่างกาย\n\nสรุป: การย่อยอาหาร = การเปลี่ยนอาหารเป็นพลังงาน`,
+      genetics: `พันธุศาสตร์คือการศึกษาการถ่ายทอดลักษณะจากพ่อแม่สู่ลูก\n\nขั้นที่ 1: DNA บรรจุข้อมูลทางพันธุกรรม\nขั้นที่ 2: ยีนควบคุมลักษณะต่างๆ\nขั้นที่ 3: ลักษณะถูกถ่ายทอดทางพันธุกรรม\n\nตัวอย่าง: สีตามาจากพ่อแม่\n\nสรุป: ยีน = การถ่ายทอดข้อมูลทางชีววิทยา`
     },
     math: {
-      algebra: `พีชคณิตแค่การหาตัวเลขที่หายไป\n\nถ้า x + 5 = 10 แสดงว่า x = 5\n\nวิธีการอย่างเป็นทางการ: ลบ 5 จากทั้งสองข้าง\nx + 5 - 5 = 10 - 5\nx = 5\n\nกฎทอง: สิ่งที่ทำกับข้างหนึ่ง ต้องทำกับอีกข้างด้วย`,
-      ratio: `อัตราส่วนคือวิธีเปรียบเทียบสองสิ่ง\n\nครู 2 คน นักเรียน 10 คน = อัตราส่วน 2:10 = 1:5\n\nหา ห.ร.ม. แล้วหารทั้งสองข้าง\n2:10 → หารด้วย 2 → 1:5`
+      algebra: `พีชคณิตคือการหาค่าที่ไม่รู้จักโดยใช้สัญลักษณ์\n\nขั้นที่ 1: ระบุค่าที่ไม่รู้จัก (x)\nขั้นที่ 2: สร้างสมการ\nขั้นที่ 3: แก้สมการทีละขั้น\n\nตัวอย่าง: x + 5 = 10 → x = 5\n\nสรุป: พีชคณิต = การหาตัวเลขที่หายไป`,
+      ratio: `อัตราส่วนใช้เปรียบเทียบปริมาณสองอย่าง\n\nขั้นที่ 1: เขียนค่า\nขั้นที่ 2: ลดรูป\n\nตัวอย่าง: 2:4 = 1:2\n\nสรุป: อัตราส่วน = เครื่องมือเปรียบเทียบ`
     },
     science: {
-      gravity: `ทำไมลูกบอลถึงตกลงเมื่อคุณปล่อยมัน?\n\nคำตอบคือแรงโน้มถ่วง\n\nแรงโน้มถ่วงเป็นแรงดึงดูดที่มองไม่เห็น ยิ่งมวลมาก แรงดึงดูดยิ่งแรง\n\nไอแซก นิวตัน ค้นพบสิ่งนี้จากแอปเปิลที่ร่วงจากต้นไม้`,
-      energy: `พลังงานคือความสามารถในการทำงาน มันไม่เคยหายไป แค่เปลี่ยนรูปแบบ\n\nกินอาหาร → พลังงานเคมีเปลี่ยนเป็นพลังงานการเคลื่อนไหว\nชาร์จโทรศัพท์ → ไฟฟ้าเปลี่ยนเป็นพลังงานเคมีในแบตเตอรี่\n\nกฎการอนุรักษ์พลังงาน: พลังงานไม่สามารถสร้างหรือทำลายได้`
+      gravity: `แรงโน้มถ่วงคือแรงที่ดึงวัตถุลงสู่พื้น\n\nขั้นที่ 1: โลกมีมวล\nขั้นที่ 2: มวลสร้างแรงดึงดูด\nขั้นที่ 3: ทุกสิ่งตกสู่พื้นโลก\n\nตัวอย่าง: แอปเปิ้ลหล่นจากต้นไม้\n\nสรุป: แรงโน้มถ่วง = แรงดึงดูดของโลก`,
+      energy: `พลังงานคือความสามารถในการทำงาน\n\nขั้นที่ 1: มีอยู่ในหลายรูปแบบ\nขั้นที่ 2: สามารถเปลี่ยนรูปแบบได้\nขั้นที่ 3: ไม่สามารถถูกทำลายได้\n\nตัวอย่าง: อาหาร → พลังงานสำหรับการเคลื่อนไหว\n\nสรุป: พลังงาน = กำลังในการทำงาน`
     },
     history: {
-      revolution: `การปฏิวัติคือสิ่งที่เกิดขึ้นเมื่อสังคมถึงจุดแตกหัก\n\nการปฏิวัติฝรั่งเศสเป็นตัวอย่างที่ดีที่สุด ประชาชนอดอยากในขณะที่กษัตริย์ใช้ชีวิตหรูหรา ความตึงเครียดนั้นระเบิดในปี 1789`,
-      ww1: `สงครามโลกครั้งที่หนึ่งเริ่มต้นจากชนวนเดียว\n\nอาร์คดยุคถูกลอบสังหารในปี 1914 ทำให้พันธมิตรลูกโซ่ดึงยุโรปส่วนใหญ่เข้าสู่สงคราม\n\nสี่ปีของสงครามสนามเพลาะ ผู้เสียชีวิตนับล้าน`
+      revolution: `การปฏิวัติคือการเปลี่ยนแปลงครั้งใหญ่ในสังคม\n\nขั้นที่ 1: ประชาชนไม่พอใจ\nขั้นที่ 2: ความขัดแย้งเริ่มต้น\nขั้นที่ 3: รัฐบาลเปลี่ยนแปลง\n\nตัวอย่าง: การปฏิวัติฝรั่งเศสเปลี่ยนแปลงฝรั่งเศส\n\nสรุป: การปฏิวัติ = การเปลี่ยนแปลงทางการเมืองครั้งใหญ่`,
+      ww1: `สงครามโลกครั้งที่ 1 เป็นความขัดแย้งระดับโลก\n\nขั้นที่ 1: ความตึงเครียดทางการเมือง\nขั้นที่ 2: การก่อตั้งพันธมิตร\nขั้นที่ 3: สงครามเริ่มต้นในปี 1914\n\nสรุป: สงครามโลกครั้งที่ 1 = สงครามระดับโลกระหว่างประเทศต่างๆ`
     },
     computer: {
-      ai: `AI คือซอฟต์แวร์ที่เรียนรู้จากตัวอย่างเพื่อตัดสินใจอย่างชาญฉลาด\n\nยิ่งได้รับข้อมูลมาก ยิ่งดีขึ้น — เหมือนนักเรียนที่ยิ่งเรียนยิ่งฉลาด\n\nAI กำลังเปลี่ยนแปลงเกือบทุกอุตสาหกรรม — การแพทย์ การศึกษา การเงิน การขนส่ง`,
-      internet: `อินเทอร์เน็ตคือเครือข่ายคอมพิวเตอร์ทั่วโลกขนาดใหญ่\n\nเมื่อคุณเปิดเว็บไซต์ อุปกรณ์ส่งคำขอไปยังเซิร์ฟเวอร์ทั่วโลก\nข้อมูลเดินทางเป็นแพ็กเก็ตผ่านสายเคเบิลและดาวเทียม\n\nวันนี้มากกว่า 5 พันล้านคนใช้อินเทอร์เน็ต`
+      ai: `ปัญญาประดิษฐ์คือเครื่องจักรที่จำลองสติปัญญาของมนุษย์\n\nขั้นที่ 1: เครื่องจักรเรียนรู้จากข้อมูล\nขั้นที่ 2: จดจำรูปแบบ\nขั้นที่ 3: ตัดสินใจ\n\nตัวอย่าง: แชทบอตตอบคำถาม\n\nสรุป: AI = ระบบการคิดของเครื่องจักร`,
+      internet: `อินเทอร์เน็ตเชื่อมต่อคอมพิวเตอร์ทั่วโลก\n\nขั้นที่ 1: อุปกรณ์เชื่อมต่อกัน\nขั้นที่ 2: ข้อมูลถูกแบ่งปัน\nขั้นที่ 3: การสื่อสารเกิดขึ้น\n\nสรุป: อินเทอร์เน็ต = เครือข่ายการสื่อสารระดับโลก`
     }
   },
+
+  /* ═══════════ KOREAN ═══════════ */
   ko: {
     biology: {
-      photosynthesis: `좋아요, 광합성에 대해 이야기해 봅시다 — 생각보다 훨씬 간단해요.\n\n식물은 잎사귀 안에서 직접 자신의 먹이를 만들어요:\n\n먼저, 잎이 햇빛을 흡수해요.\n그런 다음 이산화탄소를 빨아들여요.\n뿌리는 흙에서 물을 빨아올려요.\n엽록소가 이 모든 것을 포도당으로 바꿔요.\n\n가장 쉽게 기억하는 법: 식물은 햇빛을 먹어요.`,
-      cell: `세포는 생명의 가장 작은 단위예요. 모든 생물이 세포로 이루어져 있어요.\n\n세포 안에는:\n— 핵 — 뇌와 같아요\n— 막 — 외벽이에요\n— 세포질 — 내부를 유지하는 젤 같은 액체예요\n\n기억하세요: 세포 없이는 생명도 없어요.`,
-      digestion: `뭔가를 먹었을 때 실제로 어떤 일이 일어나는지 살펴봅시다.\n\n음식이 입에 들어가는 순간, 소화는 이미 시작돼요.\n위장이 음식을 걸쭉한 액체로 만들어요.\n소장에서 영양분이 혈류로 흡수돼요.\n\n꽤 효율적이죠?`,
-      genetics: `유전학은 왜 당신이 부모님을 닮았는지 설명해요.\n\n몸 속 거의 모든 세포 안에 DNA가 있어요.\n각 유전자는 특정 특성에 대한 지침을 가지고 있어요.\n\n우성 유전자는 나타나고, 열성은 숨어있지만 전달돼요.`
+      photosynthesis: `광합성은 식물이 음식을 만드는 과정입니다.\n\n1단계: 식물은 잎을 통해 햇빛을 흡수합니다\n2단계: 공기 중의 이산화탄소를 흡수합니다\n3단계: 뿌리에서 물을 흡수합니다\n4단계: 엽록소가 에너지를 포도당으로 변환합니다\n\n예시: 나무는 햇빛을 이용해 열매와 잎을 키웁니다.\n\n요약: 식물은 햇빛을 "먹고" 생존합니다.`,
+      cell: `세포는 생명의 기본 구성 단위입니다.\n\n1단계: 모든 생물은 세포로 이루어져 있습니다\n2단계: 세포에는 핵, 세포막, 세포질이 있습니다\n3단계: 생명 기능을 수행합니다\n\n예시: 피부는 수백만 개의 세포로 이루어져 있습니다.\n\n요약: 세포 = 생명을 구성하는 작은 단위.`,
+      digestion: `소화는 음식이 몸에서 분해되는 방식입니다.\n\n1단계: 음식이 입으로 들어옵니다\n2단계: 위에서 분해됩니다\n3단계: 영양분이 흡수됩니다\n\n예시: 밥이 몸에서 에너지로 변환됩니다.\n\n요약: 소화 = 음식을 에너지로 전환.`,
+      genetics: `유전학은 형질이 부모로부터 전달되는 방식을 연구합니다.\n\n1단계: DNA가 정보를 운반합니다\n2단계: 유전자가 형질을 제어합니다\n3단계: 형질이 유전됩니다\n\n예시: 눈 색깔은 부모로부터 옵니다.\n\n요약: 유전자 = 생물학적 정보 전달.`
     },
     math: {
-      algebra: `대수학은 숫자로 하는 탐정 놀이예요.\n\nx + 5 = 10이면 x는 5예요.\n\n공식적인 방법: 양쪽에서 5를 빼요.\nx + 5 - 5 = 10 - 5\nx = 5\n\n황금 법칙: 한쪽에 하는 것을 다른 쪽에도 해야 해요.`,
-      ratio: `비율은 두 가지를 비교하는 방법이에요.\n\n선생님 2명 학생 10명 = 2:10 = 1:5\n\n최대공약수를 찾아서 양쪽을 나눠요.\n2:10 → 2로 나누면 → 1:5`
+      algebra: `대수학은 기호를 사용하여 미지수를 구하는 것입니다.\n\n1단계: 미지수(x) 파악\n2단계: 방정식 만들기\n3단계: 단계별 풀기\n\n예시: x + 5 = 10 → x = 5\n\n요약: 대수학 = 모르는 수 구하기.`,
+      ratio: `비율은 두 양을 비교합니다.\n\n1단계: 값 쓰기\n2단계: 단순화\n\n예시: 2:4 = 1:2\n\n요약: 비율 = 비교 도구.`
     },
     science: {
-      gravity: `공을 놓으면 왜 아래로 떨어지고 위로 올라가지 않을까요?\n\n답은 중력이에요.\n\n중력은 질량을 가진 모든 물체가 만드는 보이지 않는 당김이에요.\n\n아이작 뉴턴은 사과가 나무에서 떨어지는 것을 보고 이걸 깨달았어요.`,
-      energy: `에너지는 일을 할 수 있는 능력이에요. 절대 사라지지 않고 형태만 바뀌어요.\n\n음식을 먹으면 화학 에너지가 운동 에너지가 돼요.\n폰을 충전할 때 전기가 화학 에너지로 저장돼요.\n\n에너지 보존 법칙: 에너지는 생성되거나 파괴될 수 없어요.`
+      gravity: `중력은 물체를 아래로 당기는 힘입니다.\n\n1단계: 지구는 질량을 가집니다\n2단계: 질량은 당기는 힘을 만듭니다\n3단계: 모든 것이 지구를 향해 떨어집니다\n\n예시: 나무에서 사과가 떨어짐.\n\n요약: 중력 = 지구의 당기는 힘.`,
+      energy: `에너지는 일을 할 수 있는 능력입니다.\n\n1단계: 여러 형태로 존재합니다\n2단계: 형태가 바뀔 수 있습니다\n3단계: 파괴될 수 없습니다\n\n예시: 음식 → 운동을 위한 에너지\n\n요약: 에너지 = 일을 하는 힘.`
     },
     history: {
-      revolution: `혁명은 사회가 한계점에 도달했을 때 일어나요.\n\n프랑스 혁명이 완벽한 예시예요. 왕이 사치스럽게 사는 동안 백성들은 굶주리고 있었어요. 그 긴장이 1789년에 폭발했어요.`,
-      ww1: `1차 세계대전은 단순하게 시작됐어요.\n\n1914년의 유럽은 서로를 모두 미워하면서 모두 무기를 들고 있는 방 같았어요.\n\n프란츠 페르디난트 대공 암살이 연쇄 반응을 일으켜 유럽 대부분이 전쟁에 빠졌어요.`
+      revolution: `혁명은 사회의 큰 변화입니다.\n\n1단계: 사람들이 불만을 가집니다\n2단계: 갈등이 시작됩니다\n3단계: 정부가 바뀝니다\n\n예시: 프랑스 혁명이 프랑스를 바꿨습니다.\n\n요약: 혁명 = 큰 정치적 변화.`,
+      ww1: `제1차 세계대전은 전 세계적인 분쟁이었습니다.\n\n1단계: 정치적 긴장\n2단계: 동맹 형성\n3단계: 1914년 전쟁 시작\n\n요약: 1차 세계대전 = 국가 간 세계 전쟁.`
     },
     computer: {
-      ai: `AI는 예시로부터 학습해서 스마트한 결정을 내리는 소프트웨어예요.\n\n데이터를 더 많이 받을수록 더 좋아져요 — 더 많이 공부할수록 더 똑똑해지는 학생처럼요.\n\nAI는 의학, 교육, 금융, 교통 등 거의 모든 산업을 바꾸고 있어요.`,
-      internet: `인터넷은 모두 연결된 거대한 전 세계 컴퓨터 네트워크예요.\n\n웹사이트를 열면, 기기가 세계 어딘가의 서버에 요청을 보내요.\n정보는 작은 패킷으로 나뉘어 전 세계를 여행해요.\n\n오늘날 50억 명 이상이 인터넷을 사용해요.`
+      ai: `AI는 기계가 인간의 지능을 모방하는 것입니다.\n\n1단계: 기계가 데이터를 학습합니다\n2단계: 패턴을 인식합니다\n3단계: 결정을 내립니다\n\n예시: 질문에 답하는 챗봇.\n\n요약: AI = 기계 사고 시스템.`,
+      internet: `인터넷은 전 세계 컴퓨터를 연결합니다.\n\n1단계: 장치들이 연결됩니다\n2단계: 데이터가 공유됩니다\n3단계: 통신이 이루어집니다\n\n요약: 인터넷 = 글로벌 통신 네트워크.`
     }
   },
+
+  /* ═══════════ VIETNAMESE ═══════════ */
   vi: {
     biology: {
-      photosynthesis: `Được rồi, hãy nói về quang hợp — đơn giản hơn bạn nghĩ.\n\nCây tự tạo ra thức ăn bên trong lá:\n\nLá hấp thụ ánh sáng mặt trời.\nHút CO2 từ không khí.\nRễ hút nước từ đất.\nChất diệp lục biến tất cả thành glucose.\n\nCách nhớ đơn giản: cây "ăn" ánh sáng mặt trời.`,
-      cell: `Tế bào là đơn vị sống nhỏ nhất. Mọi sinh vật đều được tạo từ tế bào.\n\nBên trong tế bào:\n— Nhân — như bộ não\n— Màng — bức tường bên ngoài\n— Tế bào chất — chất lỏng giữ mọi thứ lại\n\nNhớ nhé: không có tế bào = không có sự sống.`,
-      digestion: `Hãy xem những gì xảy ra khi bạn ăn.\n\nNgay khi thức ăn vào miệng, tiêu hóa bắt đầu.\nDạ dày phân giải thức ăn thành chất lỏng.\nRuột non hấp thụ chất dinh dưỡng vào máu.\n\nCơ thể làm điều này 3 lần mỗi ngày tự động.`,
-      genetics: `Di truyền học giải thích tại sao bạn trông giống bố mẹ.\n\nBên trong hầu hết mọi tế bào là DNA — hướng dẫn rất dài.\nMỗi gen mang thông tin cho một đặc điểm cụ thể.\n\nGen trội xuất hiện, gen lặn ẩn nhưng được truyền đi.`
+      photosynthesis: `Quang hợp là quá trình thực vật tạo ra thức ăn.\n\nBước 1: Thực vật hấp thụ ánh sáng mặt trời qua lá\nBước 2: Hấp thụ khí CO2 từ không khí\nBước 3: Rễ hút nước\nBước 4: Chất diệp lục chuyển đổi năng lượng thành glucose\n\nVí dụ: Cây dùng ánh sáng mặt trời để phát triển quả và lá.\n\nTóm tắt: Thực vật "ăn" ánh sáng mặt trời để tồn tại.`,
+      cell: `Tế bào là đơn vị cơ bản cấu tạo nên sự sống.\n\nBước 1: Mọi sinh vật đều được tạo thành từ tế bào\nBước 2: Tế bào có nhân, màng tế bào và tế bào chất\nBước 3: Chúng thực hiện các chức năng sống\n\nVí dụ: Da của bạn được tạo thành từ hàng triệu tế bào.\n\nTóm tắt: Tế bào = đơn vị nhỏ tạo nên sự sống.`,
+      digestion: `Tiêu hóa là cách thức ăn được phân giải trong cơ thể.\n\nBước 1: Thức ăn vào miệng\nBước 2: Dạ dày phân giải thức ăn\nBước 3: Các chất dinh dưỡng được hấp thụ\n\nVí dụ: Cơm trở thành năng lượng trong cơ thể bạn.\n\nTóm tắt: Tiêu hóa = biến thức ăn thành năng lượng.`,
+      genetics: `Di truyền học nghiên cứu cách các đặc điểm được truyền từ cha mẹ sang con.\n\nBước 1: ADN mang thông tin di truyền\nBước 2: Gen kiểm soát các đặc điểm\nBước 3: Các đặc điểm được di truyền\n\nVí dụ: Màu mắt đến từ bố mẹ.\n\nTóm tắt: Gen = truyền thông tin sinh học.`
     },
     math: {
-      algebra: `Đại số chỉ là tìm số còn thiếu.\n\nNếu x + 5 = 10 thì x là 5.\n\nCách chính thức: trừ 5 từ cả hai phía.\nx + 5 - 5 = 10 - 5\nx = 5\n\nQuy tắc vàng: những gì làm với một phía, phải làm với phía kia.`,
-      ratio: `Tỉ lệ là cách so sánh hai thứ.\n\n2 giáo viên, 10 học sinh = 2:10 = 1:5\n\nTìm ước chung lớn nhất rồi chia.\n2:10 → chia cho 2 → 1:5`
+      algebra: `Đại số là giải các giá trị ẩn bằng ký hiệu.\n\nBước 1: Xác định ẩn số (x)\nBước 2: Lập phương trình\nBước 3: Giải từng bước\n\nVí dụ: x + 5 = 10 → x = 5\n\nTóm tắt: Đại số = tìm số còn thiếu.`,
+      ratio: `Tỉ lệ so sánh hai đại lượng.\n\nBước 1: Viết các giá trị\nBước 2: Rút gọn\n\nVí dụ: 2:4 = 1:2\n\nTóm tắt: Tỉ lệ = công cụ so sánh.`
     },
     science: {
-      gravity: `Tại sao quả bóng rơi xuống khi bạn thả nó?\n\nCâu trả lời là trọng lực.\n\nTrọng lực là sức kéo vô hình mà mọi vật có khối lượng tạo ra.\n\nIsaac Newton tìm ra điều này khi nhìn thấy quả táo rơi từ cây.`,
-      energy: `Năng lượng là khả năng thực hiện công việc. Nó không bao giờ biến mất, chỉ thay đổi hình thức.\n\nĂn thức ăn → năng lượng hóa học thành năng lượng chuyển động.\nSạc điện thoại → điện thành hóa học trong pin.\n\nĐịnh luật bảo toàn năng lượng: năng lượng không thể tạo ra hay phá hủy.`
+      gravity: `Trọng lực là lực kéo các vật xuống phía dưới.\n\nBước 1: Trái Đất có khối lượng\nBước 2: Khối lượng tạo ra lực hút\nBước 3: Mọi thứ đều rơi về phía Trái Đất\n\nVí dụ: Quả táo rơi từ cây.\n\nTóm tắt: Trọng lực = lực hút của Trái Đất.`,
+      energy: `Năng lượng là khả năng thực hiện công việc.\n\nBước 1: Tồn tại dưới nhiều dạng\nBước 2: Có thể chuyển đổi dạng\nBước 3: Không thể bị tiêu hủy\n\nVí dụ: Thức ăn → năng lượng để di chuyển\n\nTóm tắt: Năng lượng = sức mạnh để làm việc.`
     },
     history: {
-      revolution: `Cách mạng xảy ra khi xã hội đạt đến điểm vỡ.\n\nCách mạng Pháp là ví dụ hoàn hảo. Người dân chết đói trong khi nhà vua sống xa hoa. Sự căng thẳng bùng nổ năm 1789.`,
-      ww1: `Thế chiến 1 bắt đầu đơn giản.\n\nChâu Âu 1914 như căn phòng đầy người ghét nhau và tất cả cầm vũ khí.\n\nVụ ám sát Franz Ferdinand kích hoạt chuỗi phản ứng, kéo hầu hết châu Âu vào chiến tranh.`
+      revolution: `Cách mạng là sự thay đổi lớn trong xã hội.\n\nBước 1: Người dân không hài lòng\nBước 2: Xung đột bắt đầu\nBước 3: Chính phủ thay đổi\n\nVí dụ: Cách mạng Pháp đã thay đổi nước Pháp.\n\nTóm tắt: Cách mạng = thay đổi chính trị lớn.`,
+      ww1: `Chiến tranh Thế giới thứ nhất là một cuộc xung đột toàn cầu.\n\nBước 1: Căng thẳng chính trị\nBước 2: Các liên minh hình thành\nBước 3: Chiến tranh bắt đầu năm 1914\n\nTóm tắt: WWI = chiến tranh toàn cầu giữa các quốc gia.`
     },
     computer: {
-      ai: `AI là phần mềm học từ các ví dụ để đưa ra quyết định thông minh.\n\nCàng nhận được nhiều dữ liệu, càng trở nên tốt hơn.\n\nAI đang thay đổi y học, giáo dục, tài chính, giao thông.`,
-      internet: `Internet là mạng lưới máy tính toàn cầu khổng lồ.\n\nKhi bạn mở trang web, thiết bị gửi yêu cầu đến máy chủ.\nThông tin đi dưới dạng gói qua cáp và vệ tinh.\n\nHôm nay hơn 5 tỷ người sử dụng Internet.`
+      ai: `AI là máy móc mô phỏng trí tuệ con người.\n\nBước 1: Máy móc học từ dữ liệu\nBước 2: Nhận dạng các mẫu\nBước 3: Đưa ra quyết định\n\nVí dụ: Chatbot trả lời câu hỏi.\n\nTóm tắt: AI = hệ thống tư duy của máy móc.`,
+      internet: `Internet kết nối máy tính trên toàn thế giới.\n\nBước 1: Các thiết bị kết nối\nBước 2: Dữ liệu được chia sẻ\nBước 3: Giao tiếp diễn ra\n\nTóm tắt: Internet = mạng truyền thông toàn cầu.`
     }
   }
 };
 
-/* ══════════════════════════════════════════
-   GENERATE SIMPLE — 1-2 sentences, no jargon
-══════════════════════════════════════════ */
-function generateSimple(lang, subject, topic){
-  const s = {
-    en:{biology:{photosynthesis:"Plants make their own food using sunlight, water, and air. They're basically solar-powered.",cell:"A cell is the smallest living unit — every living thing, including you, is made of them.",digestion:"Digestion is your body breaking food down into energy it can actually use.",genetics:"Genetics is why you look like your parents — your DNA carries instructions passed down from them."},math:{algebra:"Algebra is just finding a missing number. If x + 5 = 10, then x must be 5.",ratio:"A ratio compares two numbers. 2:4 means for every 2 of one thing, there are 4 of another."},science:{gravity:"Gravity is what pulls things down. Earth is so massive it pulls everything toward it.",energy:"Energy is what makes things move, heat up, or light up — it never disappears, it just changes shape."},history:{revolution:"A revolution is when people get so fed up with the system that they tear it down and start over.",ww1:"World War 1 started because one assassination triggered a chain of alliances, pulling most of Europe into war."},computer:{ai:"AI is software that learns from examples to make smart decisions — like recognising your face or predicting what you'll type next.",internet:"The internet is a giant network connecting billions of computers so they can share information instantly."}},
-    zh:{biology:{photosynthesis:"植物利用阳光、水和空气自己制造食物。简单来说，它们靠太阳能生存。",cell:"细胞是最小的生命单位。包括你在内，所有生物都由细胞构成。",digestion:"消化就是你的身体把食物分解成可以使用的能量。",genetics:"遗传学解释了为什么你长得像父母。DNA携带着来自他们的指令。"},math:{algebra:"代数就是找出缺失的数字。如果x + 5 = 10，那么x就是5。",ratio:"比率比较两个数量。2:4表示每有2个，就有4个另一种。"},science:{gravity:"重力把东西向下拉。地球质量巨大，把一切都拉向它。",energy:"能量让东西移动、加热或发光。它不会消失，只会变换形式。"},history:{revolution:"革命是当人们对制度忍无可忍，推翻它重新开始的时候。",ww1:"一战始于一次暗杀，触发了联盟链条，将大部分欧洲卷入战争。"},computer:{ai:"人工智能是从例子中学习并做出决策的软件——比如识别你的脸。",internet:"互联网是连接数十亿台电脑的巨大网络，让它们能即时共享信息。"}},
-    fr:{biology:{photosynthesis:"Les plantes fabriquent leur nourriture grâce au soleil, à l'eau et à l'air. Elles fonctionnent à l'énergie solaire.",cell:"Une cellule est la plus petite unité vivante. Tous les êtres vivants en sont composés.",digestion:"La digestion, c'est ton corps qui transforme la nourriture en énergie utilisable.",genetics:"La génétique explique pourquoi tu ressembles à tes parents. Ton ADN porte leurs instructions."},math:{algebra:"L'algèbre, c'est trouver un nombre manquant. Si x + 5 = 10, alors x vaut 5.",ratio:"Un ratio compare deux nombres. 2:4 signifie que pour 2 d'une chose, il y en a 4 d'une autre."},science:{gravity:"La gravité attire les choses vers le bas. La Terre est si massive qu'elle attire tout vers elle.",energy:"L'énergie fait bouger, chauffer ou éclairer les choses. Elle ne disparaît jamais — elle change juste de forme."},history:{revolution:"Une révolution, c'est quand les gens en ont tellement assez du système qu'ils le renversent pour repartir à zéro.",ww1:"La Première Guerre mondiale a commencé par un assassinat qui a déclenché une chaîne d'alliances."},computer:{ai:"L'IA est un logiciel qui apprend par l'exemple pour prendre des décisions intelligentes.",internet:"Internet est un immense réseau reliant des milliards d'ordinateurs pour partager des informations instantanément."}},
-    es:{biology:{photosynthesis:"Las plantas fabrican su propio alimento usando luz solar, agua y aire. Básicamente funcionan con energía solar.",cell:"Una célula es la unidad de vida más pequeña. Todo ser vivo está hecho de ellas.",digestion:"La digestión es tu cuerpo convirtiendo la comida en energía que puede usar.",genetics:"La genética explica por qué te pareces a tus padres. Tu ADN lleva instrucciones heredadas de ellos."},math:{algebra:"El álgebra es encontrar un número que falta. Si x + 5 = 10, entonces x es 5.",ratio:"Una razón compara dos números. 2:4 significa que por cada 2 de una cosa, hay 4 de otra."},science:{gravity:"La gravedad jala las cosas hacia abajo. La Tierra es tan masiva que atrae todo hacia ella.",energy:"La energía hace que las cosas se muevan, se calienten o brillen. Nunca desaparece — solo cambia de forma."},history:{revolution:"Una revolución ocurre cuando la gente está tan harta del sistema que lo derriba y empieza de nuevo.",ww1:"La Primera Guerra Mundial comenzó con un asesinato que desencadenó una cadena de alianzas."},computer:{ai:"La IA es software que aprende de ejemplos para tomar decisiones inteligentes.",internet:"Internet es una enorme red que conecta miles de millones de computadoras para compartir información al instante."}},
-    th:{biology:{photosynthesis:"พืชสร้างอาหารเองโดยใช้แสงอาทิตย์ น้ำ และอากาศ พูดง่ายๆ คือพวกมันทำงานด้วยพลังงานแสงอาทิตย์",cell:"เซลล์คือหน่วยชีวิตที่เล็กที่สุด สิ่งมีชีวิตทุกชนิดรวมถึงคุณประกอบด้วยเซลล์",digestion:"การย่อยอาหารคือกระบวนการที่ร่างกายเปลี่ยนอาหารเป็นพลังงานที่ใช้ได้",genetics:"พันธุศาสตร์อธิบายว่าทำไมคุณถึงหน้าตาคล้ายพ่อแม่ DNA ของคุณบรรจุคำสั่งที่ส่งต่อมาจากพวกเขา"},math:{algebra:"พีชคณิตคือการหาตัวเลขที่หายไป ถ้า x + 5 = 10 แสดงว่า x = 5",ratio:"อัตราส่วนเปรียบเทียบตัวเลขสองตัว 2:4 หมายความว่าทุก 2 ของสิ่งหนึ่งมี 4 ของอีกสิ่ง"},science:{gravity:"แรงโน้มถ่วงดึงสิ่งต่างๆ ลงสู่พื้น โลกมีมวลมหาศาลจึงดึงทุกอย่างเข้าหามัน",energy:"พลังงานทำให้สิ่งต่างๆ เคลื่อนไหว ให้ความร้อน หรือให้แสงสว่าง มันไม่เคยหายไป แค่เปลี่ยนรูปแบบ"},history:{revolution:"การปฏิวัติเกิดขึ้นเมื่อผู้คนทนต่อระบบไม่ได้อีกต่อไปจึงล้มมันและเริ่มต้นใหม่",ww1:"สงครามโลกครั้งที่ 1 เริ่มจากการลอบสังหารครั้งหนึ่งที่ทำให้พันธมิตรลูกโซ่ดึงยุโรปส่วนใหญ่เข้าสู่สงคราม"},computer:{ai:"AI คือซอฟต์แวร์ที่เรียนรู้จากตัวอย่างเพื่อตัดสินใจอย่างชาญฉลาด เช่น การจดจำใบหน้าของคุณ",internet:"อินเทอร์เน็ตคือเครือข่ายขนาดใหญ่ที่เชื่อมต่อคอมพิวเตอร์หลายพันล้านเครื่องเพื่อแบ่งปันข้อมูลทันที"}},
-    ko:{biology:{photosynthesis:"식물은 햇빛, 물, 공기로 스스로 먹이를 만들어요. 쉽게 말해 태양으로 작동하는 거예요.",cell:"세포는 가장 작은 생명 단위예요. 당신을 포함한 모든 생물이 세포로 이루어져 있어요.",digestion:"소화는 몸이 음식을 사용할 수 있는 에너지로 변환하는 과정이에요.",genetics:"유전학은 왜 당신이 부모님을 닮았는지 설명해요. DNA가 부모님의 지침을 담고 있어요."},math:{algebra:"대수학은 빠진 숫자를 찾는 거예요. x + 5 = 10이면 x는 5예요.",ratio:"비율은 두 숫자를 비교해요. 2:4는 한 가지가 2개일 때 다른 가지가 4개라는 뜻이에요."},science:{gravity:"중력은 물체를 아래로 당기는 힘이에요. 지구가 워낙 거대해서 모든 것을 끌어당겨요.",energy:"에너지는 물체를 움직이거나 가열하거나 빛나게 해요. 절대 사라지지 않고 형태만 바뀌어요."},history:{revolution:"혁명은 사람들이 시스템에 너무 지쳐서 무너뜨리고 새로 시작할 때 일어나요.",ww1:"1차 세계대전은 암살 하나가 동맹의 연쇄반응을 일으켜 유럽 대부분을 전쟁으로 끌어들이면서 시작됐어요."},computer:{ai:"AI는 예시로부터 학습해서 스마트한 결정을 내리는 소프트웨어예요.",internet:"인터넷은 수십억 대의 컴퓨터를 연결해 정보를 즉시 공유할 수 있게 하는 거대한 네트워크예요."}},
-    vi:{biology:{photosynthesis:"Cây tự tạo ra thức ăn bằng ánh sáng mặt trời, nước và không khí. Nói đơn giản, chúng chạy bằng năng lượng mặt trời.",cell:"Tế bào là đơn vị sống nhỏ nhất. Mọi sinh vật — kể cả bạn — đều được tạo thành từ chúng.",digestion:"Tiêu hóa là cơ thể bạn chuyển thức ăn thành năng lượng có thể sử dụng.",genetics:"Di truyền học giải thích tại sao bạn trông giống bố mẹ. DNA của bạn mang theo hướng dẫn từ họ."},math:{algebra:"Đại số chỉ là tìm số còn thiếu. Nếu x + 5 = 10 thì x là 5.",ratio:"Tỉ lệ so sánh hai con số. 2:4 nghĩa là cứ 2 cái này thì có 4 cái kia."},science:{gravity:"Trọng lực kéo mọi thứ xuống dưới. Trái Đất có khối lượng khổng lồ nên kéo mọi thứ về phía nó.",energy:"Năng lượng làm cho mọi thứ di chuyển, nóng lên hoặc phát sáng. Nó không bao giờ mất đi — chỉ thay đổi hình thức."},history:{revolution:"Cách mạng xảy ra khi người dân quá chán ghét hệ thống đến mức lật đổ nó và bắt đầu lại.",ww1:"Thế chiến 1 bắt đầu từ một vụ ám sát kích hoạt chuỗi liên minh, kéo hầu hết châu Âu vào chiến tranh."},computer:{ai:"AI là phần mềm học từ các ví dụ để đưa ra quyết định thông minh — như nhận dạng khuôn mặt của bạn.",internet:"Internet là mạng lưới khổng lồ kết nối hàng tỷ máy tính để chia sẻ thông tin ngay lập tức."}}
-  };
-  return s[lang]?.[subject]?.[topic] || s.en?.[subject]?.[topic] || "Focus on the core idea — keep it simple.";
-}
+/* ── VOICE LANG MAP ── */
+const voiceMap = { en:"en", zh:"zh", fr:"fr", es:"es", th:"th", ko:"ko", vi:"vi" };
 
-/* ══════════════════════════════════════════
-   GENERATE STEP BY STEP — numbered steps
-══════════════════════════════════════════ */
-function generateStepByStep(lang, subject, topic){
-  const s = {
-    en:{biology:{photosynthesis:"Here's exactly how photosynthesis works:\n\n1. The leaf absorbs sunlight through chlorophyll\n2. The roots pull water up from the soil\n3. The leaf takes in CO2 through tiny pores\n4. Chlorophyll combines water + CO2 + light energy\n5. This produces glucose — food for the plant\n6. Oxygen is released as a byproduct — that's what we breathe\n\nResult: plant has food, we have oxygen.",cell:"How a cell works:\n\n1. The cell membrane controls what enters and exits\n2. The nucleus sends instructions using DNA\n3. Ribosomes read those instructions and build proteins\n4. The mitochondria burns glucose to produce energy\n5. That energy powers everything the cell does\n6. The cell divides when it's time to make more",digestion:"Follow your food:\n\n1. Mouth — teeth chew, saliva starts breaking down carbs\n2. Oesophagus — food travels down to the stomach\n3. Stomach — acid and enzymes break food into liquid\n4. Small intestine — nutrients absorbed into bloodstream\n5. Large intestine — water absorbed, waste formed\n6. Exit — waste leaves the body",genetics:"How traits are inherited:\n\n1. Your DNA is stored in 23 pairs of chromosomes\n2. Each chromosome contains thousands of genes\n3. Each gene has instructions for a specific trait\n4. You received one copy from mum, one from dad\n5. If one is dominant, that trait shows up\n6. If both are recessive, the recessive trait appears\n7. This is why siblings can look different"},math:{algebra:"How to solve an algebra equation:\n\n1. Identify the unknown — usually x\n2. Write the equation: x + 5 = 10\n3. Goal: isolate x on one side\n4. Do the opposite operation — subtract 5 from both sides\n5. Left side: x + 5 - 5 = x\n6. Right side: 10 - 5 = 5\n7. Answer: x = 5\n8. Check: does 5 + 5 = 10? Yes ✓",ratio:"How to work with ratios:\n\n1. Write the two values: 2 and 10\n2. Express as a ratio: 2:10\n3. Find the highest common factor — what divides both? It's 2\n4. Divide both sides by 2\n5. Result: 1:5\n6. Read it: for every 1 of the first, there are 5 of the second\n7. Check: 1×2=2, 5×2=10 ✓"},science:{gravity:"How gravity works:\n\n1. Every object with mass creates a gravitational field\n2. The more mass, the stronger the field\n3. Earth has enormous mass — its field is very strong\n4. Any object near Earth gets pulled toward its centre\n5. The further away, the weaker the pull\n6. This keeps the Moon in orbit around Earth\n7. And keeps Earth in orbit around the Sun",energy:"How energy transforms:\n\n1. You eat food — it contains chemical energy\n2. Your body digests it and releases that energy\n3. Your muscles use it as kinetic (movement) energy\n4. Some becomes thermal energy — body heat\n5. Charging a phone: electrical → chemical (stored)\n6. Turning it on: chemical → electrical → light + sound\n7. At every step, total energy is conserved"},history:{revolution:"How a revolution unfolds:\n\n1. Inequality grows — a small group holds power\n2. The majority suffers — poverty, injustice, no voice\n3. Anger builds — people begin to organise\n4. A trigger event sparks mass action\n5. Protests escalate — sometimes into conflict\n6. The old government collapses or is overthrown\n7. A new power structure forms",ww1:"How World War 1 unfolded:\n\n1. 1914: European powers have formed two alliance blocs\n2. June 28, 1914: Archduke Franz Ferdinand assassinated in Sarajevo\n3. Austria-Hungary blames Serbia and issues ultimatum\n4. Russia mobilises to defend Serbia\n5. Germany declares war on Russia, then France\n6. Germany invades Belgium — Britain declares war on Germany\n7. 1914–1918: Four years of trench warfare\n8. November 1918: Armistice signed"},computer:{ai:"How AI learns:\n\n1. Collect a massive dataset — e.g. millions of labelled images\n2. Feed the data into a neural network\n3. The network makes a prediction on each input\n4. Compare prediction to the correct answer\n5. Calculate the error\n6. Adjust the network weights to reduce error\n7. Repeat millions of times — the model improves\n8. Eventually it makes accurate predictions on new data",internet:"How a webpage loads:\n\n1. You type a URL into your browser\n2. Browser asks DNS: what's the IP address for this domain?\n3. DNS returns the server's IP address\n4. Browser sends an HTTP request to that server\n5. Server sends back HTML, CSS, JS files\n6. These travel as data packets across cables and satellites\n7. Browser assembles the packets and renders the page\n8. Total time: under 1 second"}},
-    zh:{biology:{photosynthesis:"光合作用详细步骤：\n\n1. 叶片通过叶绿素吸收阳光\n2. 根部从土壤中吸水\n3. 叶片通过气孔吸入CO2\n4. 叶绿素将水+CO2+光能结合\n5. 产生葡萄糖——植物的食物\n6. 释放氧气作为副产品",cell:"细胞工作原理：\n\n1. 细胞膜控制进出\n2. 细胞核通过DNA发送指令\n3. 核糖体读取指令并构建蛋白质\n4. 线粒体燃烧葡萄糖产生能量\n5. 能量驱动细胞的一切活动\n6. 时机成熟时细胞分裂",digestion:"食物在体内的旅程：\n\n1. 口腔——牙齿咀嚼，唾液开始分解\n2. 食道——食物向下传送到胃\n3. 胃——酸和酶将食物分解成液体\n4. 小肠——营养物质被吸收进血液\n5. 大肠——吸收水分，形成废物\n6. 排出——废物离开身体",genetics:"遗传特征的步骤：\n\n1. DNA存储在23对染色体中\n2. 每条染色体含有数千个基因\n3. 每个基因携带特定特征的指令\n4. 你从妈妈那获得一份，从爸爸那获得一份\n5. 如果一个是显性的，该特征就会出现\n6. 如果两个都是隐性的，隐性特征就会出现"},math:{algebra:"如何解代数方程：\n\n1. 找到未知数——通常叫x\n2. 写出完整方程：x + 5 = 10\n3. 目标：将x单独放在一边\n4. 两边同时减5\n5. 左边：x\n6. 右边：5\n7. 答案：x = 5\n8. 验证：5 + 5 = 10？是的 ✓",ratio:"如何处理比率：\n\n1. 写出两个值：2和10\n2. 表示为比率：2:10\n3. 找最大公因数：2\n4. 两边都除以2\n5. 结果：1:5\n6. 读法：每1个这种，有5个那种"},science:{gravity:"重力的工作原理：\n\n1. 每个有质量的物体都产生引力场\n2. 质量越大，引力场越强\n3. 地球质量巨大，引力场很强\n4. 地球附近的物体被拉向地心\n5. 距离越远，引力越弱\n6. 同样的力使月球绕地球运转",energy:"能量如何转化：\n\n1. 你吃食物——含有化学能\n2. 身体消化并释放该能量\n3. 肌肉将其用作动能\n4. 部分变成热能——体温\n5. 充电时：电能→化学能（储存）\n6. 开机时：化学能→电能→光和声音\n7. 每一步能量总量守恒"},history:{revolution:"革命的典型过程：\n\n1. 不平等加剧——少数人掌握权力\n2. 大多数人受苦——贫困、不公正\n3. 愤怒积累——人们开始组织抗议\n4. 导火索事件引发大规模行动\n5. 抗议升级——有时演变为武装冲突\n6. 旧政府垮台或被推翻\n7. 新的权力结构形成",ww1:"第一次世界大战的经过：\n\n1. 1914年6月28日：弗朗茨·斐迪南大公遇刺\n2. 奥匈帝国向塞尔维亚发出最后通牒\n3. 俄国为保护塞尔维亚而动员军队\n4. 德国向俄国和法国宣战\n5. 德国入侵比利时，英国向德国宣战\n6. 四年堑壕战，数百万人死亡\n7. 1918年11月：停战协议签署"},computer:{ai:"AI的学习过程：\n\n1. 收集大量数据集\n2. 将数据输入神经网络\n3. 网络对每个输入做出预测\n4. 将预测与正确答案比较\n5. 计算误差\n6. 调整网络权重以减少误差\n7. 重复数百万次\n8. 最终能对新数据做出准确预测",internet:"网页加载的步骤：\n\n1. 你在浏览器中输入网址\n2. 浏览器询问DNS该域名的IP地址\n3. DNS返回服务器IP地址\n4. 浏览器向该服务器发送HTTP请求\n5. 服务器返回HTML、CSS、JS文件\n6. 数据通过电缆和卫星传输\n7. 浏览器组装数据包并渲染页面\n8. 整个过程不到1秒"}},
-    fr:{biology:{photosynthesis:"La photosynthèse étape par étape :\n\n1. La feuille absorbe la lumière solaire via la chlorophylle\n2. Les racines pompent l'eau du sol\n3. La feuille absorbe le CO2 par de minuscules pores\n4. La chlorophylle combine eau + CO2 + lumière\n5. Cela produit du glucose\n6. L'oxygène est libéré comme sous-produit",cell:"Comment une cellule fonctionne :\n\n1. La membrane cellulaire contrôle les entrées et sorties\n2. Le noyau envoie des instructions via l'ADN\n3. Les ribosomes fabriquent des protéines\n4. Les mitochondries produisent de l'énergie\n5. Cette énergie alimente la cellule\n6. La cellule se divise quand nécessaire",digestion:"Suivez la nourriture :\n\n1. Bouche — les dents mâchent, la salive commence\n2. Estomac — l'acide liquéfie la nourriture\n3. Intestin grêle — les nutriments absorbés dans le sang\n4. Gros intestin — les déchets se forment\n5. Sortie — les déchets quittent le corps",genetics:"Comment les traits sont hérités :\n\n1. Ton ADN est stocké dans 23 paires de chromosomes\n2. Chaque chromosome contient des milliers de gènes\n3. Tu as reçu une copie de ta mère et une de ton père\n4. Si l'un est dominant, ce trait apparaît\n5. Si les deux sont récessifs, le trait récessif apparaît"},math:{algebra:"Comment résoudre une équation :\n\n1. Identifier l'inconnue — x\n2. Écrire l'équation : x + 5 = 10\n3. Soustraire 5 des deux côtés\n4. Gauche : x, Droite : 5\n5. Réponse : x = 5\n6. Vérification : 5 + 5 = 10 ✓",ratio:"Comment travailler avec les ratios :\n\n1. Écrire les deux valeurs : 2 et 10\n2. Exprimer en ratio : 2:10\n3. Trouver le plus grand commun diviseur : 2\n4. Diviser les deux côtés par 2\n5. Résultat : 1:5"},science:{gravity:"Comment fonctionne la gravité :\n\n1. Tout objet ayant une masse crée un champ gravitationnel\n2. Plus la masse est grande, plus le champ est fort\n3. Tout objet proche de la Terre est attiré vers son centre\n4. Plus on est loin, plus l'attraction est faible\n5. Cette force maintient la Lune en orbite",energy:"Comment l'énergie se transforme :\n\n1. Tu manges — énergie chimique\n2. Ton corps la digère et la libère\n3. Tes muscles l'utilisent comme énergie cinétique\n4. Une partie devient chaleur corporelle\n5. Charger un téléphone : électrique → chimique\n6. L'allumer : chimique → lumière + son"},history:{revolution:"Comment une révolution se déroule :\n\n1. Les inégalités grandissent\n2. La majorité souffre\n3. La colère monte\n4. Un événement déclencheur provoque une action massive\n5. Les protestations s'intensifient\n6. L'ancien gouvernement s'effondre\n7. Une nouvelle structure de pouvoir se forme",ww1:"Comment la Première Guerre mondiale s'est déroulée :\n\n1. 28 juin 1914 : François-Ferdinand assassiné\n2. L'Autriche-Hongrie blame la Serbie\n3. La Russie se mobilise\n4. L'Allemagne déclare la guerre\n5. La Grande-Bretagne entre en guerre\n6. Quatre ans de guerre des tranchées\n7. Armistice novembre 1918"},computer:{ai:"Comment l'IA apprend :\n\n1. Collecter un énorme ensemble de données\n2. Le charger dans un réseau de neurones\n3. Le réseau fait une prédiction\n4. Comparer avec la bonne réponse\n5. Calculer l'erreur\n6. Ajuster les poids\n7. Répéter des millions de fois",internet:"Comment une page web se charge :\n\n1. Tu tapes une URL\n2. Le navigateur demande l'adresse IP au DNS\n3. Le navigateur envoie une requête HTTP\n4. Le serveur renvoie les fichiers\n5. Le navigateur assemble et affiche\n6. Durée : moins d'une seconde"}},
-    es:{biology:{photosynthesis:"La fotosíntesis paso a paso:\n\n1. La hoja absorbe luz solar a través de la clorofila\n2. Las raíces extraen agua del suelo\n3. La hoja toma CO2 del aire\n4. La clorofila combina agua + CO2 + luz\n5. Produce glucosa\n6. Libera oxígeno como subproducto",cell:"Cómo funciona una célula:\n\n1. La membrana controla lo que entra y sale\n2. El núcleo envía instrucciones con ADN\n3. Los ribosomas fabrican proteínas\n4. Las mitocondrias producen energía\n5. Esa energía impulsa la célula\n6. La célula se divide cuando es necesario",digestion:"Sigue la comida:\n\n1. Boca — se mastca, la saliva inicia\n2. Estómago — el ácido licúa la comida\n3. Intestino delgado — nutrientes a la sangre\n4. Intestino grueso — se forman desechos\n5. Salida — los desechos salen del cuerpo",genetics:"Cómo se heredan los rasgos:\n\n1. Tu ADN está en 23 pares de cromosomas\n2. Cada cromosoma tiene miles de genes\n3. Recibiste una copia de mamá y otra de papá\n4. Si uno es dominante, ese rasgo aparece\n5. Si ambos son recesivos, aparece el rasgo recesivo"},math:{algebra:"Cómo resolver una ecuación:\n\n1. Identificar la incógnita — x\n2. Escribir la ecuación: x + 5 = 10\n3. Restar 5 de ambos lados\n4. Izquierda: x, Derecha: 5\n5. Respuesta: x = 5\n6. Verificación: 5 + 5 = 10 ✓",ratio:"Cómo trabajar con razones:\n\n1. Escribir los dos valores: 2 y 10\n2. Expresar como razón: 2:10\n3. Encontrar el máximo común divisor: 2\n4. Dividir ambos lados entre 2\n5. Resultado: 1:5"},science:{gravity:"Cómo funciona la gravedad:\n\n1. Todo objeto con masa crea un campo gravitacional\n2. A mayor masa, mayor campo\n3. Todo objeto cercano a la Tierra es jalado hacia su centro\n4. Más lejos = atracción más débil\n5. Esta fuerza mantiene a la Luna orbitando",energy:"Cómo se transforma la energía:\n\n1. Comes alimento — energía química\n2. Tu cuerpo la digiere y libera\n3. Tus músculos la usan como energía cinética\n4. Parte se convierte en calor corporal\n5. Cargar el teléfono: eléctrica → química\n6. Encenderlo: química → luz + sonido"},history:{revolution:"Cómo se desarrolla una revolución:\n\n1. La desigualdad crece\n2. La mayoría sufre\n3. La ira aumenta\n4. Un evento desencadenante provoca acción masiva\n5. Las protestas escalan\n6. El viejo gobierno colapsa\n7. Una nueva estructura de poder se forma",ww1:"Cómo se desarrolló la Primera Guerra Mundial:\n\n1. 28 junio 1914: asesinato de Franz Ferdinand\n2. Austria-Hungría culpa a Serbia\n3. Rusia se moviliza\n4. Alemania declara guerra\n5. Gran Bretaña entra en guerra\n6. Cuatro años de guerra de trincheras\n7. Armisticio noviembre 1918"},computer:{ai:"Cómo aprende la IA:\n\n1. Recopilar un enorme conjunto de datos\n2. Cargarlo en una red neuronal\n3. La red hace una predicción\n4. Comparar con la respuesta correcta\n5. Calcular el error\n6. Ajustar pesos\n7. Repetir millones de veces",internet:"Cómo carga una página web:\n\n1. Escribes una URL\n2. El navegador pide la IP al DNS\n3. El navegador envía solicitud HTTP\n4. El servidor devuelve archivos\n5. El navegador ensambla y muestra\n6. Tiempo total: menos de 1 segundo"}},
-    th:{biology:{photosynthesis:"การสังเคราะห์แสงทีละขั้นตอน:\n\n1. ใบดูดซับแสงอาทิตย์ผ่านคลอโรฟิลล์\n2. รากดูดน้ำจากดิน\n3. ใบรับ CO2 จากอากาศ\n4. คลอโรฟิลล์รวมน้ำ+CO2+แสง\n5. ผลิตกลูโคส\n6. ปล่อยออกซิเจนออกมา",cell:"วิธีการทำงานของเซลล์:\n\n1. เยื่อหุ้มเซลล์ควบคุมสิ่งที่เข้าและออก\n2. นิวเคลียสส่งคำสั่งผ่าน DNA\n3. ไรโบโซมสร้างโปรตีน\n4. ไมโตคอนเดรียผลิตพลังงาน\n5. พลังงานขับเคลื่อนทุกอย่าง\n6. เซลล์แบ่งตัวเมื่อถึงเวลา",digestion:"ติดตามอาหารผ่านร่างกาย:\n\n1. ปาก — เคี้ยว น้ำลายย่อย\n2. กระเพาะ — กรดย่อยเป็นของเหลว\n3. ลำไส้เล็ก — ดูดซึมสารอาหารเข้าเลือด\n4. ลำไส้ใหญ่ — ดูดน้ำ ก่อตัวเป็นของเสีย\n5. ขับออก — ของเสียออกจากร่างกาย",genetics:"วิธีที่ลักษณะถูกถ่ายทอด:\n\n1. DNA เก็บไว้ใน 23 คู่โครโมโซม\n2. แต่ละโครโมโซมมียีนหลายพันตัว\n3. คุณได้รับหนึ่งชุดจากแม่และหนึ่งชุดจากพ่อ\n4. ถ้าหนึ่งเป็นยีนเด่น ลักษณะนั้นปรากฏ\n5. ถ้าทั้งคู่เป็นยีนด้อย ลักษณะด้อยปรากฏ"},math:{algebra:"วิธีแก้สมการพีชคณิต:\n\n1. ระบุค่าที่ไม่รู้จัก — x\n2. เขียนสมการ: x + 5 = 10\n3. ลบ 5 จากทั้งสองข้าง\n4. ฝั่งซ้าย: x, ฝั่งขวา: 5\n5. คำตอบ: x = 5\n6. ตรวจสอบ: 5 + 5 = 10 ✓",ratio:"วิธีทำงานกับอัตราส่วน:\n\n1. เขียนสองค่า: 2 และ 10\n2. แสดงเป็นอัตราส่วน: 2:10\n3. หา ห.ร.ม.: 2\n4. หารทั้งสองข้างด้วย 2\n5. ผลลัพธ์: 1:5"},science:{gravity:"วิธีทำงานของแรงโน้มถ่วง:\n\n1. วัตถุทุกชิ้นที่มีมวลสร้างสนามแรงโน้มถ่วง\n2. มวลยิ่งมาก สนามยิ่งแรง\n3. โลกมีมวลมหาศาล สนามแรงมาก\n4. วัตถุใกล้โลกถูกดึงเข้าหาศูนย์กลาง\n5. ยิ่งไกลยิ่งอ่อน\n6. แรงเดียวกันทำให้ดวงจันทร์โคจรรอบโลก",energy:"วิธีที่พลังงานเปลี่ยนรูป:\n\n1. กินอาหาร — มีพลังงานเคมี\n2. ร่างกายย่อยและปล่อยพลังงาน\n3. กล้ามเนื้อใช้เป็นพลังงานจลน์\n4. บางส่วนกลายเป็นความร้อน\n5. ชาร์จโทรศัพท์: ไฟฟ้า → เคมี\n6. เปิดเครื่อง: เคมี → แสงและเสียง"},history:{revolution:"วิธีที่การปฏิวัติดำเนินไป:\n\n1. ความไม่เท่าเทียมเพิ่มขึ้น\n2. คนส่วนใหญ่ทุกข์ทรมาน\n3. ความโกรธสะสม\n4. เหตุการณ์ชนวนกระตุ้นการกระทำครั้งใหญ่\n5. การประท้วงบานปลาย\n6. รัฐบาลเก่าล่มสลาย\n7. โครงสร้างอำนาจใหม่ก่อตัว",ww1:"สงครามโลกครั้งที่ 1 ดำเนินอย่างไร:\n\n1. 28 มิถุนายน 1914: อาร์คดยุคถูกลอบสังหาร\n2. ออสเตรีย-ฮังการีโทษเซอร์เบีย\n3. รัสเซียระดมกำลัง\n4. เยอรมนีประกาศสงคราม\n5. อังกฤษประกาศสงคราม\n6. สงครามสนามเพลาะสี่ปี\n7. พฤศจิกายน 1918: ลงนามสงบศึก"},computer:{ai:"AI เรียนรู้อย่างไร:\n\n1. รวบรวมชุดข้อมูลขนาดใหญ่\n2. ป้อนเข้าโครงข่ายประสาทเทียม\n3. โครงข่ายทำนายผล\n4. เปรียบเทียบกับคำตอบที่ถูกต้อง\n5. คำนวณข้อผิดพลาด\n6. ปรับค่าน้ำหนัก\n7. ทำซ้ำหลายล้านครั้ง",internet:"หน้าเว็บโหลดอย่างไร:\n\n1. พิมพ์ URL ในเบราว์เซอร์\n2. เบราว์เซอร์ถาม DNS สำหรับ IP\n3. เบราว์เซอร์ส่งคำขอ HTTP\n4. เซิร์ฟเวอร์ส่ง HTML, CSS, JS กลับมา\n5. เบราว์เซอร์ประกอบและแสดงผล\n6. เวลา: น้อยกว่า 1 วินาที"}},
-    ko:{biology:{photosynthesis:"광합성 단계별 설명:\n\n1. 잎이 엽록소를 통해 햇빛을 흡수해요\n2. 뿌리가 흙에서 물을 끌어올려요\n3. 잎이 공기 중 CO2를 흡수해요\n4. 엽록소가 물+CO2+빛을 결합해요\n5. 포도당을 생산해요\n6. 부산물로 산소를 방출해요",cell:"세포가 어떻게 작동하는지:\n\n1. 세포막이 출입을 제어해요\n2. 핵이 DNA로 지시를 보내요\n3. 리보솜이 단백질을 만들어요\n4. 미토콘드리아가 에너지를 만들어요\n5. 에너지가 세포의 모든 활동을 움직여요\n6. 더 많은 세포가 필요할 때 분열해요",digestion:"음식이 몸을 통과하는 여정:\n\n1. 입 — 이가 씹고, 침이 시작\n2. 위 — 산과 효소가 액체로 만들어요\n3. 소장 — 영양분이 혈류로 흡수돼요\n4. 대장 — 폐기물이 형성돼요\n5. 출구 — 폐기물이 몸 밖으로 나가요",genetics:"형질이 유전되는 방법:\n\n1. DNA가 23쌍의 염색체에 저장돼요\n2. 각 염색체에 수천 개의 유전자가 있어요\n3. 엄마에게서 하나, 아빠에게서 하나 받았어요\n4. 우성이면 그 형질이 나타나요\n5. 둘 다 열성이면 열성 형질이 나타나요"},math:{algebra:"방정식 푸는 방법:\n\n1. 미지수 찾기 — x\n2. 방정식 쓰기: x + 5 = 10\n3. 양쪽에서 5 빼기\n4. 왼쪽: x, 오른쪽: 5\n5. 답: x = 5\n6. 확인: 5 + 5 = 10 ✓",ratio:"비율 다루는 방법:\n\n1. 비교할 두 값 쓰기: 2와 10\n2. 비율로 표현: 2:10\n3. 최대공약수 찾기: 2\n4. 양쪽을 2로 나누기\n5. 결과: 1:5"},science:{gravity:"중력이 작동하는 방법:\n\n1. 질량이 있는 모든 물체는 중력장을 만들어요\n2. 질량이 클수록 장이 강해요\n3. 지구 근처의 물체는 중심으로 당겨져요\n4. 멀수록 당김이 약해요\n5. 같은 힘이 달을 지구 궤도에 유지시켜요",energy:"에너지가 변환되는 방법:\n\n1. 음식을 먹어요 — 화학 에너지\n2. 몸이 소화시켜 에너지를 방출해요\n3. 근육이 운동 에너지로 사용해요\n4. 일부는 열에너지가 돼요\n5. 폰 충전: 전기 → 화학\n6. 켜기: 화학 → 빛 + 소리"},history:{revolution:"혁명이 전개되는 방법:\n\n1. 불평등이 커져요\n2. 다수가 고통받아요\n3. 분노가 쌓여요\n4. 촉발 사건이 대규모 행동을 일으켜요\n5. 시위가 격화돼요\n6. 구 정부가 무너지거나 전복돼요\n7. 새 권력 구조가 형성돼요",ww1:"1차 세계대전이 전개된 방법:\n\n1. 1914년 6월 28일: 사라예보에서 암살\n2. 오스트리아-헝가리가 세르비아를 비난\n3. 러시아가 세르비아 방어를 위해 동원\n4. 독일이 러시아, 프랑스에 선전포고\n5. 독일이 벨기에 침공 — 영국이 참전\n6. 4년간의 참호전\n7. 1918년 11월: 휴전 협정 체결"},computer:{ai:"AI가 학습하는 방법:\n\n1. 방대한 데이터셋 수집\n2. 신경망에 입력\n3. 네트워크가 예측 생성\n4. 정답과 비교\n5. 오류 계산\n6. 가중치 조정\n7. 수백만 번 반복",internet:"웹페이지가 로드되는 방법:\n\n1. 브라우저에 URL 입력\n2. 브라우저가 DNS에 IP 요청\n3. 브라우저가 서버에 HTTP 요청 전송\n4. 서버가 HTML, CSS, JS 파일 전송\n5. 브라우저가 조립하고 렌더링\n6. 총 시간: 1초 미만"}},
-    vi:{biology:{photosynthesis:"Quang hợp từng bước:\n\n1. Lá hấp thụ ánh sáng qua chất diệp lục\n2. Rễ hút nước từ đất\n3. Lá hút CO2 từ không khí\n4. Chất diệp lục kết hợp nước+CO2+ánh sáng\n5. Tạo ra glucose\n6. Giải phóng oxy là sản phẩm phụ",cell:"Cách tế bào hoạt động:\n\n1. Màng tế bào kiểm soát vào ra\n2. Nhân gửi hướng dẫn qua DNA\n3. Ribosome tạo protein\n4. Ty thể tạo năng lượng\n5. Năng lượng vận hành mọi thứ\n6. Tế bào phân chia khi cần",digestion:"Theo dõi thức ăn qua cơ thể:\n\n1. Miệng — răng nhai, nước bọt bắt đầu\n2. Dạ dày — axit hóa lỏng thức ăn\n3. Ruột non — chất dinh dưỡng vào máu\n4. Ruột già — chất thải hình thành\n5. Thoát ra — chất thải rời khỏi cơ thể",genetics:"Cách đặc điểm được di truyền:\n\n1. DNA của bạn được lưu trong 23 cặp nhiễm sắc thể\n2. Mỗi nhiễm sắc thể có hàng nghìn gen\n3. Bạn nhận một bản từ mẹ và một từ cha\n4. Nếu một gen là trội, đặc điểm đó xuất hiện\n5. Nếu cả hai là lặn, đặc điểm lặn xuất hiện"},math:{algebra:"Cách giải phương trình:\n\n1. Xác định ẩn số — x\n2. Viết phương trình: x + 5 = 10\n3. Trừ 5 từ cả hai phía\n4. Trái: x, Phải: 5\n5. Đáp án: x = 5\n6. Kiểm tra: 5 + 5 = 10 ✓",ratio:"Cách làm việc với tỉ lệ:\n\n1. Viết hai giá trị: 2 và 10\n2. Biểu diễn dưới dạng tỉ lệ: 2:10\n3. Tìm ước chung lớn nhất: 2\n4. Chia cả hai phía cho 2\n5. Kết quả: 1:5"},science:{gravity:"Cách trọng lực hoạt động:\n\n1. Mọi vật có khối lượng đều tạo ra trường hấp dẫn\n2. Khối lượng càng lớn, trường càng mạnh\n3. Mọi vật gần Trái Đất bị kéo về tâm\n4. Càng xa, lực càng yếu\n5. Lực này giữ Mặt Trăng quỹ đạo quanh Trái Đất",energy:"Cách năng lượng biến đổi:\n\n1. Bạn ăn thức ăn — năng lượng hóa học\n2. Cơ thể tiêu hóa và giải phóng năng lượng\n3. Cơ bắp dùng làm năng lượng động học\n4. Một phần thành nhiệt năng\n5. Sạc điện thoại: điện → hóa học\n6. Bật lên: hóa học → ánh sáng + âm thanh"},history:{revolution:"Cách một cuộc cách mạng diễn ra:\n\n1. Bất bình đẳng gia tăng\n2. Đa số chịu đựng\n3. Tức giận tích tụ\n4. Sự kiện kích hoạt gây ra hành động hàng loạt\n5. Biểu tình leo thang\n6. Chính phủ cũ sụp đổ\n7. Cấu trúc quyền lực mới hình thành",ww1:"Thế chiến 1 diễn ra thế nào:\n\n1. 28/6/1914: Franz Ferdinand bị ám sát\n2. Áo-Hung đổ lỗi cho Serbia\n3. Nga động viên quân đội\n4. Đức tuyên chiến\n5. Anh tuyên chiến\n6. Bốn năm chiến tranh hào\n7. Tháng 11/1918: Ký hiệp định đình chiến"},computer:{ai:"AI học như thế nào:\n\n1. Thu thập bộ dữ liệu khổng lồ\n2. Đưa vào mạng nơ-ron\n3. Mạng dự đoán cho mỗi đầu vào\n4. So sánh với câu trả lời đúng\n5. Tính toán sai số\n6. Điều chỉnh trọng số\n7. Lặp lại hàng triệu lần",internet:"Trang web tải như thế nào:\n\n1. Bạn gõ URL vào trình duyệt\n2. Trình duyệt hỏi DNS để lấy địa chỉ IP\n3. Trình duyệt gửi yêu cầu HTTP\n4. Máy chủ gửi lại HTML, CSS, JS\n5. Trình duyệt lắp ráp và hiển thị\n6. Tổng thời gian: dưới 1 giây"}}
-  };
-  return s[lang]?.[subject]?.[topic] || s.en?.[subject]?.[topic] || "Let me walk through this step by step.";
-}
-
-/* ══════════════════════════════════════════
-   GENERATE EXAMPLE — analogy / storytelling
-══════════════════════════════════════════ */
-function generateExample(lang, subject, topic){
-  const s = {
-    en:{biology:{photosynthesis:"Imagine a tiny green factory inside every leaf.\n\nThe factory runs on sunlight — that's its electricity. It takes in two raw materials: water piped up from the roots, and carbon dioxide drifting in from the air.\n\nInside, a worker called chlorophyll runs the production line. It manufactures glucose — sugar packets the plant uses as fuel.\n\nAs a bonus? The factory releases oxygen as exhaust. Which is lucky for us — because that's what we breathe.\n\nEvery tree you've ever seen? A solar-powered food factory, running silently every day.",cell:"Think of a cell like a tiny city.\n\nThe city wall is the membrane — it controls who gets in and out. The city hall is the nucleus — it holds all the laws (your DNA) and sends out orders.\n\nThe power plant is the mitochondria — it generates electricity (energy) to keep everything running. The factories are the ribosomes — they build things based on instructions from city hall.\n\nNow imagine billions of these tiny cities, all working together — that's your body.",digestion:"Imagine your body is a recycling plant.\n\nA truck (your mouth) arrives with raw materials (food). Workers immediately start sorting and breaking things down.\n\nThe material goes through the shredder (stomach) — powerful acid breaks everything into liquid mush.\n\nThen it moves along a long conveyor belt (small intestine). Tiny workers pull out every useful thing — proteins, fats, sugars — and load them into delivery vans (your blood) to be sent around the body.\n\nWhat's left? Waste. Compacted and removed. Your body does this 3 times a day, automatically.",genetics:"Think of DNA like a recipe book — a very, very long one.\n\nYour mum contributed half the recipes. Your dad contributed the other half. Together they make your personal cookbook.\n\nEach recipe is a gene. Some say 'brown eyes.' Some say 'tall.' Some say 'type A blood.'\n\nSometimes two recipes conflict. Mum's says blue eyes. Dad's says brown. One wins — we call it dominant. Brown beats blue.\n\nBut the losing recipe doesn't disappear. It gets passed on — and might show up in your children someday."},math:{algebra:"Imagine you're at a party and someone puts a mystery box on the table.\n\nThey say: 'If I add 5 apples to whatever's in this box, I end up with 10 apples total.'\n\nYou think for a second — there must be 5 apples in the box. You didn't need any formula. You just reasoned it out.\n\nThat's algebra. The box is x. The sentence 'box + 5 = 10' is the equation. Finding what's in the box is solving for x.\n\nThe only difference between your apple logic and algebra class is that algebra gives you formal tools to do this when the numbers get harder.",ratio:"Imagine you're making lemonade for a party.\n\nYour recipe says: for every 1 cup of lemon juice, use 4 cups of water. That's a 1:4 ratio.\n\nIf you want to make double the amount, you use 2 cups of lemon juice and 8 cups of water. The ratio stays 1:4 — the flavour stays the same.\n\nIf you mess up the ratio — say you add too much lemon — the whole batch tastes wrong. The ratio is what keeps things balanced.\n\nThis is why ratios matter in cooking, medicine, engineering, and finance."},science:{gravity:"Imagine you're standing on a giant magnet — that's basically Earth.\n\nEvery object with mass is like a tiny magnet too. And magnets pull toward each other. The bigger the magnet, the stronger the pull.\n\nEarth is so massive that its 'pull' keeps your feet on the ground, keeps the oceans from floating away, and even keeps the Moon — 384,000 km away — locked in orbit.\n\nIn space, away from large masses, you'd float. Gravity is invisible, but it's the reason the universe has any structure at all.",energy:"Think of energy like money in an economy.\n\nYou can't create money out of thin air, and you can't destroy it — it just moves around. Energy is the same.\n\nWhen you eat breakfast, you're making a deposit — your body banks chemical energy from the food. Throughout the day, you spend it: walking, talking, thinking, keeping warm.\n\nWhen your phone battery dies, the money ran out — the chemical energy was spent as light, sound, and heat.\n\nYou plug it in: the power station makes a transfer, sending electrical energy into your battery, storing it as chemical energy again."},history:{revolution:"Imagine a pressure cooker.\n\nYou keep heating it up — more pressure, more pressure. As long as the lid holds, nothing happens on the outside. But the tension inside keeps building.\n\nThen one day — a small crack. And everything explodes.\n\nThat's a revolution.\n\nThe 'heat' is injustice — years of inequality. The 'pressure' is the anger of millions who can't change things through normal channels. The 'crack' is the spark — one event that tips everything over.",ww1:"Imagine a room full of people who all hate each other — and every single one of them is holding a loaded gun.\n\nThey've also made promises: 'If anyone shoots at my friend, I'll shoot at you.' Everyone has made the same promise to someone else.\n\nNow someone fires a single shot.\n\nIn seconds, everyone in the room is shooting at everyone else — even people who had nothing to do with that first shot.\n\nThat's World War One. The single shot was the assassination of Franz Ferdinand. The promises were the European alliance systems."},computer:{ai:"Imagine teaching a child to recognise dogs.\n\nYou don't give them a rulebook. Instead, you show them thousands of pictures. 'Dog. Dog. Not a dog. Dog.'\n\nAfter enough examples, something clicks. They start recognising dogs they've never seen before — even unusual ones.\n\nThat's exactly how AI works. Instead of programming rules, you feed the system millions of examples. It finds the patterns on its own. The more examples, the better it gets.\n\nThe difference? A child learns after a few hundred. An AI might need millions — but it never gets tired or bored.",internet:"Imagine sending a letter — but the letter is cut into 1000 tiny pieces.\n\nEach piece travels separately through a different route across the world. Some go via cables under the ocean. Some bounce off satellites.\n\nAt the other end, all 1000 pieces arrive and get reassembled into the original letter. This all happens in under a second.\n\nThat's the internet. Your message, your photo, this webpage — all broken into 'packets,' sent across the world, and reassembled at the other end. Every time. Instantly."}},
-    zh:{biology:{photosynthesis:"想象每片叶子里都有一个小小的绿色工厂。\n\n工厂靠阳光运行——那是它的电力。原材料是水和二氧化碳。\n\n工厂里有个叫叶绿素的工人，把这些转化成葡萄糖——植物的燃料。\n\n工厂还排放出氧气——对我们来说是好事，因为那是我们呼吸的气体。",cell:"把细胞想象成一座小城市。\n\n城墙是细胞膜，市政厅是细胞核，发电厂是线粒体，工厂是核糖体。\n\n现在想象数十亿座这样的小城市协同工作——那就是你的身体。",digestion:"想象你的身体是一个回收工厂。\n\n卡车（你的嘴）带来原材料（食物）。碎纸机（胃）分解一切。传送带（小肠）把有用的东西装进运货车（血液）。\n\n剩余物被排出体外。每天自动进行3次。",genetics:"把DNA想象成一本食谱书——一本很长的书。\n\n妈妈贡献了一半食谱，爸爸贡献另一半。每个食谱是一个基因，有的说'棕色眼睛'，有的说'高个子'。\n\n两个食谱冲突时，显性的赢。但输的食谱不消失，会传递给下一代。"},math:{algebra:"想象有人把神秘盒子放在桌上，说加5个苹果就有10个。那盒子里必定有5个。\n\n这就是代数。盒子是x，x+5=10，找出x=5。\n\n代数就是这样简单的推理，只是给了它正式的名字和工具。",ratio:"想象调柠檬水：每1杯柠檬汁加4杯水，比率1:4。\n\n做双倍时用2杯加8杯，比率不变，味道相同。\n\n比率错了，味道就不对了。这就是为什么比率在生活各处都很重要。"},science:{gravity:"想象站在巨大磁铁上——那就是地球。\n\n地球质量极大，像磁铁一样把一切拉向自己。\n\n在太空中，远离大质量天体，你会漂浮。重力是宇宙有结构的原因。",energy:"把能量想象成经济中的货币。\n\n不能凭空创造，也不能消灭，只能流动。\n\n吃早餐是存款，走路说话是消费，充电是从电站转账。每次流动都是账户间的转移。"},history:{revolution:"想象一个高压锅。不断加热，压力积累，盖子撑着没有外部变化。\n\n然后一道小裂缝，一切爆发。\n\n这就是革命：不公正是热量，愤怒是压力，一个事件是裂缝。",ww1:"想象满屋互相憎恨的人，每人都持枪，互相承诺'有人打我朋友我就打你'。\n\n然后有人开了一枪。几秒内所有人互相射击。\n\n这就是一战。那一枪是刺杀大公，那些承诺是欧洲的联盟体系。"},computer:{ai:"想象教孩子认识狗——不给规则手册，而是看数千张图片'狗、狗、不是狗'。\n\n看够了就学会了，能认出从未见过的狗。\n\nAI就这样工作：输入数百万例子，自己找规律。数据越多越好。",internet:"想象寄信，但信被剪成1000片，每片走不同路线穿越世界。\n\n到达目的地后拼回原信。不到一秒完成。\n\n这就是互联网——你的一切数据都是这样传输的。"}},
-    fr:{biology:{photosynthesis:"Imagine une toute petite usine verte dans chaque feuille.\n\nL'usine fonctionne à l'énergie solaire. Elle prend l'eau des racines et le CO2 de l'air. La chlorophylle fabrique du glucose.\n\nBonus : elle rejette de l'oxygène — ce que nous respirons.",cell:"Pense à une cellule comme à une petite ville.\n\nLa muraille est la membrane, la mairie est le noyau, la centrale électrique ce sont les mitochondries, les usines sont les ribosomes.\n\nImagine des milliards de ces petites villes qui travaillent ensemble — c'est ton corps.",digestion:"Imagine que ton corps est une usine de recyclage.\n\nUn camion (ta bouche) apporte des matières premières. Le broyeur (estomac) les transforme en liquide. Le tapis roulant (intestin grêle) extrait les nutriments.\n\nLes déchets sont évacués. Ton corps fait ça 3 fois par jour.",genetics:"Pense à l'ADN comme à un livre de recettes.\n\nTa mère a contribué la moitié, ton père l'autre moitié. Chaque recette est un gène. Parfois elles se contredisent — la dominante gagne. Mais la perdante ne disparaît pas, elle se transmet.",math:{algebra:"Imagine une boîte mystérieuse. On dit: 'ajoute 5 pommes, tu en as 10.' Il y en a donc 5 dans la boîte.\n\nC'est ça l'algèbre. La boîte est x. Trouver ce qu'il y a dedans, c'est résoudre pour x.",ratio:"Imagine préparer une limonade: 1 tasse de citron pour 4 d'eau — ratio 1:4.\n\nDoubler la recette: 2 tasses + 8 tasses. Le ratio reste 1:4, le goût aussi.\n\nSi tu rates le ratio, tout est raté. C'est pourquoi les ratios sont partout."},science:{gravity:"Imagine que tu es debout sur un immense aimant — c'est la Terre.\n\nTout objet avec masse est aussi un petit aimant. La Terre attire tout vers elle.\n\nDans l'espace, tu flotterais. La gravité est ce qui donne sa structure à l'univers.",energy:"Pense à l'énergie comme à de l'argent.\n\nTu ne peux pas en créer ni en détruire — elle se déplace juste.\n\nManger c'est déposer. Marcher c'est dépenser. Charger ton téléphone c'est transférer de l'énergie électrique en chimique."},history:{revolution:"Imagine une cocotte-minute. Plus tu chauffes, plus la pression monte. Un petit crack — tout explose.\n\nC'est une révolution : l'injustice est la chaleur, la colère est la pression, l'événement déclencheur est le crack.",ww1:"Imagine une pièce pleine de gens qui se haïssent, chacun tenant un pistolet chargé et ayant promis de riposter.\n\nQuelqu'un tire un coup. En secondes tout le monde tire sur tout le monde.\n\nC'est la Première Guerre mondiale."},computer:{ai:"Imagine apprendre à un enfant à reconnaître les chiens — pas avec des règles, mais avec des milliers de photos.\n\nAprès assez d'exemples, ça clique. C'est exactement comme ça que l'IA fonctionne.",internet:"Imagine envoyer une lettre découpée en 1000 morceaux, chacun voyageant par une route différente.\n\nIls arrivent et sont réassemblés en moins d'une seconde.\n\nC'est Internet — ton message voyage ainsi à chaque fois."}},
-    es:{biology:{photosynthesis:"Imagina una pequeña fábrica verde dentro de cada hoja.\n\nFunciona con luz solar. Toma agua de las raíces y CO2 del aire. La clorofila fabrica glucosa.\n\nBonus: libera oxígeno — lo que respiramos.",cell:"Piensa en una célula como en una pequeña ciudad.\n\nLa membrana es la muralla, el núcleo es el ayuntamiento, las mitocondrias son la planta eléctrica, los ribosomas son las fábricas.\n\nImagina miles de millones de estas pequeñas ciudades trabajando juntas — eso es tu cuerpo.",digestion:"Imagina que tu cuerpo es una planta de reciclaje.\n\nUn camión (tu boca) trae materias primas. La trituradora (estómago) las convierte en líquido. La banda transportadora (intestino) extrae los nutrientes.\n\nLos desechos son eliminados. Tu cuerpo hace esto 3 veces al día.",genetics:"Piensa en el ADN como en un libro de recetas.\n\nMamá aportó la mitad, papá la otra mitad. Cada receta es un gen. A veces se contradicen — la dominante gana. Pero la perdedora no desaparece, se transmite.",math:{algebra:"Imagina una caja misteriosa. Dicen: 'agrega 5 manzanas y tendrás 10.' Entonces hay 5 en la caja.\n\nEso es el álgebra. La caja es x. Encontrar lo que hay dentro es resolver para x.",ratio:"Imagina preparar limonada: 1 taza de limón por 4 de agua — razón 1:4.\n\nDoblar la receta: 2 tazas + 8 tazas. La razón se mantiene 1:4, el sabor también.\n\nSi fallas la razón, todo falla. Por eso las razones importan en todas partes."},science:{gravity:"Imagina que estás parado sobre un imán gigante — eso es la Tierra.\n\nTodo objeto con masa también es un imán. La Tierra atrae todo hacia ella.\n\nEn el espacio flotarías. La gravedad es lo que da estructura al universo.",energy:"Piensa en la energía como en dinero.\n\nNo puedes crearla ni destruirla — solo se mueve.\n\nComer es depositar. Caminar es gastar. Cargar el teléfono es transferir energía eléctrica a química."},history:{revolution:"Imagina una olla a presión. Más calor, más presión. Una grieta pequeña — todo explota.\n\nEso es una revolución: la injusticia es el calor, la ira es la presión, el evento es la grieta.",ww1:"Imagina una habitación llena de personas que se odian, cada una con un arma cargada y habiendo prometido responder si atacan a su amigo.\n\nAlguien dispara. En segundos todos disparan contra todos.\n\nEso es la Primera Guerra Mundial."},computer:{ai:"Imagina enseñarle a un niño a reconocer perros — no con reglas sino con miles de fotos.\n\nDespués de suficientes ejemplos, algo hace clic. Así funciona la IA exactamente.",internet:"Imagina enviar una carta cortada en 1000 pedazos, cada uno viajando por una ruta diferente.\n\nLlegan y se reensamblan en menos de un segundo.\n\nEso es Internet — así viaja tu información cada vez."}},
-    th:{biology:{photosynthesis:"ลองนึกภาพโรงงานสีเขียวเล็กๆ ภายในใบพืชทุกใบ\n\nโรงงานทำงานด้วยแสงอาทิตย์ รับน้ำจากรากและ CO2 จากอากาศ คลอโรฟิลล์ผลิตกลูโคส\n\nของแถม: โรงงานปล่อยออกซิเจน — สิ่งที่เราหายใจ",cell:"คิดว่าเซลล์เหมือนเมืองเล็กๆ\n\nกำแพงคือเยื่อหุ้ม ศาลากลางคือนิวเคลียส โรงไฟฟ้าคือไมโตคอนเดรีย โรงงานคือไรโบโซม\n\nนึกภาพเมืองหลายพันล้านเมืองทำงานร่วมกัน — นั่นคือร่างกายของคุณ",digestion:"ลองนึกภาพร่างกายเป็นโรงงานรีไซเคิล\n\nรถบรรทุก (ปาก) นำวัตถุดิบมา เครื่องบด (กระเพาะ) แปลงเป็นของเหลว สายพาน (ลำไส้) ดึงสารอาหารออก\n\nของเสียถูกกำจัดออก ร่างกายทำสิ่งนี้วันละ 3 ครั้ง",genetics:"คิดว่า DNA เหมือนหนังสือตำราอาหาร\n\nแม่มีส่วนร่วมสูตรครึ่งหนึ่ง พ่อมีส่วนร่วมอีกครึ่ง แต่ละสูตรคือยีน เมื่อขัดแย้งกัน ยีนเด่นจะชนะ แต่ยีนที่แพ้ไม่หายไป — มันส่งต่อไป",math:{algebra:"ลองนึกภาพกล่องลึกลับที่มีของบางอย่างอยู่ มีคนบอกว่า 'เพิ่ม 5 ชิ้นจะได้ 10 ชิ้น' ดังนั้นในกล่องมี 5 ชิ้น\n\นั่นคือพีชคณิต กล่องคือ x หาค่า x = 5",ratio:"ลองนึกภาพทำน้ำมะนาว: มะนาว 1 ถ้วย น้ำ 4 ถ้วย — อัตราส่วน 1:4\n\nทำสองเท่า: 2 ถ้วย + 8 ถ้วย อัตราส่วนยังคงเป็น 1:4 รสชาติเหมือนเดิม\n\nอัตราส่วนผิด รสชาติผิด นั่นคือทำไมอัตราส่วนสำคัญ"},science:{gravity:"ลองนึกภาพยืนอยู่บนแม่เหล็กยักษ์ — นั่นคือโลก\n\nโลกมีขนาดใหญ่มากจนดึงทุกอย่างเข้าหา\n\nในอวกาศ คุณจะลอย แรงโน้มถ่วงคือสิ่งที่ให้โครงสร้างกับจักรวาล",energy:"คิดว่าพลังงานเหมือนเงินในระบบเศรษฐกิจ\n\nไม่สามารถสร้างหรือทำลายได้ แค่เคลื่อนย้ายไปมา\n\nกินอาหารคือฝากเงิน เดินคือใช้จ่าย ชาร์จโทรศัพท์คือโอนเงินจากโรงไฟฟ้า"},history:{revolution:"ลองนึกภาพหม้อแรงดัน ยิ่งให้ความร้อนยิ่งมีแรงดัน รอยแตกเล็กๆ แล้วทุกอย่างระเบิด\n\nนั่นคือการปฏิวัติ: ความอยุติธรรมคือความร้อน ความโกรธคือแรงดัน เหตุการณ์คือรอยแตก",ww1:"ลองนึกภาพห้องที่เต็มไปด้วยคนที่เกลียดชังกัน ทุกคนถืออาวุธและให้คำสัญญา 'ถ้าใครยิงเพื่อนฉัน ฉันจะยิงคุณ'\n\nมีคนยิงกระสุนเดียว ในไม่กี่วินาทีทุกคนก็ยิงใส่กัน — นั่นคือสงครามโลกครั้งที่หนึ่ง"},computer:{ai:"ลองนึกภาพสอนเด็กให้จำสุนัขได้ — ไม่ใช้กฎ แต่ดูรูปภาพนับพัน 'สุนัข สุนัข ไม่ใช่สุนัข'\n\nหลังจากตัวอย่างมากพอ สิ่งต่างๆ ก็คลิก นั่นคือวิธีที่ AI ทำงาน",internet:"ลองนึกภาพส่งจดหมายที่ถูกตัดเป็น 1000 ชิ้น แต่ละชิ้นเดินทางผ่านเส้นทางต่างกัน\n\nถึงปลายทางแล้วประกอบกลับในเวลาไม่ถึงวินาที — นั่นคืออินเทอร์เน็ต"}},
-    ko:{biology:{photosynthesis:"모든 잎사귀 안에 작은 초록색 공장이 있다고 상상해보세요.\n\n공장은 햇빛으로 돌아가요. 뿌리에서 물을, 공기에서 CO2를 가져와요. 엽록소가 포도당을 만들어요.\n\n보너스? 산소를 배출해요 — 우리가 숨 쉬는 바로 그거예요.",cell:"세포를 작은 도시라고 생각해보세요.\n\n막이 도시 벽, 핵이 시청, 미토콘드리아가 발전소, 리보솜이 공장이에요.\n\n이런 작은 도시 수십억 개가 함께 작동한다고 상상해보세요 — 그게 당신의 몸이에요.",digestion:"당신의 몸이 재활용 공장이라고 상상해보세요.\n\n트럭(입)이 원자재(음식)를 가져와요. 분쇄기(위)가 액체로 만들어요. 컨베이어 벨트(소장)가 영양분을 추출해요.\n\n폐기물은 제거돼요. 하루 3번 자동으로요.",genetics:"DNA를 요리책이라고 생각해보세요.\n\n엄마가 절반, 아빠가 나머지 절반을 기여했어요. 각 레시피가 유전자예요. 충돌할 때 우성이 이겨요. 지는 레시피는 사라지지 않고 전달돼요.",math:{algebra:"파티에서 신비한 상자가 테이블에 놓여요. '5개를 더하면 10개가 돼요.' 그럼 상자 안에 5개가 있어야 해요.\n\n그게 대수학이에요. 상자가 x예요. x 찾기가 대수학이에요.",ratio:"파티를 위해 레모네이드를 만들어요: 레몬즙 1컵에 물 4컵 — 1:4 비율.\n\n두 배를 만들면 2컵 + 8컵. 비율은 1:4 유지돼요 — 맛이 같아요.\n\n비율을 실수하면 모든 것이 잘못돼요. 그래서 비율이 중요해요."},science:{gravity:"거대한 자석 위에 서 있다고 상상해보세요 — 그게 지구예요.\n\n지구는 너무 거대해서 모든 것을 끌어당겨요.\n\n우주에서는 떠다닐 거예요. 중력은 우주에 구조가 있는 이유예요.",energy:"에너지를 경제의 돈이라고 생각해보세요.\n\n만들거나 파괴할 수 없어요 — 그냥 이동해요.\n\n아침 먹기가 예금, 걷기가 지출, 폰 충전이 발전소에서 배터리로 이체예요."},history:{revolution:"압력솥을 상상해보세요. 가열할수록 압력이 쌓여요. 작은 균열 하나 — 그리고 모든 것이 폭발해요.\n\n그게 혁명이에요: 불의가 열, 분노가 압력, 사건이 균열이에요.",ww1:"서로를 모두 미워하는 사람들로 가득 찬 방을 상상해보세요. 모두 총을 들고 '내 친구를 쏘면 나도 쏠게'라고 약속했어요.\n\n누군가 한 발을 쏴요. 몇 초 안에 모든 사람이 모든 사람에게 쏴요 — 그게 1차 세계대전이에요."},computer:{ai:"아이에게 개를 알아보도록 가르친다고 상상해보세요 — 규칙이 아니라 수천 장의 사진으로요.\n\n충분한 예시 후 뭔가가 클릭돼요. 그게 정확히 AI가 작동하는 방식이에요.",internet:"편지를 1000개의 작은 조각으로 잘라 보낸다고 상상해보세요. 각 조각이 다른 경로로 여행해요.\n\n반대쪽에서 조립돼요 — 1초 이내에요. 그게 인터넷이에요."}},
-    vi:{biology:{photosynthesis:"Hãy tưởng tượng một nhà máy màu xanh nhỏ bên trong mỗi chiếc lá.\n\nNhà máy chạy bằng ánh sáng mặt trời. Lấy nước từ rễ và CO2 từ không khí. Chất diệp lục sản xuất glucose.\n\nBonus: thải ra oxy — thứ chúng ta thở.",cell:"Hãy nghĩ tế bào như một thành phố nhỏ.\n\nMàng là tường thành, nhân là tòa thị chính, ty thể là nhà máy điện, ribosome là các nhà máy.\n\nHãy tưởng tượng hàng tỷ thành phố nhỏ cùng làm việc — đó là cơ thể bạn.",digestion:"Hãy tưởng tượng cơ thể bạn là nhà máy tái chế.\n\nXe tải (miệng) mang nguyên liệu. Máy nghiền (dạ dày) tạo thành bột nhão. Băng tải (ruột non) lấy ra chất dinh dưỡng.\n\nChất thải được loại bỏ. Cơ thể làm điều này 3 lần mỗi ngày.",genetics:"Hãy nghĩ DNA như một cuốn sách dạy nấu ăn.\n\nMẹ đóng góp một nửa công thức, cha nửa còn lại. Mỗi công thức là một gen. Khi xung đột, gen trội thắng. Gen thua không biến mất — nó được truyền đi.",math:{algebra:"Hãy tưởng tượng một hộp bí ẩn. Ai đó nói: 'thêm 5 cái sẽ có 10 cái.' Vậy trong hộp có 5 cái.\n\nĐó là đại số. Hộp là x. Tìm ra trong hộp có gì là giải tìm x.",ratio:"Hãy tưởng tượng pha nước chanh: 1 cốc nước cốt chanh với 4 cốc nước — tỉ lệ 1:4.\n\nLàm gấp đôi: 2 cốc + 8 cốc. Tỉ lệ vẫn 1:4 — vị vẫn như vậy.\n\nNếu làm sai tỉ lệ, mọi thứ sẽ sai. Đó là lý do tỉ lệ quan trọng."},science:{gravity:"Hãy tưởng tượng đứng trên một nam châm khổng lồ — đó là Trái Đất.\n\nTrái Đất khổng lồ đến mức kéo mọi thứ về phía nó.\n\nTrong không gian bạn sẽ lơ lửng. Trọng lực là lý do vũ trụ có cấu trúc.",energy:"Hãy nghĩ năng lượng như tiền trong nền kinh tế.\n\nBạn không thể tạo ra hay tiêu hủy nó — nó chỉ di chuyển.\n\nĂn sáng là gửi tiền. Đi bộ là chi tiêu. Sạc điện thoại là chuyển khoản từ nhà máy điện."},history:{revolution:"Hãy tưởng tượng một nồi áp suất. Càng đun nóng càng nhiều áp suất. Một vết nứt nhỏ — mọi thứ phát nổ.\n\nĐó là cách mạng: bất công là nhiệt, tức giận là áp suất, sự kiện là vết nứt.",ww1:"Hãy tưởng tượng căn phòng đầy người ghét nhau, tất cả cầm súng và hứa 'nếu ai bắn bạn tôi, tôi sẽ bắn anh'.\n\nAi đó bắn một phát. Trong vài giây mọi người bắn vào mọi người — đó là Thế chiến thứ nhất."},computer:{ai:"Hãy tưởng tượng dạy một đứa trẻ nhận biết chó — không phải bằng quy tắc mà bằng hàng nghìn bức ảnh.\n\nSau đủ ví dụ, có gì đó bật ra. Đó chính xác là cách AI hoạt động.",internet:"Hãy tưởng tượng gửi một bức thư được cắt thành 1000 mảnh, mỗi mảnh đi theo một tuyến đường khác nhau.\n\nChúng đến và được lắp ráp lại trong vòng chưa đầy một giây — đó là Internet."}}
-  };
-  return s[lang]?.[subject]?.[topic] || s.en?.[subject]?.[topic] || "Here's a real-world way to think about this.";
-}
-
-
-
-
-/* ── SWITCH LANGUAGE ── */
-function switchLanguage(){
-  const lang = document.getElementById("language").value;
-  const t    = ui[lang];
-  document.getElementById("label-setup").innerText     = t.setup;
-  document.getElementById("label-assistant").innerText = t.assistant;
-  document.getElementById("label-feedback").innerText  = t.feedback;
-  document.getElementById("label-waitlist").innerText  = t.waitlist;
-  document.getElementById("btn-speak").innerText       = t.speak;
-  document.getElementById("btn-stop").innerText        = t.stop;
-  document.getElementById("btn-ask").innerText         = t.ask;
-  document.getElementById("btn-listen").innerText      = t.listen;
-  document.getElementById("btn-feedback").innerText    = t.submit;
-  document.getElementById("btn-join").innerText        = t.join;
-  document.getElementById("studentQuestion").placeholder = t.placeholder;
-  document.getElementById("teacherReply").innerText    = t.replyDefault;
-  const modeEl = document.getElementById("mode");
-  ["step","simple","logic","context","human"].forEach((v,i) => { modeEl.options[i].text = t.modes[i]; });
-  const subjectEl = document.getElementById("subject");
-  ["biology","history","science","math","computer"].forEach((v,i) => { subjectEl.options[i].text = t.subjects[i]; });
-  updateTopics();
-  updateContent();
-}
-
-/* ── TOPICS ── */
-function updateTopics(){
-  const lang    = document.getElementById("language").value;
-  const subject = document.getElementById("subject").value;
-  const topicEl = document.getElementById("topic");
-  topicEl.innerHTML = "";
-  const keys = Object.keys(data[lang]?.[subject] || data.en[subject] || {});
-  keys.forEach(k => {
-    const opt = document.createElement("option");
-    opt.value    = k;
-    opt.innerText = k.charAt(0).toUpperCase() + k.slice(1);
-    topicEl.appendChild(opt);
-  });
-  topicEl.value = keys[0];
-}
-
-/* ── CONTENT — picks correct generator per mode ── */
-function updateContent(){
-  const lang    = document.getElementById("language").value;
-  const subject = document.getElementById("subject").value;
-  const topic   = document.getElementById("topic").value;
-  const mode    = document.getElementById("mode").value;
-  if(!data[lang]?.[subject]?.[topic] && !data.en?.[subject]?.[topic]) return;
-
-  let output = "";
-  if(mode === "simple"){
-    output = generateSimple(lang, subject, topic);
-  } else if(mode === "step"){
-    output = generateStepByStep(lang, subject, topic);
-  } else if(mode === "context"){
-    output = generateExample(lang, subject, topic);
-  } else {
-    // logic / human — use full teacher content
-    output = data[lang]?.[subject]?.[topic] || data.en[subject][topic];
-  }
-  document.getElementById("explanation").innerText = output;
-}
-
-/* ── VOICE (upgraded) ── */
-let utterance;
-
-function getBestVoice(langCode){
-  const voices = speechSynthesis.getVoices();
-  const prefixMap = {
-    en:["en-GB","en-AU","en-US"],
-    zh:["zh-TW","zh-HK","zh-CN"],
-    fr:["fr-FR","fr-BE","fr-CA"],
-    es:["es-ES","es-MX","es-US"],
-    th:["th-TH","th"],
-    ko:["ko-KR","ko"],
-    vi:["vi-VN","vi"]
-  };
-  const preferred = prefixMap[langCode] || ["en-US"];
-  for(const locale of preferred){
-    const match = voices.find(v => v.lang === locale);
-    if(match) return match;
-  }
-  const fallback = voices.find(v => v.lang.toLowerCase().startsWith(langCode));
-  if(fallback) return fallback;
-  return voices.find(v => v.lang.startsWith("en")) || voices[0];
-}
+/* ── CONVERSATION MEMORY ── */
+let conversationHistory = [];
+let lastReplyText = "";
 
 /* ── BOOT ── */
 function launchDemo(){
@@ -611,21 +554,104 @@ function launchDemo(){
   }
   run();
 }
-  
+
+/* ── SWITCH LANGUAGE ── */
+function switchLanguage(){
+  const lang = document.getElementById("language").value;
+  const t    = ui[lang];
+
+  document.getElementById("label-setup").innerText     = t.setup;
+  document.getElementById("label-assistant").innerText = t.assistant;
+  document.getElementById("label-feedback").innerText  = t.feedback;
+  document.getElementById("label-waitlist").innerText  = t.waitlist;
+  document.getElementById("btn-speak").innerText       = t.speak;
+  document.getElementById("btn-stop").innerText        = t.stop;
+  document.getElementById("btn-ask").innerText         = t.ask;
+  document.getElementById("btn-listen").innerText      = t.listen;
+  document.getElementById("btn-feedback").innerText    = t.submit;
+  document.getElementById("btn-join").innerText        = t.join;
+  document.getElementById("studentQuestion").placeholder = t.placeholder;
+  document.getElementById("teacherReply").innerText    = t.replyDefault;
+
+  const modeEl = document.getElementById("mode");
+  const modeVals = ["step","simple","logic","context","human"];
+  modeVals.forEach((v,i) => { modeEl.options[i].text = t.modes[i]; });
+
+  const subjectEl  = document.getElementById("subject");
+  const subjectVals = ["biology","history","science","math","computer"];
+  subjectVals.forEach((v,i) => { subjectEl.options[i].text = t.subjects[i]; });
+
+  /* reset conversation when language changes */
+  conversationHistory = [];
+  lastReplyText = "";
+
+  updateTopics();
+  updateContent();
+}
+
+/* ── TOPICS ── */
+function updateTopics(){
+  const lang    = document.getElementById("language").value;
+  const subject = document.getElementById("subject").value;
+  const topicEl = document.getElementById("topic");
+
+  topicEl.innerHTML = "";
+
+  const keys = Object.keys(data[lang][subject]);
+  keys.forEach(k => {
+    const opt = document.createElement("option");
+    opt.value    = k;
+    opt.innerText = k.charAt(0).toUpperCase() + k.slice(1);
+    topicEl.appendChild(opt);
+  });
+
+  topicEl.value = keys[0];
+
+  /* reset conversation when topic changes */
+  conversationHistory = [];
+  lastReplyText = "";
+}
+
+/* ── CONTENT ── */
+function updateContent(){
+  const lang  = document.getElementById("language").value;
+  const s     = document.getElementById("subject").value;
+  const t     = document.getElementById("topic").value;
+  const mode  = document.getElementById("mode").value;
+
+  if(!data[lang] || !data[lang][s] || !data[lang][s][t]) return;
+
+  const base = data[lang][s][t];
+  let output = "";
+
+  if(mode === "step")         output = ui[lang].modes[0] + ":\n\n" + base;
+  else if(mode === "simple")  output = ui[lang].modes[1] + ":\n\n" + base.split("\n")[0];
+  else if(mode === "logic")   output = ui[lang].modes[2] + ":\n\n" + base;
+  else if(mode === "context") output = ui[lang].modes[3] + ":\n\n" + base;
+  else if(mode === "human")   output = ui[lang].modes[4] + ":\n\n" + base;
+
+  document.getElementById("explanation").innerText =
+    ui[lang].assistant + "\n\n" + output;
+}
+
+/* ── VOICE ── */
+let utterance;
+
+function getVoice(lang){
+  const voices = speechSynthesis.getVoices();
+  return voices.find(v => v.lang.toLowerCase().includes(lang)) ||
+         voices.find(v => v.lang.toLowerCase().includes("en"));
+}
+
 function speak(){
   stopVoice();
   const lang = document.getElementById("language").value;
   const text = document.getElementById("explanation").innerText;
-  if(!text) return;
   document.getElementById("subtitles").style.display = "block";
   document.getElementById("subtitles").innerText = text;
-  utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice  = getBestVoice(lang);
-  utterance.lang   = utterance.voice ? utterance.voice.lang : lang;
-  utterance.rate   = 0.92;
-  utterance.pitch  = 1.05;
-  utterance.volume = 1;
-  utterance.onend  = () => { document.getElementById("subtitles").style.display = "none"; };
+  utterance       = new SpeechSynthesisUtterance(text);
+  utterance.voice = getVoice(voiceMap[lang]);
+  utterance.lang  = voiceMap[lang];
   speechSynthesis.speak(utterance);
 }
 
@@ -633,16 +659,11 @@ function speakReply(){
   stopVoice();
   const lang = document.getElementById("language").value;
   const text = document.getElementById("teacherReply").innerText;
-  if(!text) return;
   document.getElementById("subtitles").style.display = "block";
   document.getElementById("subtitles").innerText = text;
-  utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice  = getBestVoice(lang);
-  utterance.lang   = utterance.voice ? utterance.voice.lang : lang;
-  utterance.rate   = 0.92;
-  utterance.pitch  = 1.05;
-  utterance.volume = 1;
-  utterance.onend  = () => { document.getElementById("subtitles").style.display = "none"; };
+  utterance       = new SpeechSynthesisUtterance(text);
+  utterance.voice = getVoice(voiceMap[lang]);
+  utterance.lang  = voiceMap[lang];
   speechSynthesis.speak(utterance);
 }
 
@@ -654,84 +675,117 @@ function stopVoice(){
 speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
 
 /* ── STATE DETECTION ── */
-function detectUserState(input){
-  const t = input.toLowerCase().trim();
-  if(/don'?t understand|confused|not clear|lost|unclear|what does|what is|help/.test(t)) return "confused";
-  if(/how|why|tell me more|explain more|what about|curious|interesting|deeper/.test(t)) return "curious";
+function detectState(q){
+  const t = q.toLowerCase();
+  if(/don'?t understand|confused|not clear|lost|too hard|i'?m stuck|help me|what does|what is/.test(t)) return "confused";
+  if(/again|repeat|same|one more time|say that again/.test(t)) return "repeat";
+  if(/example|show me|like what|such as|for instance/.test(t)) return "example";
+  if(/but|however|what if|so then|does that mean|follow.?up|and then|what about/.test(t)) return "followup";
+  if(/why|how|deeper|more|explain more|tell me more|curious|elaborate/.test(t)) return "curious";
   return "neutral";
 }
 
-/* ── ANSWER QUESTION — no labels, natural teacher language ── */
+/* ── ANSWER QUESTION ── */
+/* Improvements applied:
+   1. Reads the actual question and routes to the right response type
+   2. Concept-first format for curious/deep questions
+   3. Simpler breakdown when confused
+   4. Follow-up awareness — continues thread, no restart
+   5. No repeat of last reply — fresh framing if same content
+   6. Clears input after asking
+*/
 function answerQuestion(){
-  const lang  = document.getElementById("language").value;
-  const q     = document.getElementById("studentQuestion").value.trim();
-  const s     = document.getElementById("subject").value;
-  const t     = document.getElementById("topic").value;
-  if(!q) return;
-
-  const state = detectUserState(q);
-  let reply   = "";
-
-  if(state === "confused"){
-    reply = "No worries — let me make this really simple.\n\n"
-      + generateSimple(lang, s, t)
-      + "\n\nDoes that help? Or would you like me to try a different approach?";
-  } else if(state === "curious"){
-    reply = "Great question! Let me give you a deeper look.\n\n"
-      + generateStepByStep(lang, s, t);
-  } else {
-    reply = "Let me walk you through this.\n\n"
-      + (data[lang]?.[s]?.[t] || data.en[s][t]);
-  }
-
-  document.getElementById("teacherReply").innerHTML = reply.replace(/\n/g,"<br>");
-  document.getElementById("replyOptions").style.display = "flex";
-}
-
-/* ── APPLY STYLE — each button gives genuinely different output ── */
-function applyStyle(style){
   const lang = document.getElementById("language").value;
+  const q    = document.getElementById("studentQuestion").value.trim();
   const s    = document.getElementById("subject").value;
   const t    = document.getElementById("topic").value;
-  const T    = ui[lang];
-  let reply  = "";
 
-  if(style === "simple"){
-    reply = generateSimple(lang, s, t);
-  } else if(style === "step"){
-    reply = generateStepByStep(lang, s, t);
-  } else if(style === "context"){
-    reply = generateExample(lang, s, t);
+  if(!q) return;
+
+  const base      = data[lang][s][t];
+  const firstLine = base.split("\n")[0];
+  const state     = detectState(q);
+  const isFollowUp = conversationHistory.length > 0;
+
+  let reply = "";
+
+  if(state === "confused"){
+    /* Strip to the simplest possible — first line + example only */
+    const exampleLine = base.split("\n").find(l => l.toLowerCase().includes("example") || l.toLowerCase().includes("例子") || l.toLowerCase().includes("exemplo") || l.toLowerCase().includes("ejemplo") || l.toLowerCase().includes("exempl") || l.toLowerCase().includes("ตัวอย่าง") || l.toLowerCase().includes("예시") || l.toLowerCase().includes("ví dụ")) || "";
+    reply = "Let me make this as simple as possible.\n\n"
+          + firstLine + "\n\n"
+          + (exampleLine ? exampleLine + "\n\n" : "")
+          + "Want me to break it into steps, or give you a real-world example?";
+
+  } else if(state === "repeat"){
+    /* Reframe — use the summary line instead of full content */
+    const summaryLine = base.split("\n").reverse().find(l => l.trim().length > 0) || firstLine;
+    reply = "Here it is in a fresh way:\n\n" + summaryLine + "\n\n" + firstLine;
+
+  } else if(state === "example"){
+    /* Pull the example line from the content */
+    const exLine = base.split("\n").find(l => /example|例子|ejemplo|exemple|ตัวอย่าง|예시|ví dụ/i.test(l)) || firstLine;
+    reply = "Here's a real-world example:\n\n" + exLine + "\n\n" + firstLine;
+
+  } else if(state === "curious"){
+    /* Concept-first format: Overview → Why → Steps → Example → Summary */
+    const lines    = base.split("\n").filter(l => l.trim());
+    const summary  = lines[lines.length - 1];
+    const stepLines = lines.filter(l => /step|étape|paso|ขั้น|단계|bước|第\d步/i.test(l)).join("\n");
+    const exLine   = lines.find(l => /example|例子|ejemplo|exemple|ตัวอย่าง|예시|ví dụ/i.test(l)) || "";
+    reply = "📌 Concept Overview\n" + firstLine
+          + "\n\n⚙️ How It Works\n" + (stepLines || lines.slice(1,5).join("\n"))
+          + (exLine ? "\n\n🌍 Real-World Example\n" + exLine : "")
+          + "\n\n✅ Your Question: " + q
+          + "\n\n🔁 Summary\n" + summary;
+
+  } else if(state === "followup" && isFollowUp){
+    /* Continue from where we left off — don't restart the intro */
+    const lines = base.split("\n").filter(l => l.trim());
+    const mid   = lines.slice(Math.floor(lines.length / 3)).join("\n");
+    reply = "Building on what we just covered:\n\n" + mid;
+
+  } else {
+    /* Default: answer the question first, then explain */
+    reply = "Your question: "" + q + ""\n\n"
+          + firstLine + "\n\n"
+          + base;
   }
 
-  document.getElementById("teacherReply").innerHTML =
-    reply.replace(/\n/g,"<br>") +
-    `<br><br><span style="color:#6b7280;font-size:13px;">${T.clarify}</span><br>
-    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-      <button class="followup-btn" onclick="gotIt()">${T.yes}</button>
-      <button class="followup-btn alt" onclick="showOptions()">${T.tryAgain}</button>
-    </div>`;
+  /* Avoid showing the exact same reply twice in a row */
+  if(reply === lastReplyText){
+    const lines = base.split("\n").filter(l => l.trim());
+    reply = "Here's another angle:\n\n" + lines.reverse().join("\n");
+  }
+
+  /* Save to history */
+  conversationHistory.push({ q, reply, state });
+  lastReplyText = reply;
+
+  /* Clear the input */
+  document.getElementById("studentQuestion").value = "";
+
+  document.getElementById("teacherReply").innerText =
+    ui[lang].assistant + "\n\n" + reply;
 }
 
-function gotIt(){
-  const lang = document.getElementById("language").value;
-  const el   = document.getElementById("teacherReply");
-  const text = el.innerText.split(ui[lang].clarify)[0].trim();
-  el.innerHTML = text.replace(/\n/g,"<br>");
-  document.getElementById("replyOptions").style.display = "none";
-}
-
-function showOptions(){
-  document.getElementById("replyOptions").style.display = "flex";
-  document.getElementById("replyOptions").scrollIntoView({behavior:"smooth"});
-}
-
-/* ── FEEDBACK ── */
+/* ── FEEDBACK — deduplicates identical submissions ── */
 function submitFeedback(){
-  const f    = document.getElementById("feedbackInput").value;
-  let list   = JSON.parse(localStorage.getItem("baint_feedback")) || [];
+  const f = document.getElementById("feedbackInput").value.trim();
+  if(!f) return;
+
+  let list = JSON.parse(localStorage.getItem("baint_feedback")) || [];
+
+  if(list.includes(f)){
+    document.getElementById("feedbackList").innerHTML =
+      list.map(x => "• " + x).join("<br>") +
+      "<br><span style='color:#b45309;font-size:12px;'>⚠️ This feedback was already recorded.</span>";
+    return;
+  }
+
   list.push(f);
   localStorage.setItem("baint_feedback", JSON.stringify(list));
+  document.getElementById("feedbackInput").value = "";
   document.getElementById("feedbackList").innerHTML = list.map(x => "• " + x).join("<br>");
 }
 
@@ -745,6 +799,7 @@ function joinWaitlist(){
   window.location.href = `mailto:baintcomputer@gmail.com?subject=BAINT Waitlist&body=New signup: ${email}`;
   document.getElementById("waitlistMessage").innerText = ui[lang].waitlistOk;
 }
+
 </script>
 </body>
 </html>
