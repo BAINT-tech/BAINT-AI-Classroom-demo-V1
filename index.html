@@ -120,7 +120,7 @@ button {
     <!-- LAUNCH -->
     <div id="app-launcher" class="section">
       <img src="logo.png" alt="Baint OS Logo" style="width:120px;height:120px;margin-bottom:12px;">
-      <button onclick="launchDemo()">Click to Launch BAINT Classroom Demo</button>
+      <h3 style="cursor:pointer;" onclick="launchDemo()">Click to Launch BAINT Classroom Demo</h3>
       <div class="disclaimer">Demo partially AI-assisted for guidance. Human supervision encouraged.</div>
     </div>
 
@@ -202,10 +202,7 @@ button {
 
 <script>
 
-const appLauncher = document.getElementById("app-launcher");
-const bootScreen  = document.getElementById("boot");
-const demoScreen  = document.getElementById("demo");
-const bootLog     = document.getElementById("boot-log");
+/* DOM refs resolved at call time, not at script parse time */
 
 /* ── UI TRANSLATIONS ── */
 const ui = {
@@ -532,6 +529,10 @@ let lastReplyText = "";
 
 /* ── BOOT ── */
 function launchDemo(){
+  var appLauncher = document.getElementById("app-launcher");
+  var bootScreen  = document.getElementById("boot");
+  var demoScreen  = document.getElementById("demo");
+  var bootLog     = document.getElementById("boot-log");
   appLauncher.style.display = "none";
   bootScreen.style.display  = "block";
 
